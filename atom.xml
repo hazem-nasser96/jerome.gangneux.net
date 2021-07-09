@@ -3,7 +3,7 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2021-07-09T15:06:01+00:00</updated>
+    <updated>2021-07-09T15:17:18+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
@@ -323,422 +323,6 @@ ServerName localhost
 ]]></content>
     </entry>
         <entry>
-        <title type="html"><![CDATA[Apache + PHP FPM + Mysql with docker]]></title>
-        <link href="/2021/06/24/apache-php-fpm-mysql-docker"/>
-        <updated>2021-06-24T00:00:00+00:00</updated>
-        <id>/2021/06/24/apache-php-fpm-mysql-docker</id>
-        <content type="html"><![CDATA[<h1 id="introduction">Introduction</h1>
-
-<p>It was about time, I decided to update my stack and use docker on my servers.</p>
-
-<p>For the ones that follows me I usually prefer to set up a bare metal server with Debian Apache PHP and MySQL installed on it.<br />
-My excuses — if I even need some — were a mix between performances and simplicity.</p>
-
-<p>But today I'm experimenting with multiple small projects, and they all are on the same server.
-It's still a bare metal server, and I'm not — yet — changing this for a cloud provider, we can talk about this in another blog post.</p>
-
-<p>Multiple projects with a single server can lead to some incompatible dependencies,
-in my specific scenario I need some PHP extension that is obsolete and works only with older PHP version, but I don't want to carry this limitation to all my projects.</p>
-
-<p>Why Apache and not Nginx? <a href="https://youtu.be/-rmf5EqJVDw?t=16">No reason &copy;</a>.</p>
-
-<p>Let's see how I built my LAMP stack with Docker (should we say DAMP?)</p>
-
-<h1 id="php">PHP</h1>
-
-<p>I used the <code>php:7.4-fpm</code> base image and added some extensions, those vary depending on the current project.</p>
-
-<p>I added composer because it's always handy to have it there, plus, and this may be up for discussion, I added NodeJS + PM2 in this image too.</p>
-
-<p>Node is often needed for the front end (compiling asset and such) and I did not want the complexity of another image (but I'm open for comment/PR on this one)
-as well as <a href="pm2.keymetrics.io/">PM2</a> that I use for my background scripts. 
-For example like this: <code>pm2 start --name php_messenger_consume php -- bin/console -n messenger:consume async --limit=10 --memory-limit=128M --time-limit=3600</code></p>
-
-<p>It's very handy to have it on the same image as PHP, and does not look even possible otherwise (let me know in the comments).</p>
-
-<p><code class="filepath">file:///docker/php/Dockerfile</code></p>
-
-<pre><code class="language-dockerfile">
-FROM php:7.4-fpm
-
-# PHP and related
-RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
-        locales \
-        apt-utils \
-        git \
-        g++ \
-        libicu-dev \
-        libpng-dev \
-        libxml2-dev \
-        libzip-dev \
-        libonig-dev \
-        libxslt-dev \
-        unzip \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-    &amp;&amp; docker-php-ext-configure gd --with-freetype --with-jpeg \
-    &amp;&amp; docker-php-ext-configure intl \
-    &amp;&amp; docker-php-ext-install \
-        pdo \
-        pdo_mysql \
-        opcache \
-        intl \
-        zip \
-        calendar \
-        dom \
-        mbstring \
-        gd \
-        xsl \
-    &amp;&amp; pecl install apcu \
-    &amp;&amp; docker-php-ext-enable apcu \
-\
-    &amp;&amp;  curl -sS https://getcomposer.org/installer | php -- \
-    &amp;&amp;  mv composer.phar /usr/local/bin/composer
-
-RUN mv &quot;$PHP_INI_DIR/php.ini-production&quot; &quot;$PHP_INI_DIR/php.ini&quot;
-
-# Node 14 and related
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
-    &amp;&amp; apt-get install -y --no-install-recommends nodejs \
-    &amp;&amp; npm install pm2@5.0 -g \
-    &amp;&amp; pm2 install pm2-logrotate \
-    &amp;&amp; pm2 set pm2-logrotate:compress true
-
-</code></pre>
-
-<h1 id="apache">Apache</h1>
-
-<p>This on is a bit more tricky.</p>
-
-<p>First on my production server I won't use it, the server will have a real Apache with vhosts configured properly forwarding to each different projects.
-Those final vhosts will look similar to the one below that I use in the development image.</p>
-
-<p>So for the dev env (hence the <code>docker-compose-dev.yml</code> coming up below) it will have Apache.</p>
-
-<p>The goal is to redirect the query that hit the server to PHP FPM.</p>
-
-<p>For this, I first tried to use the base image <code>httpd:2.4</code> it seemed logic to me but for some reason I never succeeded to make it work, (have you? PR welcome).
-I ended up using a debian base <code>debian:buster-slim</code> and installed Apache on my own (probably not optimal, but we are on a dev environment).</p>
-
-<p>It has <em>mod proxy fast CGI</em> and <em>mod rewrite</em> activated as we will use it in our config.</p>
-
-<p><code class="filepath">file:///docker/apache/Dockerfile</code></p>
-
-<pre><code class="language-dockerfile">
-FROM debian:buster-slim
-
-RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
-    apache2 \
-    &amp;&amp; a2enmod proxy_fcgi \
-    &amp;&amp; a2enmod rewrite
-
-CMD /usr/sbin/apache2ctl -D FOREGROUND
-
-</code></pre>
-
-<h1 id="mysql">MySQL</h1>
-
-<p>I'm using the base image <code>mysql</code> with some options like <code>MYSQL_ALLOW_EMPTY_PASSWORD</code> and <code>cap_add: SYS_NICE</code>. 
-The later prevent the error message "mbind: Operation not permitted" as seen on <a href="https://stackoverflow.com/a/55706057/696517">stackoverflow.com</a></p>
-
-<h1 id="connecting-everything-together">Connecting everything together</h1>
-
-<p>The idea now it to put everything together:</p>
-
-<ul>
-<li>Apache will be exposed to some port and redirect requests to PHP-FPM.</li>
-<li>PHP will be able to connect to the database.</li>
-<li>And also we can use PHP as a command line on our server to execute PHP commands.</li>
-</ul>
-
-<p>I added comments on the file directly, so you have the context.</p>
-
-<p><small>Note: the name of the project is "bookmark" in this example</small></p>
-
-<h2 id="production">Production</h2>
-
-<p><code class="filepath">file:///docker-compose.yml</code></p>
-
-<pre><code class="language-yaml">
-version: &quot;3.3&quot;
-services:
-
-    database:
-        image: mysql
-        container_name: bookmark_mysql
-        restart: always
-        # We set up a docker volume to store our database data
-        volumes:
-            - bookmark-mysql-data:/var/lib/mysql
-        environment:
-            MYSQL_ALLOW_EMPTY_PASSWORD: &quot;yes&quot;
-        networks:
-            - bookmark-network
-        # This option fix the &quot;mbind: Operation not permitted&quot; error that pops in the logs
-        # https://stackoverflow.com/a/55706057/696517
-        cap_add:
-            - SYS_NICE
-
-    php:
-        # Comes from the Dockerfile we talked about earlier
-        build: docker/php
-        container_name: bookmark_php
-        # We will mount our application code in this directory
-        volumes:
-            - ./:/var/www
-        restart: always
-        # Connect this to the common network
-        networks:
-            - bookmark-network
-
-# Common network among all the machines
-networks:
-    bookmark-network:
-
-volumes:
-    bookmark-mysql-data:
-
-</code></pre>
-
-<p>This is the version used in production, so without Apache.</p>
-
-<p>Now the version for local dev</p>
-
-<h2 id="development">Development</h2>
-
-<p>As you probably now, docker-compose config files cascade (like CSS), and we can supersede options
-Again I added comment strait in the file for context.</p>
-
-<p><code class="filepath">file:///docker-compose-dev.yml</code></p>
-
-<pre><code class="language-yaml">
-version: &quot;3.3&quot;
-services:
-
-    database:
-        # For local development I expose the database
-        # Expose port 3306 (mysql default) and bind it to 3307 on the local machine
-        ports:
-          - &quot;3307:3306&quot;
-        # Not auto-restarting the container in local
-        restart: &quot;no&quot;
-
-    # I love this project for dev purpose, I let you check more about it here: https://github.com/maildev/maildev
-    # it&#039;s optional and I won&#039;t go in detail about it now
-    mail:
-        image: maildev/maildev
-        container_name: bookmark_maildev
-        command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
-        ports:
-          - &quot;8083:80&quot;
-        restart: &quot;no&quot;
-        networks:
-            - bookmark-network
-
-    php:
-        # Not auto-restarting the container in local
-        restart: &quot;no&quot;
-
-    apache:
-        # For local development I set up an Apache server
-        # It comes from the Dockerfile we talked about earlier
-        build: docker/apache
-        container_name: bookmark_apache
-        # Start after those image
-        depends_on:
-            - php
-            - database
-        # Expose port 80 and bind it to 9001 on the local machine
-        ports:
-            - &quot;9001:80&quot;
-        volumes:
-            # We will mount our application code in this directory
-            - ./:/var/www
-            # This one is to allow us to set up apache vhosts (see below)
-            - ./docker/apache/conf:/etc/apache2/sites-enabled
-        restart: &quot;no&quot;
-        networks:
-            - bookmark-network
-
-</code></pre>
-
-<h2 id="glue-in-between">Glue in between</h2>
-
-<p>Be it in production or development, having apache on the server or in a docker image,
-you know have to redirect web request to PHP FPM</p>
-
-<p>This is done with an Apache config file (here called <code>vhosts.conf</code> for historical reasons)</p>
-
-<p>This config file is similar between a production environment and a dev environment,
-main differences will be explained in inline comments</p>
-
-<p>Note: the base version here is the dev environment.</p>
-
-<p><code class="filepath">file:///apache/conf/vhosts.conf</code></p>
-
-<pre><code class="language-apache">
-ServerName localhost
-# Listening on port 80, I use cloudflare, and they handle the SSL part,
-# otherwise you will need a second similar section for SSL
-&lt;VirtualHost *:80&gt;
-    # Follow important Auth headers
-    SetEnvIfNoCase ^Authorization$ &quot;(.+)&quot; HTTP_AUTHORIZATION=$1
-
-    # Define our app directory
-    DocumentRoot /var/www/public
-
-    # Rule to redirect request to PHP files to our PHP docker image
-    # in production environment you would have to expose the PHP docker image and update the fcgi uri below with the right hostname and port
-    &lt;FilesMatch \.php$&gt;
-        SetHandler proxy:fcgi://php:9000
-    &lt;/FilesMatch&gt;
-
-    # Rules for our main directory
-    &lt;Directory /var/www/public&gt;
-        # Will rewrite requests
-        RewriteEngine On
-
-        # If the request is a file or a directory, skip the rewrite
-        RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteCond %{REQUEST_FILENAME} !-d
-
-        # Remove the index.php from the URL
-        RewriteRule ^(.*)$ index.php [QSA,L]
-
-        # Other quite basic config
-        # see apache doc
-        AllowOverride None
-        Require all granted
-        Allow from All
-        FallbackResource /index.php
-    &lt;/Directory&gt;
-
-    # These are basic configuration option (optional)
-    # see apache doc
-    &lt;Directory /var/www&gt;
-        Options FollowSymlinks
-    &lt;/Directory&gt;
-
-    &lt;Directory /var/www/public/build&gt;
-        DirectoryIndex disabled
-        FallbackResource disabled
-    &lt;/Directory&gt;
-
-    CustomLog /proc/self/fd/1 common
-    ErrorLog /proc/self/fd/2
-
-&lt;/VirtualHost&gt;
-
-</code></pre>
-
-<p><link rel="stylesheet" href="/assets/css/monokai.min.css">
-<script type="text/javascript" src="/assets/js/highlight.min.js"></script>
-<script>hljs.highlightAll();</script></p>
-]]></content>
-    </entry>
-        <entry>
-        <title type="html"><![CDATA[Generative]]></title>
-        <link href="/2021/03/17/generative"/>
-        <updated>2021-03-17T00:00:00+00:00</updated>
-        <id>/2021/03/17/generative</id>
-        <content type="html"><![CDATA[<h1 id="squared-sin">Squared Sin()</h1>
-
-<p>This has been made with custom code.<br />
-Details: basically playing with the Sin() math function and gradients.</p>
-
-<p>You can make your own here: <a href="https://jerome.gangneux.net/experiments/sq/">experiments/sq</a></p>
-
-<p><section id="gallery">
-    <h2>Gallery</h2>
-    <div class="mx-auto max-w-2xl mt-6">
-        <div class="text-center">Click for more screenshots</div>
-        <div class="shadow-2xl relative">
-                        <div class="mySlides"><img class="image1 w-full w-full" src="/images/projects/generative/sq_0.png"></div>
-                        <div class="mySlides"><img class="image2 w-full w-full" src="/images/projects/generative/sq_1.png"></div>
-                        <div class="mySlides"><img class="image3 w-full w-full" src="/images/projects/generative/sq_2.png"></div>
-                        <div class="mySlides"><img class="image4 w-full w-full" src="/images/projects/generative/sq_3.png"></div>
-                        <div class="mySlides"><img class="image5 w-full w-full" src="/images/projects/generative/sq_4.png"></div>
-                        <div class="mySlides"><img class="image6 w-full w-full" src="/images/projects/generative/sq_5.png"></div>
-                        <span class="absolute left-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="z-index: 11;" onclick="plusSlides(-1)">❮</span>
-            <span class="absolute right-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="width: 100%;z-index: 10;justify-content: flex-end;" onclick="plusSlides(1)">❯</span>
-        </div>
-    </div>
-
-    <script>
-    var slideIndex = 1;
-    showSlides(slideIndex);
-
-    function plusSlides(n) { showSlides(slideIndex += n); return false; }
-    function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        if (n > slides.length) {
-            slideIndex = 1
-        }
-        if (n < 1) {
-            slideIndex = slides.length
-        }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slides[slideIndex - 1].style.display = "block";
-    }
-    </script>
-</section>
-</p>
-
-<p>More work below ⬇️</p>
-
-<h1 id="from-movies">From Movies</h1>
-
-<p>Videos with sound generated from existing movies.</p>
-
-<p>This has been made with custom code.<br />
-Details: for a given movie,</p>
-
-<p>1/ Getting the average color of each frame, then putting pixel after pixel on the video<br />
-2/ Generating a music track from each color component (R/G/B) for the kick, piano, bass<br />
-3/ Merge all in the video at 200fps</p>
-
-<h2 id="generative-31104577f3">Generative 31104577f3</h2>
-
-<iframe src="https://player.vimeo.com/video/529744282?title=0&amp;byline=0&amp;portrait=0" width="100%" height="394" class="center" frameborder="0" allowfullscreen></iframe>
-
-<p><br>
-Note: the final video does not suffer from any compression artifacts.</p>
-
-<p>I my opinion, one of the best parts is around 4:30 
-where something very bright happen in the movie and is well reflected in the soundtrack</p>
-
-<p>The final image resulting from the process looks like:
-<!-- I hope this will make someone lol --><center>
-<img class="shadow-2xl center" src="https://jerome.gangneux.net/images/upload/m_1px_raw.png" />
-</center></p>
-
-<h2 id="generative-6c044c095b">Generative 6c044c095b</h2>
-
-<iframe src="https://player.vimeo.com/video/529745381?title=0&amp;byline=0&amp;portrait=0" width="100%" height="394" class="center" frameborder="0" allowfullscreen></iframe>
-
-<p><br>
-Note: the final video does not suffer from any compression artifacts.</p>
-
-<h2 id="for-sale">For sale</h2>
-
-<p>Those art piece are for sale, they come with:</p>
-
-<ul>
-<li>Full quality video with audio</li>
-<li>Full quality audio track</li>
-<li>Final image</li>
-<li>Intermediate files used to generate the video and audio</li>
-<li>Code made to generate that particular piece</li>
-<li>Documentation to understand the code</li>
-</ul>
-
-<p>contact me!</p>
-]]></content>
-    </entry>
-        <entry>
         <title type="html"><![CDATA[Generative]]></title>
         <link href="/2021/03/17/generative"/>
         <updated>2021-03-17T00:00:00+00:00</updated>
@@ -851,26 +435,6 @@ Note: the final video does not suffer from any compression artifacts.</p>
 ]]></content>
     </entry>
         <entry>
-        <title type="html"><![CDATA[Artillery Royale]]></title>
-        <link href="/2020/05/01/ChessBattle-game"/>
-        <updated>2020-05-01T00:00:00+00:00</updated>
-        <id>/2020/05/01/ChessBattle-game</id>
-        <content type="html"><![CDATA[<h1 id="artillery-royale">Artillery Royale</h1>
-
-<p>Want to know more? <a href="https://weheartprojects.com/2020/07/artillery-royale/">Follow the white rabbit</a></p>
-]]></content>
-    </entry>
-        <entry>
-        <title type="html"><![CDATA[La vie n&#039;a pas de sens.]]></title>
-        <link href="/2020/03/01/la-vie-n-a-pas-de-sens"/>
-        <updated>2020-03-01T00:00:00+00:00</updated>
-        <id>/2020/03/01/la-vie-n-a-pas-de-sens</id>
-        <content type="html"><![CDATA[<h1 id="la-vie-n%27a-pas-de-sens.">La vie n'a pas de sens.</h1>
-
-<p>Vous voulez en savoir plus ? <a href="/la_vie_n_a_pas_de_sens">Suivez le lapin blanc</a></p>
-]]></content>
-    </entry>
-        <entry>
         <title type="html"><![CDATA[La vie n&#039;a pas de sens.]]></title>
         <link href="/2020/03/01/la-vie-n-a-pas-de-sens"/>
         <updated>2020-03-01T00:00:00+00:00</updated>
@@ -891,13 +455,751 @@ Note: the final video does not suffer from any compression artifacts.</p>
 ]]></content>
     </entry>
         <entry>
-        <title type="html"><![CDATA[Glitch Videos]]></title>
-        <link href="/2019/11/01/glitch-video"/>
+        <title type="html"><![CDATA[Glitch Clip App]]></title>
+        <link href="/2019/11/01/glitch-clip"/>
         <updated>2019-11-01T00:00:00+00:00</updated>
-        <id>/2019/11/01/glitch-video</id>
-        <content type="html"><![CDATA[<h2 id="selection-of-the-best-art">Selection of the best art</h2>
+        <id>/2019/11/01/glitch-clip</id>
+        <content type="html"><![CDATA[<p><strong>Note: This project has been acquired in 2020, I'm no longer the owner of Glitch Clip App</strong></p>
 
-<p>Coming soon!</p>
+<p>Glitch Clip is an App for iPad that allows you to create generative videos thanks to some artsy visual effects (kaleidoscope, mosaic, twist and 20+ more) or to make creative VJing shows with live music.</p>
+
+<h2 id="how-it-works">How it works</h2>
+
+<p>1/ Select short video clips and start remixing it. Add effects (kaleidoscope, mosaic, twist and more) and glitch things!<br />
+2/ Switch from one clip to another really fast, it's made for live performances. You can also import your own clips.<br />
+3/ Explore generative art, fine tune your effect stack to make artsy videos you can then share with your friends!<br />
+4/ Connect a keyboard or a MIDI controller to the app. From here everything is possible: play live from your controller or synchronize your DAW.</p>
+
+<p>Glitch Clip is made for video DJing (VJing) but you can simply use it to have fun in your own way!
+And of course you can also record and export your video.</p>
+
+<p>You can find the old help page here: <a href="https://jerome.gangneux.net/glitch-clip/">Glitch Clip Help</a></p>
+
+<p><section id="gallery">
+    <h2>Gallery</h2>
+    <div class="mx-auto max-w-2xl mt-6">
+        <div class="text-center">Click for more screenshots</div>
+        <div class="shadow-2xl relative">
+                        <div class="mySlides"><img class="image1 w-full w-full" src="/images/projects/glitchclip/appstore/01.PNG"></div>
+                        <div class="mySlides"><img class="image2 w-full w-full" src="/images/projects/glitchclip/twitter_card.jpg"></div>
+                        <div class="mySlides"><img class="image3 w-full w-full" src="/images/projects/glitchclip/appstore/02.PNG"></div>
+                        <div class="mySlides"><img class="image4 w-full w-full" src="/images/projects/glitchclip/review.png"></div>
+                        <div class="mySlides"><img class="image5 w-full w-full" src="/images/projects/glitchclip/appstore/04.PNG"></div>
+                        <div class="mySlides"><img class="image6 w-full w-full" src="/images/projects/glitchclip/appstore/07.PNG"></div>
+                        <div class="mySlides"><img class="image7 w-full w-full" src="/images/projects/glitchclip/appstore/09.PNG"></div>
+                        <div class="mySlides"><img class="image8 w-full w-full" src="/images/projects/glitchclip/midi.jpg"></div>
+                        <div class="mySlides"><img class="image9 w-full w-full" src="/images/projects/glitchclip/appstore/06.PNG"></div>
+                        <span class="absolute left-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="z-index: 11;" onclick="plusSlides(-1)">❮</span>
+            <span class="absolute right-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="width: 100%;z-index: 10;justify-content: flex-end;" onclick="plusSlides(1)">❯</span>
+        </div>
+    </div>
+
+    <script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) { showSlides(slideIndex += n); return false; }
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex - 1].style.display = "block";
+    }
+    </script>
+</section>
+</p>
+]]></content>
+    </entry>
+        <entry>
+        <title type="html"><![CDATA[Alchemy Quest]]></title>
+        <link href="/2019/03/01/alchemy-quest"/>
+        <updated>2019-03-01T00:00:00+00:00</updated>
+        <id>/2019/03/01/alchemy-quest</id>
+        <content type="html"><![CDATA[<style>.post-header { display: none; }</style>
+
+<h1><img src="/images/projects/AlchemyQuest/logo-screen.png" alt="Alchemy Quest"></h1>
+
+<h2 id="pitch">Pitch</h2>
+
+<p>The pleasure of an Alchemy game while adding the exploration part of an RPG.<br />
+Stroll around, collect elements and combine to find them all!</p>
+
+<p><a href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1451729414&mt=8">Download the game on iOS</a><br></p>
+
+<hr />
+
+<p>With Alchemy Quest explore multiple worlds where life has mysteriously disappeared.
+Collect items found here and there, combine them to find missing ones and bring these lands back to life.
+Solve puzzles to move from one level to another.</p>
+
+<p>You will meet various characters who will help you in your quest, starting with the Mage who is responsible for this mess.</p>
+
+<p>Alchemy Quest is in between an Alchemy game and an RPG, this game is accessible to all.
+Moving around is very simple: touch the screen and the character goes there.
+The combinatorial mode is integrated in the RPG mode so that the game stay homogeneous.</p>
+
+<h2 id="confidentiality">Confidentiality</h2>
+
+<p><strong>Short version:</strong><br />
+Alchemy Quest do not use any of your personal information</p>
+
+<p><strong>Long version:</strong><br />
+Alchemy Quest do not collect your personal information, do not contact any external service.<br />
+You can play without Internet access.<br />
+Alchemy Quest is a paying game and has no vocation to make money with your data.</p>
+
+<h2 id="support">Support</h2>
+
+<p>If you have any question or suggestion please contact me by mail at: jerome@gangneux.net</p>
+
+<p><section id="gallery">
+    <h2>Gallery</h2>
+    <div class="mx-auto max-w-2xl mt-6">
+        <div class="text-center">Click for more screenshots</div>
+        <div class="shadow-2xl relative">
+                        <div class="mySlides"><img class="image1 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-01.png"></div>
+                        <div class="mySlides"><img class="image2 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-02.png"></div>
+                        <div class="mySlides"><img class="image3 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-03.png"></div>
+                        <div class="mySlides"><img class="image4 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-04.png"></div>
+                        <div class="mySlides"><img class="image5 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-05.png"></div>
+                        <div class="mySlides"><img class="image6 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-06.png"></div>
+                        <div class="mySlides"><img class="image7 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-07.png"></div>
+                        <div class="mySlides"><img class="image8 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-08.png"></div>
+                        <div class="mySlides"><img class="image9 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-09.png"></div>
+                        <div class="mySlides"><img class="image10 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-10.png"></div>
+                        <span class="absolute left-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="z-index: 11;" onclick="plusSlides(-1)">❮</span>
+            <span class="absolute right-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="width: 100%;z-index: 10;justify-content: flex-end;" onclick="plusSlides(1)">❯</span>
+        </div>
+    </div>
+
+    <script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) { showSlides(slideIndex += n); return false; }
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex - 1].style.display = "block";
+    }
+    </script>
+</section>
+</p>
+]]></content>
+    </entry>
+        <entry>
+        <title type="html"><![CDATA[Thread Reader: Let&#039;s explore my tooling (technical post)]]></title>
+        <link href="/2018/05/01/thread-reader-tools"/>
+        <updated>2018-05-01T00:00:00+00:00</updated>
+        <id>/2018/05/01/thread-reader-tools</id>
+        <content type="html"><![CDATA[<p><strong>Note: This project has been acquired in 2018, I'm no longer the owner of ThreadReaderApp</strong></p>
+
+<p><em>This is a technical article about Thread Reader,
+for more context <a href="/posts/category/threadreader">see the whole series here</a></em></p>
+
+<h1 id="hardware-and-server-stack">Hardware and Server Stack</h1>
+
+<p>I have my own server from <a href="https://kimsufi.com">kimsufi.com</a> (Canada based).
+It is an Intel i5 at 2.8GHz with 16GB RAM and 2TB of hard drive, Network is 100Mbps.</p>
+
+<p>I use a very basic setup, with Apache2, PHP and MySQL under Ubuntu.
+It has memcached for some caching layer, even if most of the content is cached on the hard drive.</p>
+
+<p>I use Sphinx search to power the "related thread" feature as well as the search feature (obviously).</p>
+
+<p>So, yes it is PHP + basic CSS (<a href="http://getbootstrap.com/">bootstrap</a>) + basic javascript (<a href="http://jquery.com/">jquery</a>).</p>
+
+<h3 id="notable">Notable</h3>
+
+<ul>
+<li>I'm using the <a href="https://silex.symfony.com/">Silex</a> PHP micro framework and some Symfony components</li>
+<li>PHP sessions are in memcached</li>
+<li>Apache is configured to cache everything very violently</li>
+<li>All this is backed by <a href="https://www.cloudflare.com/">Cloudflare</a> caching</li>
+</ul>
+
+<h3 id="server-metrics-as-may-2018">Server Metrics as May 2018</h3>
+
+<ul>
+<li>Average load is close to 0.3 and can go close to 1 when 800+ visits/minutes</li>
+<li>The database is &lt; 2Gb and the whole hard drive caching + code is about 25Gb</li>
+<li>RAM is half used on a normal day, no swapping</li>
+</ul>
+
+<h1 id="monitoring">Monitoring</h1>
+
+<p>To monitor the server I mostly use cron jobs that check for specific signals:</p>
+
+<ul>
+<li>I check the size of the job queue</li>
+<li>I check that the bot has said something in the last hour</li>
+</ul>
+
+<p>If something is wrong I get an email, I also have a basic alert mechanism from Kimsufi when the server is down.</p>
+
+<p>On my laptop, I have a term open on my server with a <code>tail -f</code> on logs (I use SSH + <a href="https://mosh.org/">mosh</a>).</p>
+
+<p>Logs include many things: payments hooks, Apache errors, bot mentions and replies, job outputs and more.<br />
+These logs are also accessible on the web via an admin page I have access to.</p>
+
+<h2 id="in-case-of-emergency">In case of emergency</h2>
+
+<p>If something goes wrong about performance I use:</p>
+
+<ul>
+<li><code>top</code> to check CPU and RAM usage</li>
+<li><code>iotop</code> to check disk usage</li>
+<li><code>iftop</code> to check network usage</li>
+</ul>
+
+<p>Most of the time it is not a performance issue but more a bug that cause some edge case.</p>
+
+<p>For example last one was some thread that was unrolled and posted on Twitter,
+got something like 300 RT and then the author deleted the thread. 
+So any visitor would arrive at the thread page but nothing was found on the database 
+and so the bot tried to unroll it but it was not on Twitter any more (times 1000 visits). Made a mess. Fixed now.</p>
+
+<h2 id="web-admin-interface">Web Admin interface</h2>
+
+<p>I made an admin interface with the minimum to do some monitoring about the service (not the server).</p>
+
+<ul>
+<li>I can get the last unrolls and trending pages.</li>
+<li>I can check user details, and upgrade to Premium</li>
+<li>I can do some action on threads like force refresh for example.</li>
+</ul>
+
+<h1 id="scripts-and-crons">Scripts and Crons</h1>
+
+<p>I have plenty of scripts and Crons that runs on the server:</p>
+
+<pre><code>21 3 * * * /threadreader/cron/CheckUser.php &gt; /logs/cron.log
+45 4 * * * /threadreader/cron/CheckThread.php &gt; /logs/cron.log
+0 8 * * * /threadreader/cron/UsageReporting.php &gt; /logs/cron.log
+0 8 * * * /threadreader/cron/MoneyReporting.php &gt; /logs/cron.log
+0 8 2 * * /threadreader/cron/MoneyReporting.php --period=month &gt; /logs/cron.log
+17 */3 * * * /threadreader/cron/StaticTrending.php &gt; /logs/cron.log
+10 * * * * /threadreader/cron/Health.php &gt; /logs/cron.log
+</code></pre>
+
+<p>I have two more Cron: database backup and software updates running every day.</p>
+
+<p>Then I have all these scripts that loops all the time with sometime a bit of waiting <code>sleep</code>.
+These are started in a <code>screen</code> that is configured to auto start if the server reboots (never happened)</p>
+
+<ul>
+<li>Check for bot mentions</li>
+<li>Update existing threads</li>
+<li>Check for deleted threads</li>
+<li>Check for deleted users</li>
+<li>Run jobs</li>
+</ul>
+
+<h2 id="queue-and-job-mechanism">Queue and job mechanism</h2>
+
+<p>Thread Reader needs a queuing mechanism for two reasons:<br />
+long processing jobs (like thread archiving) and relative scheduled actions (DM/emails alerts)</p>
+
+<p>This one is so low tech that I'm almost ashamed to talk about but...</p>
+
+<p>It is a MySQL table where I enqueue a command name with its arguments, 
+I add the time when I want it to be executed and a return code to check later.<br />
+Then a script pulls entries one by one and execute them.</p>
+
+<h1 id="backup-and-security">Backup and security</h1>
+
+<ul>
+<li>SSH via public key and no root</li>
+<li>Every port closed (via <code>ufw</code>) except ssh and http/s</li>
+<li>Apache and PHP are configured with paranoia in mind</li>
+</ul>
+
+<p>Thread Reader is quite a special case about data as it does not have so much content, nor original content.<br />
+Still. A full dump of the database is saved every day (cron script), 
+encrypted and sync to <a href="https://dropbox.com">dropbox.com</a> (true)<br />
+No other data are saved as it is only caching.</p>
+
+<h1 id="external-services-and-tools">External Services and Tools</h1>
+
+<p>For thread reader I only use a few external services:</p>
+
+<ul>
+<li><a href="https://www.mailgun.com/">Mail Gun</a> to send emails: I chose them because the registration was the most straight forward and the pricing competitive.</li>
+<li><a href="https://stripe.com">Stripe</a> to allow people to pay by Credit Card: They are the best for developers for sure.</li>
+<li>Paypal so people can pay without giving any bank info: It is widely used even if it is a pain for developers.</li>
+<li>Google Analytics and Google AdSense for analytics and ads.</li>
+</ul>
+
+<h2 id="support-and-twitter-ecosystem">Support and Twitter ecosystem</h2>
+
+<p>I use services to keep in touch with my users on Twitter:<br />
+I did use <a href="https://tweetdeck.twitter.com/">Tweetdeck</a> 
+but I changed to (the ugly) <a href="https://hootsuite.com/">Hootsuite</a> recently 
+as they allow to see your DM inbox separately of the outbox.
+This is very important because I use the same account for the support and the bot (it sends thousands of DM by day).</p>
+
+<p>Most of the support is done by Twitter and email (inbox by Gmail setup with custom domain).</p>
+
+<h2 id="development-software-and-services">Development Software and Services</h2>
+
+<p>I have a private <a href="https://github.com">Github</a> repository for the code, 
+I use the issue tracking and the project view to keep my TODOs.
+I use github for deployment too, <code>master</code> is clean and get pulled on production every 5 minutes.</p>
+
+<p>For big updates that need a database change I jump on the server and do the necessary manually. 
+This is very rare as the service is quite well-structured now.</p>
+
+<p>To connect to my database I use <a href="https://www.sequelpro.com/">Sequel Pro</a> via SSH, 
+it has some custom options to plays nicely with the database (like not requesting full blobs etc).</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>As you can see nothing fancy, it is good old technology.<br />
+Boring working stuff.</p>
+
+<p>I made a bunch of shell scripts to interact with Twitter API, but in general I am not in favor of making my own tools.</p>
+
+<p>What I like in this setup is the performance: I get to handle 1000 people/minutes without to worry about anything,
+I'm quite sure it can go up to 5000 before showing any sign of slowness.</p>
+
+<p>All this for US$30/month</p>
+
+<p><strong>
+    Learn more about Thread Reader story in <a href="/posts/category/threadreader">the whole blog post series</a>.
+</strong></p>
+]]></content>
+    </entry>
+        <entry>
+        <title type="html"><![CDATA[Thread Reader follow up: Daily Life of a Solo Maker]]></title>
+        <link href="/2018/04/09/thread-reader-follow-up-6-months"/>
+        <updated>2018-04-09T00:00:00+00:00</updated>
+        <id>/2018/04/09/thread-reader-follow-up-6-months</id>
+        <content type="html"><![CDATA[<p><strong>Note: This project has been acquired in 2018, I'm no longer the owner of ThreadReaderApp</strong></p>
+
+<p><em>This is a follow up of my experiment with Thread Reader,
+for more context <a href="/2017/09/12/thread-reader-from-idea-to-launch">read the first part here</a>
+<a href="/2017/09/12/thread-reader-from-idea-to-launch">and the second part here</a></em></p>
+
+<h1 id="solo-maker">Solo Maker</h1>
+
+<p><strong>Definition:</strong> <em>A solo maker for me is a person that is working full time on his own project and get most of its revenues from it.</em></p>
+
+<p>So a few months ago I decided to work full time on my own.</p>
+
+<p>To be honest, I've always had trouble getting motivated to work for some other service or product than my own projects.
+And today I feel confident that I can figure it out and get enough money out of my work.</p>
+
+<p>At that time Thread Reader was still very small and it was not the reason why I wanted to stop the usual office work.
+But still it help as I had some hopes about it.</p>
+
+<h2 id="so-what-is-a-typical-day-for-me%3F">So what is a typical day for me?</h2>
+
+<p>First I wake up at 7.50am, I'm a morning person and get work done easily in the morning.
+Plus as you may know I live in Vancouver, Canada 
+so regarding time zones it is best for me to wake up early to answer to people, 
+otherwise they could think I'm not responsive.</p>
+
+<p>As you can deduce, I spend quite some time on user support. 
+I get plenty of Direct Message on Twitter about Thread Reader:
+it is mostly questions about how it works, bug reports, requests for new features... picture of dogs... 🐶</p>
+
+<p>I try my best to listen to my users and identify pain points.<br />
+I also spend some time to read my Twitter timeline to see what's up on Thread Reader, and reply if it makes sense.</p>
+
+<p>The goal here is to make people understand that I am a real person and that I do care about their problems.</p>
+
+<p>Then I check my TODO list for Thread Reader: I always have some bug to fix or small improvements.
+Most of the time I also have a bigger feature undergoing (last one was search and took 2 weeks).</p>
+
+<p>On the side, I have other little projects not related to Thread Reader,
+mostly because I have to make some more money in case something goes wrong (in any kind of way) 
+but also to keep practicing with other technologies.</p>
+
+<p>My biggest fear is that Twitter block/prevent Thread Reader to work.
+It could be because of an update of their API for example, plenty of Apps already had to stop because of this.</p>
+
+<h1 id="features">Features</h1>
+
+<p>This is a list of the existing feature on Thread Reader as well as tests that failed and my feelings about it.</p>
+
+<h2 id="the-one-that-are-still-here">The one that are still here</h2>
+
+<p><strong>Unroll/bot:</strong></p>
+
+<p>The core of the App and works quite well now. It has some trouble to get old Thread because Twitter API does not allow it. 
+Historically the bot has been blocked by twitter because they considered it too spammy. 
+I had to change a few things and now it seems to be ok.</p>
+
+<p><strong>Alerts/Subscriptions:</strong></p>
+
+<p>Alerts allows people to subscribe to the unroll of a given author. 
+This was to get people back on the website and it works very well. People love it. 
+I added Twitter DM alerts for my Premium user 
+(it is not possible to do it for everyone anyway because of some Twitter limitations regarding DM volume)</p>
+
+<p><strong>Archive:</strong></p>
+
+<p>On Thread Reader you can ask a PDF archive for a given unroll so you can save it to your computer.
+It is with this feature that I introduced Premium plan for the first time. 
+I personally think that these PDFs are awesome and very useful to save piece of information.</p>
+
+<p><strong>Account page:</strong></p>
+
+<p>When I introduced the first premium feature I had to create a private user profile so people can get their PDF.
+I used that page to add other information like the list of every unroll they asked the bot, the subscriptions and more.</p>
+
+<p><strong>Search:</strong></p>
+
+<p>After sometime I realize that it was quite hard to have a homepage that could satisfy everyone. 
+Some are more interested in politics and other in technology etc.
+So I decided to add a search feature, and made it the primary way to find content on the site. 
+It is quite powerful but you must be premium to access all the options.</p>
+
+<p><strong>Read later:</strong></p>
+
+<p>You can add any unroll to your private dashboard to find/read it later. 
+I did not monitor anything about this one because I'm using it personally and I will not remove it anyway!</p>
+
+<h2 id="the-failed-experiments">The failed experiments</h2>
+
+<p><strong>Home page selection:</strong></p>
+
+<p>I tried to make a homepage that could satisfy everybody but it did not make much sense.
+This has been replaced by the search based homepage. The homepage still have a few selected content mostly for Google.</p>
+
+<p><strong>Storify importer:</strong></p>
+
+<p>Storify was closing and I thought it would be nice to allow people to migrate their content to Thread Reader.
+I tried to build a Storify importer but their content was way too heterogeneous (not having only tweets).
+I was too confusing, only 5 persons try to use it.</p>
+
+<p><strong>News aggregator:</strong></p>
+
+<p>At some point I was thinking that Thread Reader could aggregate some news websites (from their Twitter accounts) 
+so you would have an overview of news. I was very happy with that feature and I personally used it every day. 
+But in the end, real user did not.<br />
+I removed it from the website to keep the focus on Threads. I may retry this some day!</p>
+
+<p><strong>Public page:</strong></p>
+
+<p>I thought that user would want to have a public page and pin a selection of their favorite threads on it.<br />
+As always I try to ask people first and see the reaction.<br />
+I did a <a href="https://twitter.com/threadreaderapp/status/976234284288626689">Twitter poll</a> 
+and got more than 60% of people saying that they could use it. 
+To day only 5 peoples use it (including me). It will be removed in the near future.</p>
+
+<h2 id="most-asked-feature">Most asked feature</h2>
+
+<p>The most asked feature is to be able to unroll a thread with multiple authors (replies or comment, call it the way you want).</p>
+
+<p>Problem is: it is not possible.<br />
+Twitter does not have a way to get replies for a given Tweet! 
+To be honest, even the actual basic unroll of one author is already a quite dirty trick.<br />
+Also, that would mean that sometime the thread will split in two or more parts. 
+Very hard to design a good interface for it.</p>
+
+<h1 id="branding">Branding</h1>
+
+<p>Quite early in the life of Thread Reader I could see some traction. 
+And the project scope changed from an experimentation to some more serious website.</p>
+
+<p>So the name I came with and the design I did myself in the beginning were quite wrong.</p>
+
+<p>It was <a href="https://tttthreads.com">tttthreads.com</a> and <code>@tttthreads</code></p>
+
+<p>For the name people were very confuse about how many <b>t</b>' you needed
+and how to pronounce it to talk about it with their friends.</p>
+
+<p>I remembered some advice from a respectable person, and he always told me: 
+<i>"if you have to choose a name, make it say what the product do."</i></p>
+
+<p><u>Thread Reader App</u> was born.</p>
+
+<p>The design has been revisited by a real designer, 
+the previous one was a little more catchy for sure but totally ugly too.</p>
+
+<div class="bs-callout bs-callout-info bs-callout-desc" style="text-align:center">
+    <img src="/images/writing/threadreader/evolution-thumb.jpg" />
+</div>
+
+<h1 id="money">Money</h1>
+
+<h2 id="premium">Premium</h2>
+
+<p>Let's talk about the important stuff: Money.</p>
+
+<p>Thread Reader has premium membership. It was a three steps move.</p>
+
+<ul>
+<li>First I put Paypal donation on the website: I started to receive some money.</li>
+<li>Second I added some premium feature (PDF Archive), you had to pay $20/year by credit card: people paid a little.</li>
+<li>Third I run the number and decided to update the pricing: $30/year or $3/month (with more Premium feature too)</li>
+</ul>
+
+<p>Today my users can pay via Credit Card, Paypal or Patreon.
+Surprisingly or not, Paypal is the most used provider, something like 75%!
+Followed by... Patreon and only after that Credit Card.</p>
+
+<p>I guess Credit Card payment still have a bad press on the internet.</p>
+
+<p>As today: Monday, April the 9th I have 284 premium users.
+Most of them choose the yearly payment (thus saving 2 months)</p>
+
+<h2 id="other-source-of-income">Other source of income</h2>
+
+<p>I have some Google Ads running on the website, these are very dependent of the traffic.<br />
+It goes from $5 to $50 per day.</p>
+
+<h2 id="expenses">Expenses</h2>
+
+<p>I subscribed to some services to help me manage all my TODO and support, it is about $30/month.<br />
+The server is around $50/month and the most expensive thing is sending email alerts: it varies from $50 to $100/month.</p>
+
+<h2 id="total">Total</h2>
+
+<p>As today, I can live out of Thread Reader but it is not stable enough for me to be serene. 
+I am thinking about other ways to get money and stabilize the whole thing.</p>
+
+<p>That is why I'm looking for some monthly sponsorship: if you are interested <a href="https://www.patreon.com/posts/april-18-search-17951520">read more here</a>.</p>
+
+<h1 id="metrics">Metrics</h1>
+
+<h2 id="traffic">Traffic</h2>
+
+<p>From the start, the website have seen 2.6 millions users and displayed 6.6 millions pages.</p>
+
+<div class="bs-callout bs-callout-info bs-callout-desc" style="text-align:center">
+    <img src="/images/writing/threadreader/full-metrics.png" />
+</div>
+
+<p>Thread Reader is a service working on top of Twitter so it is by definition very social.
+Someday nothing much happen, but all of a sudden out of nowhere: 
+800 persons/minutes goes on the website to read some buzzing content!</p>
+
+<p>These days I'm very happy but in return I have a lot of support to do from newcomers.</p>
+
+<h2 id="social">Social</h2>
+
+<p>On the social side <code>@ThreadReaderApp</code> which is the bot 
+but also an account that I manage by hand from time to time has 20k followers and posted 50k+ status 
+(mostly automated ones for sure!)</p>
+
+<p>Everything is increasing linearly but that does not matter I don't need an exponential growth.</p>
+
+<div class="bs-callout bs-callout-info bs-callout-desc" style="text-align:center">
+    <img src="/images/writing/threadreader/twitter-20k.png" />
+</div>
+
+<h2 id="internals">Internals</h2>
+
+<p>These are some raw numbers (April 9th 2018) that does not always mean anything:</p>
+
+<ul>
+<li>Free accounts: 5100</li>
+<li>Archive: 4500</li>
+<li>Mention to the bot: 76K</li>
+<li>Unrolled Thread: 40K</li>
+<li>User with one subscription or more: 4500</li>
+</ul>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p><strong>What now?</strong></p>
+
+<p>When I started this project a few months ago I did not think it will grow so big,
+today as a solo maker I feel great, but still I have to work hard and make everything more sustainable.</p>
+
+<p>My next step will be to find a monthly sponsorship and drop the Google Ads in return.</p>
+
+<p>If you are interested in a month-to-month reporting 
+you can check my updates on <a href="https://www.patreon.com/ThreadReaderApp/posts">Patreon.com</a>.<br />
+If you liked this post you can support me there too!</p>
+
+<p><strong>
+    Learn more about Thread Reader story in <a href="/posts/category/threadreader">the whole blog post series</a>.
+</strong></p>
+]]></content>
+    </entry>
+        <entry>
+        <title type="html"><![CDATA[Thread Reader use case: From Launch to Traction]]></title>
+        <link href="/2017/10/20/thread-reader-from-lauch-to-traction"/>
+        <updated>2017-10-20T00:00:00+00:00</updated>
+        <id>/2017/10/20/thread-reader-from-lauch-to-traction</id>
+        <content type="html"><![CDATA[<p><strong>Note: This project has been acquired in 2018, I'm no longer the owner of ThreadReaderApp</strong></p>
+
+<p><em>For more context <a href="/2017/09/12/thread-reader-from-idea-to-launch">read the first part here</a></em></p>
+
+<p><strong>Time to Launch!</strong></p>
+
+<h1 id="launching">Launching</h1>
+
+<p>I was quite naive on this one, I read through some blog post 
+and I thought that you can/should show your product on a few major websites and hopefully get some interest.</p>
+
+<p>So that is what I did, I prepared different messages to talk about my project on each platform, 
+each message was quite polished and adapted to the given public and then I posted it. 
+I was monitoring these posts to see if it would get some traction but… not much happened.</p>
+
+<p>I started with <a href="https://www.producthunt.com/posts/thread-reader">Product Hunt</a> (6 September) 
+I was quite sad to get only 65 up-votes (but that would be my best score overall)
+At the end of the week I did not get much traffic coming through.</p>
+
+<p>Then I tried <a href="https://news.ycombinator.com/item?id=15227530">Hacker News</a> 
+with little success too (haha “little” = 1 point) (12 September)</p>
+
+<p>Even if my expectation at this time were very low, I attempted <a href="https://www.reddit.com/r/SideProject/comments/71rr7s/a_tool_for_twitter_unroll_threadstweetstorms_for/">Reddit on /r/SideProject</a> 
+and got nothing (22 September)</p>
+
+<p>These are the stats for that launch, be careful it is very misleading</p>
+
+<div class="bs-callout bs-callout-info bs-callout-desc" style="text-align:center">
+    <img src="/images/writing/tttthreads/launch_results.png" />
+</div>
+
+<p>As I said, each of theses “communication” tries did not get me any relevant visits.<br />
+The peak you can see for Product Hunt is not related to PH, Hacker News drove nothing 
+and Reddit less than nothing (maybe something like 100 visits).</p>
+
+<p>Thread Reader also got a little press coverage, but it did not help much
+<a href="https://lifehacker.com/thread-reader-reformats-tweetstorms-into-text-essays-1798630765">lifehacker.com/thread-reader-reformats-tweetstorms-into-text-essays</a></p>
+
+<p>Of course all these links that talk about the service are great as they allow a better discoverability of the tool, 
+but the real peaks come from another type of traffic: influencers.</p>
+
+<p>Let’s check that.</p>
+
+<h1 id="get-traction">Get traction</h1>
+
+<p>So I guess you saw that spike between Hacker News and Reddit? 
+More than 10K Users that day! 🔥🔥🔥</p>
+
+<div class="bs-callout bs-callout-info bs-callout-desc" style="text-align:center">
+    <img src="/images/writing/tttthreads/real_time_up.gif">
+</div>
+
+<p>On that day I went to almost 400 users live, but I was worried about the server and did not take time to get a capture. 
+In the end the server was ok, everything is very well cached.</p>
+
+<p>Thread Reader as you can imagine is deeply social, and so it is a perfect candidate for buzz of all kind.<br />
+I did not look for any influencers in particular, some just decided to use the product and tweeted the given link to their audience 
+(for me an influencer is someone with 10K followers or more).</p>
+
+<p>The first peak, at the same time of Product Hunt, was a French guy with 300K followers, 
+and I had a combo here as one of his friend with 200K retweeted him with the link. Big time!</p>
+
+<p>The second major peak a few days after Hacker News was a Russian woman with “only” 11K followers, 
+but she wrote a massive Tweet Story of 500+ tweets and the content was very good quality. 
+People RT this like crazy and I still got many visits even today going to the site to read that story.</p>
+
+<p>Now, from time to time, I get a random peak coming from anyplace at anytime.<br />
+Last was from Spain!</p>
+
+<p>So this is how I got some traction, influencers and good content.</p>
+
+<div class="bs-callout bs-callout-info bs-callout-desc" style="text-align:center">
+    <img src="/images/writing/tttthreads/stats-global.png">
+</div>
+
+<h1 id="money">Money</h1>
+
+<h2 id="costs">Costs</h2>
+
+<p>Let be transparent.</p>
+
+<p>The server is in France and cost me 5 euros/month. 
+That is quite cheap, but we have a good internet ecosystem there.<br />
+In addition to that, I spent a month full time to develop Thread Reader and now 
+I will say I take one hour every day to answer support questions and fix bugs or add small features.</p>
+
+<p>As a freelancer in France I would ask for US$ 500 per day, 
+so this project would have been about 12K including a month of support (this estimate is quite opinionated for sure).</p>
+
+<h2 id="gains">Gains</h2>
+
+<p><strong>Donation</strong><br />
+I did not plan to make big money with that project, at the beginning I did not include any way to give me money. 
+At some point I got inspired by another website and started to ask for PayPal donation. 
+The very same day I received a first donation of US$10 I was so excited, 
+to be honest I never imagined that people will donate.</p>
+
+<p>Donations today sum up to US$180, people give around $8.<br />
+To put that in perspective, lifetime unique users so far are about 130K so that is $0.001/user</p>
+
+<p><strong>Crypto Mining experiment</strong><br />
+At the time Thread Reader went live, a new service started, it is a crypto miner named <a href="https://coinhive.com/">CoinHive</a>. 
+The idea is that a script run on my website doing some work on the computer of the user and 
+I get some crypto coins in exchange (very simplified here).<br />
+I was very intrigued by the concept and I thought it was worth the try.<br />
+Of course, I did not implement it as most of the bad guys would do: in Thread Reader 
+I warn the user with a message explaining what is going on, 
+and the miner would start only if the user is on a desktop computer that is not running on battery. 
+Also, I decided to use only 40% of the free computer resources of the user 
+and of course they can opt out very easily straight on the website.</p>
+
+<div class="bs-callout bs-callout-info bs-callout-desc" style="text-align:center">
+    <img src="/images/writing/tttthreads/chmessage.png">
+</div>
+
+<p>The result is not very lucrative, I mean I don’t have that much traffic, and they don’t pay much either, 
+so I gained 0.25 XMR so far worth about 22US$ (not paid yet)</p>
+
+<div class="bs-callout bs-callout-info bs-callout-desc" style="text-align:center">
+    <img src="/images/writing/tttthreads/mining_report.png">
+</div>
+
+<p>I will stop that experiment soon, also it is important to note that multiple anti-virus 
+consider that as Malware (it is not but it has been abused as it) so I did get few criticisms about it.</p>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p><strong>What now?</strong></p>
+
+<p>This project is a good excuse to build a lot of small tools to help it spread, so I made a <a href="https://chrome.google.com/webstore/detail/thread-reader/kpdlflboeofkdonnljbeoonbglonpgdh">Google Chrome extension</a> 
+that allows access to Thread Reader straight in Twitter.com, also an <a href="https://play.google.com/store/apps/details?id=com.citroon.threadreader">Android micro app</a> 
+that leverage the share feature of the Twitter app and Android.</p>
+
+<div class="bs-callout bs-callout-info bs-callout-desc" style="text-align:center">
+    <img src="/images/writing/tttthreads/ext-android.png">
+</div>
+
+<p>I also experimented things, like an <a href="http://www.nopackagedeals.com/2017/10/11/1300-lies/">embed version</a>, 
+it was a feature request and technically interesting to build, so I made it.<br />
+But I also tested other things likes <a href="http://tttthreads.com/story/create">stories</a> 
+and <a href="http://tttthreads.com/news/cps7l7j4">news stories</a> but it did not get much traction.</p>
+
+<p>Because the feedback loop I get with these tools is very fast (it is easy to try new things) 
+and thanks to the people that are very supportive and genuinely interested, 
+I’m going to keep working on that service something like an hour a day for user support and bug fix.</p>
+
+<p>I want to dedicate that blog post to my most supportive users (that would be human support not necessarily money), alphabetically:</p>
+
+<ul>
+<li><a href="https://twitter.com/alphyna">@alphyna</a></li>
+<li><a href="https://twitter.com/edaross">@edaross</a></li>
+<li><a href="https://twitter.com/kausikdatta22">@kausikdatta22</a></li>
+<li><a href="https://twitter.com/loriaustex">@loriaustex</a></li>
+</ul>
+
+<p><strong>
+    Learn more about Thread Reader story in <a href="/posts/category/threadreader">the whole blog post series</a>.
+</strong></p>
 ]]></content>
     </entry>
     </feed>
