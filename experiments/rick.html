@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width">
+  <meta http-equiv="cleartype" content="on">
+  <style type="text/css">
+  </style>
+</head>
+<body>
+  <div id="container">
+    <a href="#" id="action">Click to continue</a>
+  </div>
+  <img id="image" style="display:none" src="rick.gif">
+  <div style="display:none">
+    <audio controls="controls" style="display:none" id="audio" preload loop>
+      <source src="rick.mp3" type="audio/mpeg" />
+    </audio>
+  </div>
+  <script>
+    document.getElementById('action').onclick = function() {
+    document.getElementById('audio').play();
+    document.getElementById('image').style.display = 'block';
+    document.getElementById('action').style.display = 'none';
+    }
+  </script>
+</body>
+</html>

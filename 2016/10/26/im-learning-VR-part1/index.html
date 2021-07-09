@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Learning VR (part 1) - Jérôme Gangneux</title>
+                <meta name="description" content="Finally the result is nice but not as I had in mind because of a limitation coming from the Daydream platform...">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="Finally the result is nice but not as I had in mind because of a limitation coming from the Daydream platform...">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2016/10/26/im-learning-VR-part1" />
+        <meta property="og:title" content="Learning VR (part 1) - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/vr/part1-cover.png" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+            <div class="text-5xl font-semibold tracking-tight leading-none mb-12">
+                <a href="/">Jérôme Gangneux</a>
+                                :: Projects
+                            </div>
+            <div id="main-menu" class="mt-4">
+                <div class="flex sm:text-xl text-base flex-wrap">
+                                                            <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Projects</a>
+                    <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Art</a>
+                    <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Blog</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <style>#site-header { display: none; }</style>
+<nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>Learning VR (part 1)</h1>
+        <p>October 26, 2016</p>
+    </header>
+    <section class="main">
+        <h2 id="introduction">Introduction</h2>
+
+<p>I want to learn VR, mainly because I think there is something going on,
+I have a big project in my head and I will use it to learn VR: <a href="/2016/10/22/im-learning-VR-intro">check my previous post</a></p>
+
+<h2 id="what-i-managed-to-do">What I managed to do</h2>
+
+<h3 id="installation-and-hardware">Installation and hardware</h3>
+
+<p>The installation of Daydream by Google has been quite easy,
+but the documentation is already obsolete and you will have to adapt things here and there.</p>
+
+<p>Regarding the hardware part, I bought a Nexus 6P phone for the headset
+and I have a Nexus 5 that I use for the remote.
+I already had a Cardboard (in plastic) and I use my Bluetooth keyboard for this experiment.</p>
+
+<table style="text-align:center;width:100%" valign="center">
+<tr><td>
+<img src="/images/vr/part1/cardboard.jpg" style="max-width:50%;width:50%"><br>Cardboard
+</td><td>
+<img src="/images/vr/part1/keyboard.jpg" style="max-width:50%;width:50%"><br>Keyboard
+</td></tr>
+</table>
+
+<h3 id="learning">Learning</h3>
+
+<p>I watched a few video to learn the basic with Blender and to be able to create a Keyboard in 3D,
+it was quite easy because I limited myself to basic cube for each key.
+Then named each keys with the name used in Unity, so I can access it easily in Unity Script (C#).</p>
+
+<p>For the other point, I will learn on the go.</p>
+
+<h2 id="progress">Progress</h2>
+
+<p>I started with the demo from Google, so I did not have to create a new scene from scratch,
+the remote worked quickly and I could move the cube from the demo.</p>
+
+<p>Then I integrated the 3D models from Blender, "Snowman" and "Rabbit" that I had created in the video tutorials,
+I added that was needed in the code, so I can move these objects too. Fun.</p>
+
+<p>I also added a block to symbolize the remote - Nexus 5 - so it was now physically present in the scene
+(because in the basic Google demo there is only the pointer) and I code a little so the block moved on the 3 axes.</p>
+
+<p>Eventually I imported the full 3D Keyboard in Unity and added a text field in the scene.
+After some time looking at the documentation of Unity (not easy to find on that topic)
+I succeed to get the events for each key, and so I could add a visual feedback on the 3D model:
+when you push a key from the real keyboard, the virtual one reacts.</p>
+
+<p><img src="/images/vr/part1/keyboard-blender-p1.png" style="max-width:100%"></p>
+
+<p>Finally, the result is nice but not as I had in mind
+because of a limitation coming from the Daydream platform.</p>
+
+<h2 id="what-i-learn">What I learn</h2>
+
+<p>Unfortunately I arrived to a limitation of the Daydream platform (in the way I use it):
+tracking of the position in space is not possible.
+If the user moves, or if he moves the remote in space,
+it is not possible to get those positions in the virtual environment.
+For this to be possible, we need externals trackers like the Vive use for example.
+It is a well known limitation that I forgot.</p>
+
+<p><img src="/images/vr/part1/scene-unity-p1.png" style="max-width:100%"></p>
+
+<h2 id="step-by-step">Step by step</h2>
+
+<p>The second step will be to have a working web browser
+and use the keyboard and the remote to surf the web.</p>
+
+<p>I will experiment with a wiimote (trying to connect it first)
+and also I want to get a live video stream to do a feedback screen from the real world.</p>
+
+<h2 id="screenshot">Screenshot</h2>
+
+<p><img src="/images/vr/part1/final-p1.png" style="max-width:100%"></p>
+
+<p>Unfortunately I did not found a way to get a video of the app,
+most of the capturing apps do not work with VR on.
+On this screen you can see the keyboard with no key pressed.
+The keys do not have texture (lazy me), the key change to orange when you use it.
+On the right the remote and in the back the pointer (orange).
+There is also a floating screen with the text you enter with the keyboard.</p>
+
+    </section>
+    <footer class="pt-10">
+            </footer>
+    </article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+        <p class="text-right" style="opacity: 0.5;">
+            contact: jerome@gangneux.net
+        </p>
+    </footer>
+
+            </body>
+</html>

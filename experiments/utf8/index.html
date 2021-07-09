@@ -1,0 +1,74 @@
+<html>
+  <head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>UTF8 DANCE - v0.1</title>
+	<style type="text/css">
+	  @font-face {
+	  font-family: 'Code2000';
+	  src: url('code2000.eot');
+	  src: url('code2000.eot?#iefix') format('embedded-opentype'),
+	  url('code2000.woff') format('woff'),
+	  url('code2000.ttf') format('truetype'),
+	  url('code2000.svg#code2000') format('svg');
+	  font-weight: normal;
+	  font-style: normal;
+	  }
+      html, body { overflow: hidden; color: white; background: black; font-family: Arial, sans-serif; }
+      * { padding: 0; margin: 0; }
+      div#main { font-family: 'Code2000', Arial, sans-serif; 
+      font-size: 180px;
+      font-weight: bold;
+      text-align: center;
+      background: #ff7f7f;
+      height: 100%;
+      padding-top: 10%;
+      }
+      small#info {
+      text-transform: uppercase;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 10;
+      }
+      a {
+      color: white;
+      opacity: 0.75;
+      position: absolute;
+      z-index: 9;
+      bottom: 10px;
+      left: 10px;
+      display: block;
+      }
+	</style>
+    
+  </head>
+  <body>
+    <!--
+        In v0.2 we need to remove range of undefined glyph
+        plus loop when the end of UTF8 is reached
+        plus add a % loader for the font loading
+        plus add transition in background color?
+      -->
+    <small id="info"></small>
+    <a href="https://vimeo.com/48858289" id="link">inspiration from this video: https://vimeo.com/48858289</a>
+    <div id="main"></div>
+    <script>
+var color_list = ['ff7f9a','ff7fee','c47fff','7f91ff','7fd6ff','7fffeb','7fffa6','c1ff7f','faff7f','ffaf7f','ff7f7f'];
+var color = 0;
+var code  = 33;
+var start = function() {
+setInterval(function() {
+    code++;
+    d = String.fromCharCode(code)
+    if (code % 500 == 0) {
+        document.getElementById('main').style.backgroundColor = '#' + color_list[color % color_list.length];
+        color++;
+    }
+    document.getElementById('main').innerHTML = d;
+    document.getElementById('info').innerHTML = code.toString(16);
+}, 110);
+}
+start();
+    </script>
+  </body>
+</html>

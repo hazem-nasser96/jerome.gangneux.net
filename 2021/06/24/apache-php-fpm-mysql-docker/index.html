@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Apache + PHP FPM + Mysql with docker - Jérôme Gangneux</title>
+                <meta name="description" content="It was about time, I decided to update my stack and use docker on my servers. Let&#039;s see how I built my LAMP stack with Docker (should we say DAMP?)">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="It was about time, I decided to update my stack and use docker on my servers. Let&#039;s see how I built my LAMP stack with Docker (should we say DAMP?)">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2021/06/24/apache-php-fpm-mysql-docker" />
+        <meta property="og:title" content="Apache + PHP FPM + Mysql with docker - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/writing/ia-docker-php.jpg" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+            <div class="text-5xl font-semibold tracking-tight leading-none mb-12">
+                <a href="/">Jérôme Gangneux</a>
+                                :: Projects
+                            </div>
+            <div id="main-menu" class="mt-4">
+                <div class="flex sm:text-xl text-base flex-wrap">
+                                                            <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Projects</a>
+                    <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Art</a>
+                    <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Blog</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <style>#site-header { display: none; }</style>
+<nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>Apache + PHP FPM + Mysql with docker</h1>
+        <p>June 24, 2021</p>
+    </header>
+    <section class="main">
+        <h1 id="introduction">Introduction</h1>
+
+<p>It was about time, I decided to update my stack and use docker on my servers.</p>
+
+<p>For the ones that follows me I usually prefer to set up a bare metal server with Debian Apache PHP and MySQL installed on it.<br />
+My excuses — if I even need some — were a mix between performances and simplicity.</p>
+
+<p>But today I'm experimenting with multiple small projects, and they all are on the same server.
+It's still a bare metal server, and I'm not — yet — changing this for a cloud provider, we can talk about this in another blog post.</p>
+
+<p>Multiple projects with a single server can lead to some incompatible dependencies,
+in my specific scenario I need some PHP extension that is obsolete and works only with older PHP version, but I don't want to carry this limitation to all my projects.</p>
+
+<p>Why Apache and not Nginx? <a href="https://youtu.be/-rmf5EqJVDw?t=16">No reason &copy;</a>.</p>
+
+<p>Let's see how I built my LAMP stack with Docker (should we say DAMP?)</p>
+
+<h1 id="php">PHP</h1>
+
+<p>I used the <code>php:7.4-fpm</code> base image and added some extensions, those vary depending on the current project.</p>
+
+<p>I added composer because it's always handy to have it there, plus, and this may be up for discussion, I added NodeJS + PM2 in this image too.</p>
+
+<p>Node is often needed for the front end (compiling asset and such) and I did not want the complexity of another image (but I'm open for comment/PR on this one)
+as well as <a href="pm2.keymetrics.io/">PM2</a> that I use for my background scripts. 
+For example like this: <code>pm2 start --name php_messenger_consume php -- bin/console -n messenger:consume async --limit=10 --memory-limit=128M --time-limit=3600</code></p>
+
+<p>It's very handy to have it on the same image as PHP, and does not look even possible otherwise (let me know in the comments).</p>
+
+<p><code class="filepath">file:///docker/php/Dockerfile</code></p>
+
+<pre><code class="language-dockerfile">
+FROM php:7.4-fpm
+
+# PHP and related
+RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
+        locales \
+        apt-utils \
+        git \
+        g++ \
+        libicu-dev \
+        libpng-dev \
+        libxml2-dev \
+        libzip-dev \
+        libonig-dev \
+        libxslt-dev \
+        unzip \
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+    &amp;&amp; docker-php-ext-configure gd --with-freetype --with-jpeg \
+    &amp;&amp; docker-php-ext-configure intl \
+    &amp;&amp; docker-php-ext-install \
+        pdo \
+        pdo_mysql \
+        opcache \
+        intl \
+        zip \
+        calendar \
+        dom \
+        mbstring \
+        gd \
+        xsl \
+    &amp;&amp; pecl install apcu \
+    &amp;&amp; docker-php-ext-enable apcu \
+\
+    &amp;&amp;  curl -sS https://getcomposer.org/installer | php -- \
+    &amp;&amp;  mv composer.phar /usr/local/bin/composer
+
+RUN mv &quot;$PHP_INI_DIR/php.ini-production&quot; &quot;$PHP_INI_DIR/php.ini&quot;
+
+# Node 14 and related
+RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
+    &amp;&amp; apt-get install -y --no-install-recommends nodejs \
+    &amp;&amp; npm install pm2@5.0 -g \
+    &amp;&amp; pm2 install pm2-logrotate \
+    &amp;&amp; pm2 set pm2-logrotate:compress true
+
+</code></pre>
+
+<h1 id="apache">Apache</h1>
+
+<p>This on is a bit more tricky.</p>
+
+<p>First on my production server I won't use it, the server will have a real Apache with vhosts configured properly forwarding to each different projects.
+Those final vhosts will look similar to the one below that I use in the development image.</p>
+
+<p>So for the dev env (hence the <code>docker-compose-dev.yml</code> coming up below) it will have Apache.</p>
+
+<p>The goal is to redirect the query that hit the server to PHP FPM.</p>
+
+<p>For this, I first tried to use the base image <code>httpd:2.4</code> it seemed logic to me but for some reason I never succeeded to make it work, (have you? PR welcome).
+I ended up using a debian base <code>debian:buster-slim</code> and installed Apache on my own (probably not optimal, but we are on a dev environment).</p>
+
+<p>It has <em>mod proxy fast CGI</em> and <em>mod rewrite</em> activated as we will use it in our config.</p>
+
+<p><code class="filepath">file:///docker/apache/Dockerfile</code></p>
+
+<pre><code class="language-dockerfile">
+FROM debian:buster-slim
+
+RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
+    apache2 \
+    &amp;&amp; a2enmod proxy_fcgi \
+    &amp;&amp; a2enmod rewrite
+
+CMD /usr/sbin/apache2ctl -D FOREGROUND
+
+</code></pre>
+
+<h1 id="mysql">MySQL</h1>
+
+<p>I'm using the base image <code>mysql</code> with some options like <code>MYSQL_ALLOW_EMPTY_PASSWORD</code> and <code>cap_add: SYS_NICE</code>. 
+The later prevent the error message "mbind: Operation not permitted" as seen on <a href="https://stackoverflow.com/a/55706057/696517">stackoverflow.com</a></p>
+
+<h1 id="connecting-everything-together">Connecting everything together</h1>
+
+<p>The idea now it to put everything together:</p>
+
+<ul>
+<li>Apache will be exposed to some port and redirect requests to PHP-FPM.</li>
+<li>PHP will be able to connect to the database.</li>
+<li>And also we can use PHP as a command line on our server to execute PHP commands.</li>
+</ul>
+
+<p>I added comments on the file directly, so you have the context.</p>
+
+<p><small>Note: the name of the project is "bookmark" in this example</small></p>
+
+<h2 id="production">Production</h2>
+
+<p><code class="filepath">file:///docker-compose.yml</code></p>
+
+<pre><code class="language-yaml">
+version: &quot;3.3&quot;
+services:
+
+    database:
+        image: mysql
+        container_name: bookmark_mysql
+        restart: always
+        # We set up a docker volume to store our database data
+        volumes:
+            - bookmark-mysql-data:/var/lib/mysql
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: &quot;yes&quot;
+        networks:
+            - bookmark-network
+        # This option fix the &quot;mbind: Operation not permitted&quot; error that pops in the logs
+        # https://stackoverflow.com/a/55706057/696517
+        cap_add:
+            - SYS_NICE
+
+    php:
+        # Comes from the Dockerfile we talked about earlier
+        build: docker/php
+        container_name: bookmark_php
+        # We will mount our application code in this directory
+        volumes:
+            - ./:/var/www
+        restart: always
+        # Connect this to the common network
+        networks:
+            - bookmark-network
+
+# Common network among all the machines
+networks:
+    bookmark-network:
+
+volumes:
+    bookmark-mysql-data:
+
+</code></pre>
+
+<p>This is the version used in production, so without Apache.</p>
+
+<p>Now the version for local dev</p>
+
+<h2 id="development">Development</h2>
+
+<p>As you probably now, docker-compose config files cascade (like CSS), and we can supersede options
+Again I added comment strait in the file for context.</p>
+
+<p><code class="filepath">file:///docker-compose-dev.yml</code></p>
+
+<pre><code class="language-yaml">
+version: &quot;3.3&quot;
+services:
+
+    database:
+        # For local development I expose the database
+        # Expose port 3306 (mysql default) and bind it to 3307 on the local machine
+        ports:
+          - &quot;3307:3306&quot;
+        # Not auto-restarting the container in local
+        restart: &quot;no&quot;
+
+    # I love this project for dev purpose, I let you check more about it here: https://github.com/maildev/maildev
+    # it&#039;s optional and I won&#039;t go in detail about it now
+    mail:
+        image: maildev/maildev
+        container_name: bookmark_maildev
+        command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+        ports:
+          - &quot;8083:80&quot;
+        restart: &quot;no&quot;
+        networks:
+            - bookmark-network
+
+    php:
+        # Not auto-restarting the container in local
+        restart: &quot;no&quot;
+
+    apache:
+        # For local development I set up an Apache server
+        # It comes from the Dockerfile we talked about earlier
+        build: docker/apache
+        container_name: bookmark_apache
+        # Start after those image
+        depends_on:
+            - php
+            - database
+        # Expose port 80 and bind it to 9001 on the local machine
+        ports:
+            - &quot;9001:80&quot;
+        volumes:
+            # We will mount our application code in this directory
+            - ./:/var/www
+            # This one is to allow us to set up apache vhosts (see below)
+            - ./docker/apache/conf:/etc/apache2/sites-enabled
+        restart: &quot;no&quot;
+        networks:
+            - bookmark-network
+
+</code></pre>
+
+<h2 id="glue-in-between">Glue in between</h2>
+
+<p>Be it in production or development, having apache on the server or in a docker image,
+you know have to redirect web request to PHP FPM</p>
+
+<p>This is done with an Apache config file (here called <code>vhosts.conf</code> for historical reasons)</p>
+
+<p>This config file is similar between a production environment and a dev environment,
+main differences will be explained in inline comments</p>
+
+<p>Note: the base version here is the dev environment.</p>
+
+<p><code class="filepath">file:///apache/conf/vhosts.conf</code></p>
+
+<pre><code class="language-apache">
+ServerName localhost
+# Listening on port 80, I use cloudflare, and they handle the SSL part,
+# otherwise you will need a second similar section for SSL
+&lt;VirtualHost *:80&gt;
+    # Follow important Auth headers
+    SetEnvIfNoCase ^Authorization$ &quot;(.+)&quot; HTTP_AUTHORIZATION=$1
+
+    # Define our app directory
+    DocumentRoot /var/www/public
+
+    # Rule to redirect request to PHP files to our PHP docker image
+    # in production environment you would have to expose the PHP docker image and update the fcgi uri below with the right hostname and port
+    &lt;FilesMatch \.php$&gt;
+        SetHandler proxy:fcgi://php:9000
+    &lt;/FilesMatch&gt;
+
+    # Rules for our main directory
+    &lt;Directory /var/www/public&gt;
+        # Will rewrite requests
+        RewriteEngine On
+
+        # If the request is a file or a directory, skip the rewrite
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+
+        # Remove the index.php from the URL
+        RewriteRule ^(.*)$ index.php [QSA,L]
+
+        # Other quite basic config
+        # see apache doc
+        AllowOverride None
+        Require all granted
+        Allow from All
+        FallbackResource /index.php
+    &lt;/Directory&gt;
+
+    # These are basic configuration option (optional)
+    # see apache doc
+    &lt;Directory /var/www&gt;
+        Options FollowSymlinks
+    &lt;/Directory&gt;
+
+    &lt;Directory /var/www/public/build&gt;
+        DirectoryIndex disabled
+        FallbackResource disabled
+    &lt;/Directory&gt;
+
+    CustomLog /proc/self/fd/1 common
+    ErrorLog /proc/self/fd/2
+
+&lt;/VirtualHost&gt;
+
+</code></pre>
+
+<p><link rel="stylesheet" href="/assets/css/monokai.min.css">
+<script type="text/javascript" src="/assets/js/highlight.min.js"></script>
+<script>hljs.highlightAll();</script></p>
+
+    </section>
+    <footer class="pt-10">
+                    <a href="https://github.com/jrmgx/public/blob/main/2021-06-24-apache-php-fpm-mysql-docker.md">Did you find an error or want to make a change? Open a PR</a><br>
+            <a href="https://github.com/jrmgx/public/issues/2">Follow this link to add a comment on this page</a>
+            </footer>
+    </article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+        <p class="text-right" style="opacity: 0.5;">
+            contact: jerome@gangneux.net
+        </p>
+    </footer>
+
+            </body>
+</html>

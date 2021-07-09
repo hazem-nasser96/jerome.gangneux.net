@@ -1,0 +1,428 @@
+/* DEV */
+#console_log {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    font-family: courier;
+    color: white;
+    background: rgba(0,0,0,0.2);
+    max-height: 30%;
+    overflow-y: auto;
+    width: 100%;
+}
+#console_log.console_small {
+    width: 25px;
+    height: 25px;
+    overflow: hidden;
+    margin: 25px;
+    border-radius: 30px;
+    color: rgba(0,0,0,0);
+    border: red 3px solid;
+    left: auto;
+    right: 0;
+}
+
+/* common */
+html, body, .background, .foreground, section {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    min-width: 100%;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    -webkit-perspective: 500;
+}
+
+section {
+    position: relative;
+    display: none;
+}
+
+section:first-of-type {
+    display: block;
+}
+
+a, a:hover, a:visited {
+    text-decoration: none;
+}
+
+/* webview tricks */
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+:focus {
+    outline: 0;
+    border: none;
+    color: rgba(0, 0, 0, 0);
+}
+
+.please-dont-flick * {
+    -webkit-transform: translate3d(0,0,0);
+    transform: translate3d(0,0,0);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+div, span, a {
+    padding: 0;
+    margin: 0;
+    -webkit-touch-callout: none;
+    touch-callout: none;
+}
+
+div {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/* font face example */
+@font-face {
+    font-family: helsinki;
+    src: url(helsinki.ttf);
+    font-weight: 200;
+}
+
+/* button */
+.button {
+    position: relative;
+    font-size: 30px;
+    display: inline-block;
+    letter-spacing: 1px;
+}
+.button .top,
+.button .bottom {
+    background: #e9db9e;
+    color: white;
+    border-radius: 10px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.button .bottom {
+    background: #b6a86b;
+    z-index: 3;
+    top: 10px;
+}
+.button.clicked .top {
+    top: 8px;
+    -webkit-transition: all .02s linear;
+    transition: all .02s linear;
+}
+
+/* specific */
+
+/* annimation */
+.out {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-name: out;
+    -webkit-animation-duration: 2s;
+}
+
+.in {
+    -webkit-animation-timing-function: ease-out;
+    -webkit-animation-iteration-count: 1;
+    -webkit-animation-name: in;
+    -webkit-animation-duration: 2s;
+}
+
+@-webkit-keyframes out {
+    0% {
+        -webkit-transform: translate3d(0,0,0);
+    }
+    10% {
+        -webkit-transform: translate3d(10px,-20px,70px);
+    }
+    20% {
+        -webkit-transform: translate3d(10px,-20px,70px);
+    }
+    100% {
+        -webkit-transform: translate3d(-200%,-20px,70px);
+    }
+}
+
+@-webkit-keyframes in {
+    0% {
+        -webkit-transform: translate3d(200%,20px,70px);
+    }
+    80% {
+        -webkit-transform: translate3d(10px,20px,70px);
+    }
+    90% {
+        -webkit-transform: translate3d(10px,20px,70px);
+    }
+    100% {
+        -webkit-transform: translate3d(0,0,0);
+    }
+}
+
+body {
+    color: white;
+    background: url(images/bg.png) center center repeat;
+    background-size: cover;
+    font-family: helsinki;
+}
+
+.background {
+    background: 
+        url(images/top_left.png) top left no-repeat,
+        url(images/top_right.png) top right no-repeat,
+        url(images/bottom_right.png) bottom right no-repeat,
+        url(images/bottom_left.png) bottom left no-repeat,
+
+        url(images/top.png) top center no-repeat,
+        url(images/bottom.png) bottom center no-repeat,
+
+        url(images/right.png) center right no-repeat,
+        url(images/left.png) center left no-repeat,
+
+        url(images/bg.png) center center repeat
+    ;
+    background-size: 
+        72px, 72px, 72px, 72px, 
+        100% 60px, 100% 60px,
+        72px 100%, 72px 100%,
+        cover
+    ;
+}
+
+/* colors */
+
+.green .top {
+    background: #96E157;
+}
+.green .bottom {
+    background: #60A52A;
+}
+.blue .top {
+    background: #33D2C5;
+}
+.blue .bottom {
+    background: #24978B;
+}
+.red .top {
+    background: #EF1C09;
+}
+.red .bottom {
+    background: #B40009;
+}
+.lightblue .top {
+    background: #B9EDE9;
+}
+.lightblue .bottom {
+    background: #80B0AD;
+}
+.empty .top, .empty .bottom {
+    background: none;
+}
+.placeholder .top {
+    background: url(images/vide.png) center center no-repeat;
+    background-size: 80%;
+}
+.placeholder .bottom {
+    background: none;
+}
+
+/* menu */
+
+.title {
+    height: 42%;
+    text-align: center;
+    font-size: 70px;
+    padding-top: 20%;
+}
+
+.main_buttons {
+    height: 20%;
+    text-align: center;
+}
+
+.start {
+    font-size: 70px;
+    width: 35%;
+    height: 55%;
+}
+.start .top {
+    width: 100%;
+    height: 100%;
+    padding-top: 5%;
+    box-sizing: border-box;
+}
+.start .bottom {
+    width: 100%;
+    height: 100%;
+}
+
+.rate {
+    width: 26%;
+    height: 40%;
+    margin-top: 8%;
+}
+.rate .top {
+    padding-top: 10px;
+    box-sizing: border-box;
+    font-size: 50px;
+}
+
+.more {
+    height: 18%;
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    font-size: 40px;
+}
+
+/* game */
+
+.top_menu {
+    width: 80%;
+    height: 10%;
+    margin: 8% 10%;
+    box-sizing: border-box;
+}
+
+.top_menu .back, .top_menu .tries_wrapper, .top_menu .time {
+    width: 33%;
+    float: left;
+    font-size: 24px;
+}
+
+.top_menu .back {
+    background: url(images/fleche.png) center left no-repeat;
+    background-size: contain;
+    height: 70px;
+}
+
+.top_menu .tries_wrapper {
+    text-align: center;
+    padding-top: 4%;
+}
+
+.rounds {
+    font-size: 35px;
+    position: relative;
+    top: 3px;
+    left: -5px;
+}
+
+.top_menu .time {
+    text-align: right;
+    padding: 4% 2% 0 0;
+}
+
+.play, .choices {
+    width: 80%;
+    position: absolute;
+    margin: 0 10%;
+}
+
+.play {
+    top: 50%;
+    height: 22%;
+    margin: 0 12%;
+    width: 76%;
+    text-align: center;
+    z-index: 2000;
+}
+
+.play.small {
+    top: 55%;
+}
+
+.play.small .letter {
+    width: 8.5%;
+    height: 20%;
+    margin: 0.6%;
+}
+
+.play.small .letter .top, .play.small .letter .bottom {
+    font-size: 28px;
+    padding-top: 5px;
+}
+
+.play.small .letter .bottom {
+    top: 6px;
+}
+
+.choices {
+    bottom: 2%;
+    z-index: 3000;
+    margin-left: 11.5%;
+    height: 22%;
+}
+
+.letter {
+    width: 15.5%;
+    height: 35%;
+    margin: 0.6%;
+}
+
+.play .letter {
+    margin: 1.6%;
+}
+
+.choices .letter {
+    margin: 1.8%;
+}
+
+.letter .top, .letter .bottom {
+    width: 100%;
+    height: 100%;
+    text-transform: uppercase;
+    font-size: 64px;
+    box-sizing: border-box;
+    font-weight: bold;
+}
+
+.propal {
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-image: url(images/propal/ant.png);
+    background-size: contain;
+    height: 30%;
+    width: 100%;
+    position: absolute;
+    top: 15%;
+    left: 0;
+    z-index: 100;
+}
+
+#win {
+    background: rgba(0,0,0,0.5);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+}
+
+#win .title {
+    height: 17%;
+    text-align: center;
+    font-size: 58px;
+    padding-top: 22%;
+}
+
+#win .subtitle {
+    text-align: center;
+    font-size: 40px;
+    height: 12%;
+}
+
+#win .start {
+    font-size: 66px;
+    width: 60%;
+    height: 58%;
+}

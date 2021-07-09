@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Learning VR (part 4) - Jérôme Gangneux</title>
+                <meta name="description" content="It is going well, I continue to experiment in VR, and I got good results. (...) I also started to meet people that do VR too, some are already specialists, other are enthusiasts. We mostly got to the same point each time ; I will resume it for you">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="It is going well, I continue to experiment in VR, and I got good results. (...) I also started to meet people that do VR too, some are already specialists, other are enthusiasts. We mostly got to the same point each time ; I will resume it for you">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2016/11/28/im-learning-vr-part4" />
+        <meta property="og:title" content="Learning VR (part 4) - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/vr/part4-cover.png" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+            <div class="text-5xl font-semibold tracking-tight leading-none mb-12">
+                <a href="/">Jérôme Gangneux</a>
+                                :: Projects
+                            </div>
+            <div id="main-menu" class="mt-4">
+                <div class="flex sm:text-xl text-base flex-wrap">
+                                                            <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Projects</a>
+                    <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Art</a>
+                    <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Blog</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <style>#site-header { display: none; }</style>
+<nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>Learning VR (part 4)</h1>
+        <p>November 28, 2016</p>
+    </header>
+    <section class="main">
+        <h1 id="introduction">Introduction</h1>
+
+<p>It is going well, I continue to experiment in VR, and I got good results.<br />
+I am now able to do pretty much what I want, I'm only missing time!</p>
+
+<p>The main idea ; to get a virtual desktop ; takes all its meaning when you are at the point where you can personalize your environment.<br />
+I added fake furniture: a desktop (a cube), a plant<sup><em></sup> and a moving cat<sup></em></sup> (it is pretty dumb for now / not animated at all and just following the pointer), but that proves my first thoughts.<br />
+VR has that advantage: you can make it yours without any limitation.<br />
+I am working in the middle of a night sky, with Mars in background, how cool is that?</p>
+
+<p>Note: I am not a 3D artist, and I'm not focusing on the rendering aspect of this environment yet, in one word: it is ugly for now :)</p>
+
+<p><small>* These models come from <a href="http://tf3dm.com/search/?q=cat&search=Search">tf3dm.com</a></small></p>
+
+<table style="text-align:center;margin:20px 0">
+    <tr><td style="max-width:50%;width:50%">
+        <a href="/images/vr/part4/capture_02.png"><img src="/images/vr/part4/capture_02.png" style="padding:10px;max-width:100%"></a><br>
+        <strong>Main view from the desktop</strong>
+    </td>
+    <td style="max-width:50%;width:50%">
+        <a href="/images/vr/part4/capture_04.png"><img src="/images/vr/part4/capture_04.png" style="padding:10px;max-width:100%"></a><br>
+        <strong>Behind me there is Mars</strong>
+    </td></tr>
+</table>
+
+<h1 id="progress">Progress</h1>
+
+<div style="text-align:center;margin:20px 0">
+    <img src="/images/vr/part4/tweet.png" style="padding:10px;max-width:100%;"><br>
+    <strong>I've been on twitter and posted a tweet!</strong>
+</div>
+
+<p>Yay! the WebView is working, it is coming strait from Android (rendered in native Android code, it is a <code>android.webkit.WebView</code> instance).<br />
+In theory any view that comes from Android could be shown in my VR environment. It is quite cool!<br />
+You can navigate on the web, use the keyboard if needed (to tweet for example).</p>
+
+<div style="text-align:center;margin:20px 0">
+    <a href="/images/vr/part4/capture_01.png"><img src="/images/vr/part4/capture_01.png" style="padding:10px;max-width:100%;width:70%"></a><br>
+    <strong>Working WebView in VR, you can get closer to see better</strong>
+</div>
+
+<p>There are limitations, hardware accelerated views does not work,
+and also you can get only one view from android at a given time.
+I know that these problems are solvable and I'm working on it, but it is not my priority anymore.<br />
+I have other VR experiment to test in this project, let's move on.</p>
+
+<p>Talking about moving on, I added a way to move.<br />
+As you know I'm using a Daydream Cardboard so there is no position tracking in space.
+I decided that it will be interesting to move around.<br />
+So now, when you point to the ground and push the main button, the camera (you) moves to this location.
+It is not teleportation, it moves quite slowly to the place you're pointing.</p>
+
+<p>I also added gravity for most of the objects, including the cubes that you can play with.</p>
+
+<table style="text-align:center;margin:20px 0">
+    <tr><td style="max-width:32%;width:32%">
+        <a href="/images/vr/part4/capture_03.png"><img src="/images/vr/part4/capture_03.png" style="padding:10px;max-width:100%"></a><br>
+        <strong>Moving around</strong>
+    </td>
+    <td style="max-width:32%;width:32%">
+        <a href="/images/vr/part4/capture_05.png"><img src="/images/vr/part4/capture_05.png" style="padding:10px;max-width:100%"></a><br>
+        <strong>Grabbing cube on the way</strong>
+    </td>
+    <td style="max-width:32%;width:32%">
+        <a href="/images/vr/part4/capture_06.png"><img src="/images/vr/part4/capture_06.png" style="padding:10px;max-width:100%"></a><br>
+        <strong>Poster</strong>
+    </td></tr>
+</table>
+
+<h1 id="what-is-needed">What is needed</h1>
+
+<p>While I was experimenting, I felt the need to have a kind of "window" manager to move objects around,
+it is not windows that are present but more something like 3D boxes around these objects I guess.
+This implies many interesting things, like a notion of App, with state management (between restarts for example).<br />
+Each app could have a resize and a move action, and we could be able to see the virtual space that the App occupies in the environment.</p>
+
+<p>Iteration are quite slow because each time the VR environment has to restart and it takes ages.
+I must work on that problem too, if you have any idea let me know.
+To be honest, I think Unity software is a little buggy too and not that much ergonomic, sometime I'm losing time because of that too.</p>
+
+<h1 id="beyond-code">Beyond code</h1>
+
+<p>I also started to meet people that do VR too, some are already specialists, other are enthusiasts.
+We mostly got to the same point each time ; I will resume it for you too: I do not believe in VR,
+not in this form, but I'm quite sure it will evolve to AR. The technologies (on the software part) are similar so it is like I'm anticipating and practicing this new area. Most people would agree about that.
+VR has too much ergonomic problems, AR theoretically allows to do VR anyway.</p>
+
+<p>There are new trending topics, this time I learn about "<a href="http://www.spatial-computing.org/">spacial computing</a>",
+and for me it is just a way to talk about AR with a new buzz word.</p>
+
+<h1 id="next-steps">Next steps</h1>
+
+<p>I need to clean the code, it is spaghetti code with lots of bizarre things.
+While cleaning, I will try to get the App concept in, or at least something like an interface to allows every App to inherit basic "window" management functionalities + state conservation.</p>
+
+<p>At the end of this cleaning process, I should have multiple Apps, the list would be:
+ - the Cat App (a cat moving around)
+ - the Keyboard App
+ - the Mars/Planet App
+ - the WebView app
+ - the Poster app (an App where you can put any image in)
+ - the Plant app</p>
+
+<p>Also, I really want to find a way to get body tracking, but I also want to stay on the Daydream platform to keep all this working wirelessly. I found that piece of hardware: <a href="http://www.vicovr.com/">VicoVR</a> but for now my budget is too tight. <a href="https://www.patreon.com/jrmgx">You like what I do? You can sponsor me?</a></p>
+
+<table style="text-align:center;margin:20px 0">
+    <tr><td style="max-width:50%;width:50%">
+        <a href="/images/vr/part4/capture_02.png"><img src="/images/vr/part4/capture_08.png" style="padding:10px;max-width:100%"></a><br>
+        <strong>The future Cat App has to be more useful than that</strong>
+    </td>
+    <td style="max-width:50%;width:50%">
+        <a href="/images/vr/part4/capture_04.png"><img src="/images/vr/part4/capture_07.png" style="padding:10px;max-width:100%"></a><br>
+        <strong>View from far away<br>&nbsp;</strong>
+    </td></tr>
+</table>
+
+<p>Note, don't be impressed about what you see here, anyone can achieve that.
+My job here is only to assemble existing technologies pieces in a meaning full way and deliver something quick.
+It is like Lego &copy;</p>
+
+    </section>
+    <footer class="pt-10">
+            </footer>
+    </article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+        <p class="text-right" style="opacity: 0.5;">
+            contact: jerome@gangneux.net
+        </p>
+    </footer>
+
+            </body>
+</html>

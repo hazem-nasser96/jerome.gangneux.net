@@ -1,0 +1,76 @@
+<html class="">
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="stylesheet" href="style.css" type="text/css" />
+    <script src="jquery.js"></script>
+</head>
+<body>
+    
+    <div class="background">
+    </div>    
+
+    <div class="foreground">
+
+        <section id="menu">
+            <div class="title">
+                What's<br/>the name of...
+            </div>
+            <div class="main_buttons">
+                <a href="#" class="button start blue">
+                    <span class="top">Play</span>
+                    <span class="bottom"></span>
+                </a><br/>
+                <a href="#" class="button rate lightblue">
+                    <span class="top">Rate</span>
+                    <span class="bottom"></span>
+                </a>
+            </div>
+            <!-- div class="more">
+                <span class="text">Your best time:</span><br/>
+                <span class="best">13:37</span>
+            </div -->
+        </section>
+
+        <section id="game">
+            <div class="top_menu">
+                <div class="back"></div>
+                <div class="tries_wrapper"><span class="rounds">1</span>/&nbsp;10</div>
+                <div class="time">10:42</div>
+            </div>
+
+            <div class="propal"></div>
+
+            <div class="play placeholder_tpl">
+                <span class="letter button placeholder">
+                    <span class="top"></span>
+                    <span class="bottom"></span>
+                </span>   
+            </div>
+
+            <div class="choices letter_tpl">
+                <span data-letter="%letter%" data-position="%position%" class="letter button blue">
+                    <span class="top">%letter%</span>
+                    <span class="bottom"></span>
+                </span>                
+            </div>
+        </section>
+
+        <section id="win">
+            <h1 class="title">Congratulations!<br />You win!</h1>
+            <h2 class="subtitle">Your time:<br /><span class="time">04:18</span></h2>
+            <div class="main_buttons">
+                <a href="#" class="button start blue">
+                    <span class="top">Play Again</span>
+                    <span class="bottom"></span>
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <div id="console_log"></div>
+
+    <script src="script.js"></script>
+    <script type="text/javascript">game.init();</script>
+</body>
+</html>

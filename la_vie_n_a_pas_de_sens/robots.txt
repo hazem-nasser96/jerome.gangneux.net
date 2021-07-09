@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /blog/tags/
+Disallow: /blog/categories/
+
+Sitemap: https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/sitemap.xml

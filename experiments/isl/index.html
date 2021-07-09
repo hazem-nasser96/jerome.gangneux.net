@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Interactive image "extruder"</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <style type="text/css">canvas { margin-top: 10px; }</style>
+</head>
+<body>
+    <div class="container">
+        <h1>Interactive image "extruder"</h1>
+
+        <h2>Step 1 (optional): Choose an image to play with</h2>
+        <input type="file" id="imageUpload" /><br />
+        <label>Loop for: <input type="number" value="320" id="loop" /></label><br />
+
+        <h2>Step 2: Click on the image to extrude</h2>
+        <div id="result"></div>
+    </div>
+
+    <img src="example.jpg" id="image" style="display:none">
+
+    <div class="container">
+        It is coded in javascript, you can checkout the code by showing the source of this page.
+    </div>
+
+    <script type="text/javascript">
+        var destSize = 520;
+        var defaultLoop = destSize;
+        var currentSplit;
+        document.getElementById("loop").value = defaultLoop;
+
+        var canvas = document.createElement("canvas");
+        canvas.setAttribute("width", destSize);
+        canvas.setAttribute("height", destSize);
+        canvas.onclick = function(event) {
+            defaultLoop = parseInt(document.getElementById("loop").value, 10);
+            var x = event.offsetX ? (event.offsetX) : event.pageX - canvas.offsetLeft;
+            if (currentSplit && x > currentSplit) {
+                if (x - currentSplit - defaultLoop < 0) return;
+                x = x - defaultLoop;
+            }
+            currentSplit = x;
+            //drawAtWithLoop(x, defaultLoop);
+            progressAnimation = 0;
+            idAnimation = window.requestAnimationFrame(drawAtWithLoopAnimated);
+        };
+
+        document.getElementById("result").appendChild(canvas);
+        var context = canvas.getContext("2d");
+
+        var progressAnimation = 0;
+        var idAnimation = null;
+        function drawAtWithLoopAnimated() {
+            drawAtWithLoop(currentSplit, progressAnimation += Math.ceil(defaultLoop/60));
+            if (progressAnimation < defaultLoop) {
+                window.requestAnimationFrame(drawAtWithLoopAnimated);
+            }
+        }
+
+        function drawAtWithLoop(x, loop) {
+            canvas.setAttribute("width", destSize + loop);
+
+            var srcSize = destSize, zerox = 0, zeroy = 0;
+
+            if (srcImage.width > srcImage.height) {
+                srcSize = srcImage.height;
+                zerox = (srcImage.width - srcImage.height) / 2;
+            }
+            else {
+                srcSize = srcImage.width;
+                zeroy = (srcImage.height - srcImage.width) / 2;
+            }
+
+            var ratio = srcSize / destSize;
+            var src = srcImage;
+
+            // first half
+            context.drawImage(src,
+                zerox, zeroy,
+                x * ratio, srcSize,
+                0, 0,
+                x, destSize
+            );
+
+            // second half
+            context.drawImage(src,
+                zerox + (x + 2) * ratio, zeroy,
+                srcSize - (x + 2) * ratio, srcSize,
+                x + loop, 0,
+                destSize - (x + 2), destSize
+            );
+
+            // loop
+            var pas = 1;
+            var formula = function(y) { return 0; };
+            // You can play with different "formula"
+            //var wave = 20;
+            //var formula = function(y) { return Math.sin(y/wave) * wave; };
+            //var formula = function(y) { return Math.random() * wave; };
+            for (var i = 0; i < loop; i += pas) {
+                context.drawImage(src,
+                    zerox + (x + 1) * ratio, zeroy + formula(i),
+                    1, srcSize,
+                    x + i, 0,
+                    1, destSize
+                );
+            }
+        }
+
+        var srcImage = document.getElementById("image");
+        var action = function() {
+            currentSplit = null;
+            drawAtWithLoop(0, 0);
+        };
+
+        if (srcImage.complete) {
+            action();
+        }
+        else {
+            srcImage.onload = action;
+        }
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    srcImage.src = e.target.result;
+                    srcImage.onload = action;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        document.getElementById("imageUpload").onchange = function() {
+            readURL(this);
+        };
+    </script>
+</body>
+</html>

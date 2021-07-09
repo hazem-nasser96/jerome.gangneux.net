@@ -1,0 +1,470 @@
+<html>
+    <head>
+        <title>#Gifcrash Maker</title>
+        <style>
+html, body, .foreground {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+.foreground {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.background {
+    position: absolute;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+    background-color: black;
+    top: -50px;
+    left: -50px;
+    bottom: -50px;
+    right: -50px;
+}
+.blurBackground {
+    background-repeat: no-repeat;
+    background-size: cover;
+    -webkit-filter: blur(20px);
+    filter: blur(20px);
+    z-index: 1;
+}
+.foreground {
+    z-index: 2;
+    text-align: center;
+}
+.foreground img {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    -webkit-transform: translateY(-50%);
+}
+.foreground img.cas1 {
+    min-height: 100%;
+}
+.foreground img.cas2 {
+    min-width: 100%;
+}
+#help {
+    z-index: 100;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 20px 30px;
+    font-family: 'Courier New', Courier, monospace;
+    background: rgba(255, 255, 255, 0.5);
+    color: black;
+}
+.onOff {
+    font-size: 75%;
+    font-weight: bold;
+    color: rgb(43, 15, 15);
+}
+        </style>
+    </head>
+    <body id="body">
+        <div id="help">
+            [R] Auto Mode <span id="autoModeState" class="onOff">[ ON ]</span><br>
+            [J]/[K] Next/Prev<br>
+            [L] Reload Clip<br>
+            [B] Blur Background <span id="blurBackgroundState" class="onOff">[ ON ]</span><br>
+            [F] Fullscreen<br>
+            [H] Help (this)
+        </div>
+        <div class="background"></div>
+        <div class="foreground"><img src="gifs/gif_166.gif"/></div>
+        <script src="gifs/jquery-1.11.0.min.js"></script>
+        <script>
+// Helpers
+
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}
+
+function rand(min, max) {
+    if (typeof max == "undefined") {
+        max = min;
+        min = 0;
+    }
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function updateSizes(e) {
+    var ratio = $('html').width() / $('html').height();
+    var img = $('img');
+    var imgRatio = img.prop('naturalWidth') / img.prop('naturalHeight');
+    if (ratio > imgRatio) {
+        img.addClass('cas1').removeClass('cas2');
+    } else {
+        img.addClass('cas2').removeClass('cas1');
+    }
+    if (blurBackground) {
+        $('.background').css('backgroundImage', 'url(' + encodeURI(img.attr('src')) + ')');
+    }
+}
+
+// Init
+
+var timeoutHandle = null;
+var currentIndex = 0;
+var urls = [
+    'gif_0.gif',
+    'gif_1.gif',
+    'gif_10.gif',
+    'gif_100.gif',
+    'gif_101.gif',
+    'gif_102.gif',
+    'gif_103.gif',
+    'gif_104.gif',
+    'gif_105.gif',
+    'gif_106.gif',
+    'gif_107.gif',
+    'gif_108.gif',
+    'gif_109.gif',
+    'gif_11.gif',
+    'gif_110.gif',
+    'gif_111.gif',
+    'gif_112.gif',
+    'gif_113.gif',
+    'gif_114.gif',
+    'gif_115.gif',
+    'gif_116.gif',
+    'gif_117.gif',
+    'gif_118.gif',
+    'gif_119.gif',
+    'gif_12.gif',
+    'gif_120.gif',
+    'gif_121.gif',
+    'gif_122.gif',
+    'gif_123.gif',
+    'gif_124.gif',
+    'gif_125.gif',
+    'gif_126.gif',
+    'gif_127.gif',
+    'gif_128.gif',
+    'gif_129.gif',
+    'gif_13.gif',
+    'gif_130.gif',
+    'gif_131.gif',
+    'gif_132.gif',
+    'gif_133.gif',
+    'gif_134.gif',
+    'gif_135.gif',
+    'gif_136.gif',
+    'gif_137.gif',
+    'gif_138.gif',
+    'gif_139.gif',
+    'gif_14.gif',
+    'gif_140.gif',
+    'gif_141.gif',
+    'gif_142.gif',
+    'gif_143.gif',
+    'gif_144.gif',
+    'gif_145.gif',
+    'gif_146.gif',
+    'gif_147.gif',
+    'gif_148.gif',
+    'gif_149.gif',
+    'gif_15.gif',
+    'gif_150.gif',
+    'gif_151.gif',
+    'gif_152.gif',
+    'gif_153.gif',
+    'gif_154.gif',
+    'gif_155.gif',
+    'gif_156.gif',
+    'gif_157.gif',
+    'gif_158.gif',
+    'gif_159.gif',
+    'gif_16.gif',
+    'gif_160.gif',
+    'gif_161.gif',
+    'gif_162.gif',
+    'gif_163.gif',
+    'gif_164.gif',
+    'gif_165.gif',
+    'gif_166.gif',
+    'gif_167.gif',
+    'gif_168.gif',
+    'gif_169.gif',
+    'gif_17.gif',
+    'gif_170.gif',
+    'gif_171.gif',
+    'gif_172.gif',
+    'gif_173.gif',
+    'gif_174.gif',
+    'gif_175.gif',
+    'gif_176.gif',
+    'gif_177.gif',
+    'gif_178.gif',
+    'gif_179.gif',
+    'gif_18.gif',
+    'gif_180.gif',
+    'gif_181.gif',
+    'gif_182.gif',
+    'gif_183.gif',
+    'gif_184.gif',
+    'gif_185.gif',
+    'gif_186.gif',
+    'gif_187.gif',
+    'gif_188.gif',
+    'gif_189.gif',
+    'gif_19.gif',
+    'gif_190.gif',
+    'gif_191.gif',
+    'gif_192.gif',
+    'gif_193.gif',
+    'gif_194.gif',
+    'gif_195.gif',
+    'gif_196.gif',
+    'gif_197.gif',
+    'gif_198.gif',
+    'gif_199.gif',
+    'gif_2.gif',
+    'gif_20.gif',
+    'gif_200.gif',
+    'gif_201.gif',
+    'gif_202.gif',
+    'gif_203.gif',
+    'gif_204.gif',
+    'gif_205.gif',
+    'gif_206.gif',
+    'gif_207.gif',
+    'gif_208.gif',
+    'gif_209.gif',
+    'gif_21.gif',
+    'gif_210.gif',
+    'gif_211.gif',
+    'gif_212.gif',
+    'gif_213.gif',
+    'gif_214.gif',
+    'gif_215.gif',
+    'gif_216.gif',
+    'gif_217.gif',
+    'gif_218.gif',
+    'gif_219.gif',
+    'gif_22.gif',
+    'gif_220.gif',
+    'gif_221.gif',
+    'gif_222.gif',
+    'gif_223.gif',
+    'gif_224.gif',
+    'gif_225.gif',
+    'gif_226.gif',
+    'gif_227.gif',
+    'gif_228.gif',
+    'gif_229.gif',
+    'gif_23.gif',
+    'gif_230.gif',
+    'gif_231.gif',
+    'gif_232.gif',
+    'gif_233.gif',
+    'gif_234.gif',
+    'gif_235.gif',
+    'gif_236.gif',
+    'gif_237.gif',
+    'gif_238.gif',
+    'gif_239.gif',
+    'gif_24.gif',
+    'gif_240.gif',
+    'gif_241.gif',
+    'gif_242.gif',
+    'gif_243.gif',
+    'gif_244.gif',
+    'gif_245.gif',
+    'gif_246.gif',
+    'gif_247.gif',
+    'gif_248.gif',
+    'gif_249.gif',
+    'gif_25.gif',
+    'gif_250.gif',
+    'gif_251.gif',
+    'gif_252.gif',
+    'gif_253.gif',
+    'gif_254.gif',
+    'gif_255.gif',
+    'gif_256.gif',
+    'gif_26.gif',
+    'gif_27.gif',
+    'gif_28.gif',
+    'gif_29.gif',
+    'gif_3.gif',
+    'gif_30.gif',
+    'gif_31.gif',
+    'gif_32.gif',
+    'gif_33.gif',
+    'gif_34.gif',
+    'gif_35.gif',
+    'gif_36.gif',
+    'gif_37.gif',
+    'gif_38.gif',
+    'gif_39.gif',
+    'gif_4.gif',
+    'gif_40.gif',
+    'gif_41.gif',
+    'gif_42.gif',
+    'gif_43.gif',
+    'gif_44.gif',
+    'gif_45.gif',
+    'gif_46.gif',
+    'gif_47.gif',
+    'gif_48.gif',
+    'gif_49.gif',
+    'gif_5.gif',
+    'gif_50.gif',
+    'gif_51.gif',
+    'gif_52.gif',
+    'gif_53.gif',
+    'gif_54.gif',
+    'gif_55.gif',
+    'gif_56.gif',
+    'gif_57.gif',
+    'gif_58.gif',
+    'gif_59.gif',
+    'gif_6.gif',
+    'gif_60.gif',
+    'gif_61.gif',
+    'gif_62.gif',
+    'gif_63.gif',
+    'gif_64.gif',
+    'gif_65.gif',
+    'gif_66.gif',
+    'gif_67.gif',
+    'gif_68.gif',
+    'gif_69.gif',
+    'gif_7.gif',
+    'gif_70.gif',
+    'gif_71.gif',
+    'gif_72.gif',
+    'gif_73.gif',
+    'gif_74.gif',
+    'gif_75.gif',
+    'gif_76.gif',
+    'gif_77.gif',
+    'gif_78.gif',
+    'gif_79.gif',
+    'gif_8.gif',
+    'gif_80.gif',
+    'gif_81.gif',
+    'gif_82.gif',
+    'gif_83.gif',
+    'gif_84.gif',
+    'gif_85.gif',
+    'gif_86.gif',
+    'gif_87.gif',
+    'gif_88.gif',
+    'gif_89.gif',
+    'gif_9.gif',
+    'gif_90.gif',
+    'gif_91.gif',
+    'gif_92.gif',
+    'gif_93.gif',
+    'gif_94.gif',
+    'gif_95.gif',
+    'gif_96.gif',
+    'gif_97.gif',
+    'gif_98.gif',
+    'gif_99.gif',
+];
+shuffleArray(urls);
+var urlsLength = urls.length;
+
+var blurBackground = false;
+blurToggle();
+
+var autoMode = false;
+autoToggle();
+
+$('img').on('load', updateSizes);
+$(window).on('resize', updateSizes);
+
+document.getElementById("body").onkeyup = function(key) {
+    switch (key.code) {
+        case "KeyR": autoToggle(); break;
+        case "KeyF": fullscreen(); break;
+        case "KeyH": helpShowHide(); break;
+        case "KeyJ": next(); break;
+        case "KeyK": prev(); break;
+        case "KeyB": blurToggle(); break;
+        case "KeyL": reloadCurrent(); break;
+    }
+}
+
+// Keys Actions
+
+function fullscreen() {
+    var elem = document.getElementById("body");
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+    }
+}
+
+function blurToggle() {
+    blurBackground = !blurBackground;
+    $('#blurBackgroundState').text(blurBackground ? "[ ON ]" : "[ OFF ]");
+    if (blurBackground) {
+        $('.background').addClass('blurBackground');
+    } else {
+        $('.background').removeClass('blurBackground');
+        $('.background').css('backgroundImage', 'none');
+    }
+}
+
+function autoToggle() {
+    autoMode = !autoMode;
+    $('#autoModeState').text(autoMode ? "[ ON ]" : "[ OFF ]");
+    if (autoMode) {
+        next();
+    } else {
+        clearTimeout(timeoutHandle);
+    }
+}
+
+function helpShowHide() {
+    $('#help').toggle();
+}
+
+function next() {
+    if (autoMode) {
+        var nextImageInSeconds = rand(1, 3);
+        timeoutHandle = setTimeout(next, nextImageInSeconds * 1000);
+    }
+    currentIndex++;
+    if (currentIndex >= urlsLength) {
+        currentIndex = 0;
+    }
+    loadIndex(currentIndex);
+}
+
+function prev() {
+    currentIndex--;
+    if (currentIndex < 0) {
+        currentIndex = urlsLength - 1;
+    }
+    loadIndex(currentIndex);
+}
+
+function reloadCurrent() {
+    loadIndex(currentIndex);
+}
+
+function loadIndex(i) {
+    var url = encodeURI("gifs/" + urls[i]);
+    var img = $('img');
+    img.attr('src', url);
+    if (blurBackground) {
+        $('.background').css('backgroundImage', 'url(' + url + ')');
+    }
+}
+
+        </script>
+    </body>
+</html>

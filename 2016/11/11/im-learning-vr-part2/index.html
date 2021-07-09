@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Learning VR (part 2) - Jérôme Gangneux</title>
+                <meta name="description" content="The previous session was full of hopes, mainly because I got something working very quickly, but now I&#039;m stuck. I spent two weeks on a problem that I still did not manage to fully solve. Let&#039;s talk about that.">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="The previous session was full of hopes, mainly because I got something working very quickly, but now I&#039;m stuck. I spent two weeks on a problem that I still did not manage to fully solve. Let&#039;s talk about that.">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2016/11/11/im-learning-vr-part2" />
+        <meta property="og:title" content="Learning VR (part 2) - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/vr/part2-cover.png" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+            <div class="text-5xl font-semibold tracking-tight leading-none mb-12">
+                <a href="/">Jérôme Gangneux</a>
+                                :: Projects
+                            </div>
+            <div id="main-menu" class="mt-4">
+                <div class="flex sm:text-xl text-base flex-wrap">
+                                                            <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Projects</a>
+                    <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Art</a>
+                    <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Blog</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <style>#site-header { display: none; }</style>
+<nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>Learning VR (part 2)</h1>
+        <p>November 11, 2016</p>
+    </header>
+    <section class="main">
+        <h1 id="introduction">Introduction</h1>
+
+<p>The previous session was full of hopes,
+mainly because I got something working very quickly, but now I'm stuck.</p>
+
+<p>I spent two weeks on a problem that I still did not manage to fully solve.
+Let's talk about that.</p>
+
+<div style="text-align:center"><img src="/images/vr/part3/part3-unity-cube.png" style="padding:10px;max-width:100%"><br><strong>My workspace</strong></div>
+
+<h1 id="the-project">The project</h1>
+
+<p>The idea is to get a web browser working in VR,
+I do that to learn Unity / DayDream and VR in general.
+Also, I want to build a working environment,
+where you can develop for the environment itself (this is the final goal).
+So I want a working web browser to start with.</p>
+
+<p>But I'm far from here.</p>
+
+<h1 id="pieces-of-the-puzzle">Pieces of the puzzle</h1>
+
+<p>Nothing that I tried has worked so far,
+I even restarted to test the feasibility of this project outside of Unity (native android)
+to check if it could be easier (and it is not).
+I spent hours on the Internet, looking for documentation and examples.
+I found that Samsung and Oculus got this working so it gave me some hope.</p>
+
+<p>Oculus has released some code that could be a good start for me,
+I was very lucky because it was part of the Oculus SDK 1.0.3
+and it disappeared on the next version (I don't know why)</p>
+
+<p>In this code, Oculus implemented a MediaPlayer (from the Android MediaPlayer class)
+streaming to a Unity texture (as an example of their SDK), a good start for my project.<br />
+In the same time I discovered that any android view could be rendered into an OpenGL texture,
+thanks to Felix Jones who wrote a
+<a href="http://www.felixjones.co.uk/neo%20website/Android_View/">very good article</a> about that.<br />
+That was it, all the pieces are available,
+it must be possible to use these to get my idea working!</p>
+
+<table style="width:100%">
+<tr>
+<td style="text-align:center;max-width:50%;width:50%">
+    <img src="/images/vr/part2/final-p2.png" style="padding:10px;max-width:100%"><br>
+    <strong>The Oculus MediaPlayer in action</strong>
+</td>
+<td style="text-align:center;max-width:50%;width:50%">
+    <img src="/images/vr/part2/screen.png" style="padding:10px;max-width:100%"><br>
+    <strong>Example app from Felix Jones</strong>
+</td>
+</tr>
+</table>
+
+<div style="height:20px"></div>
+
+<p>Of course this is not so easy,
+first I don't know much about Unity, JNI, C++ or even OpenGL
+(and OpenGL looks very complicated IMHO).
+I started to read and try to understand the code from Oculus and the blog post from Felix Jones,
+but it is more than I can handle I guess.</p>
+
+<p>No problem, I asked for help on the Internet,
+even reached Felix Jones about his blog post (the Android view to OpenGL one).
+He was nice enough to respond to a few questions
+but in the end he told me that this information was too strategic for his company to help me more,
+I can understand, it is fair.</p>
+
+<div style="text-align:center"><img src="/images/vr/part2/talk.png" style="padding:10px;max-width:100%"><br>
+<strong>Learning the hard way</strong></div>
+
+<h1 id="progress">Progress</h1>
+
+<p>This is the technical workflow,</p>
+
+<p>It is an Android app for Google DayDream (VR),
+it uses Unity as the 3D engine, Unity is backed by OpenGL to get things on screen.
+I use a plugin from Android to Unity to instantiate Android native views
+(TextView and WebView for example) then in Android I render these views on an OpenGL texture.
+This texture comes from a plugin written in C++ (most of this code comes from Oculus)
+this C++ code create an OpenGL texture and give the "texture id" to Android and Unity as well,
+it is the link between these two worlds.</p>
+
+<ol>
+<li>The C++ plugin creates the texture in the current Unity OpenGL context</li>
+<li>Java creates the view and render it in the OpenGL texture</li>
+<li>Unity render the texture (by its texture id) into the final object</li>
+</ol>
+
+<p>I almost got the full process working, but before this result I encounter so many problems.
+The trickiest one that I discovered was that the Android's WebView
+is hardware accelerated when created in Android, so it messes up the OpenGL context.
+It is important to remove any hardware acceleration on the Android's views.
+From that point I decided to restart all my experimentations with a basic TextView first.</p>
+
+<p>Today, the proof of concept is almost working, I only have a last problem,
+the texture that comes from the Android view (a TextView in my example)
+is only rendered as a 1px by 1px texture when it arrives in Unity (stretched into the object),
+it is strange, but because I'm a beginner, I'm sure I missed something basic somewhere.
+I will find a solution!</p>
+
+<h1 id="next-steps">Next steps</h1>
+
+<p>I did not have time to play with the Nintendo Wii controller as I wanted,
+so when I will get the WebView working I may look at that.
+Also, I want people to get visual feedback about the real world around them,
+so I'll try to get a live video stream from the camera into the VR world.
+I have much more idea but I need to go step by step because it is quite hard.</p>
+
+<h1 id="useful-links">Useful links</h1>
+
+<h2 id="documentation-and-articles">Documentation and articles</h2>
+
+<ul>
+<li><a href="http://www.felixjones.co.uk/neo%20website/Android_View/">http://www.felixjones.co.uk/neo%20website/Android_View/</a></li>
+<li><a href="http://www.thegamecontriver.com/2015/04/android-plugin-unity-android-studio.html">http://www.thegamecontriver.com/2015/04/android-plugin-unity-android-studio.html</a></li>
+<li><a href="https://docs.unity3d.com/Manual/class-RenderTexture.html">https://docs.unity3d.com/Manual/class-RenderTexture.html</a></li>
+<li><a href="https://docs.unity3d.com/Manual/PluginsForAndroid.html">https://docs.unity3d.com/Manual/PluginsForAndroid.html</a></li>
+<li><a href="http://docs.gearvrf.org/org/gearvrf/scene_objects/GVRWebViewSceneObject.html">http://docs.gearvrf.org/org/gearvrf/scene_objects/GVRWebViewSceneObject.html</a></li>
+<li><a href="https://docs.unity3d.com/Manual/class-MovieTexture.html">https://docs.unity3d.com/Manual/class-MovieTexture.html</a></li>
+<li><a href="https://www.reddit.com/r/GearVR/comments/2u0ro2/gearvr_w_unity_loading_movie_onto_texture/">https://www.reddit.com/r/GearVR/comments/2u0ro2/gearvr_w_unity_loading_movie_onto_texture/</a></li>
+</ul>
+
+<h2 id="checkout-some-code">Checkout some code</h2>
+
+<ul>
+<li><a href="https://gist.github.com/jrmgx/019cba403769dda27a6d42e48c461b1b">https://gist.github.com/jrmgx/019cba403769dda27a6d42e48c461b1b</a></li>
+<li><a href="https://gist.github.com/jrmgx/e0319c2b898115d1a55e50e423f96dfb">https://gist.github.com/jrmgx/e0319c2b898115d1a55e50e423f96dfb</a></li>
+</ul>
+
+<h2 id="help-me-if-you-can">Help me if you can</h2>
+
+<ul>
+<li><a href="http://stackoverflow.com/questions/40370290/how-to-get-an-android-webview-as-a-unity-texture">http://stackoverflow.com/questions/40370290/how-to-get-an-android-webview-as-a-unity-texture</a></li>
+<li><a href="http://stackoverflow.com/questions/40554697/only-getting-one-pixel-from-an-external-texture">http://stackoverflow.com/questions/40554697/only-getting-one-pixel-from-an-external-texture</a></li>
+</ul>
+
+    </section>
+    <footer class="pt-10">
+            </footer>
+    </article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+        <p class="text-right" style="opacity: 0.5;">
+            contact: jerome@gangneux.net
+        </p>
+    </footer>
+
+            </body>
+</html>

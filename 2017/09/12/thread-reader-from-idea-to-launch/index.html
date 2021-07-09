@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Thread Reader use case: From Idea to Launch - Jérôme Gangneux</title>
+                <meta name="description" content="With this project, I wanted to show how easy it’s to build a functioning web service from the idea to the first sign of traction.">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="With this project, I wanted to show how easy it’s to build a functioning web service from the idea to the first sign of traction.">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2017/09/12/thread-reader-from-idea-to-launch" />
+        <meta property="og:title" content="Thread Reader use case: From Idea to Launch - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/writing/tttthreads/fake-mokup-4x3.png" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+            <div class="text-5xl font-semibold tracking-tight leading-none mb-12">
+                <a href="/">Jérôme Gangneux</a>
+                                :: Projects
+                            </div>
+            <div id="main-menu" class="mt-4">
+                <div class="flex sm:text-xl text-base flex-wrap">
+                                                            <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Projects</a>
+                    <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Art</a>
+                    <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Blog</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <style>#site-header { display: none; }</style>
+<nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>Thread Reader use case: From Idea to Launch</h1>
+        <p>September 12, 2017</p>
+    </header>
+    <section class="main">
+        <p><strong>Note: This project has been acquired in 2018, I'm no longer the owner of ThreadReaderApp</strong></p>
+
+<h1 id="bootstrap-your-idea">Bootstrap your idea</h1>
+
+<p><small>This project started on August 11, 2017</small></p>
+
+<p>With this project, I wanted to show how easy it’s to build a functioning web service from the idea to the first sign of traction.</p>
+
+<p>This post is not to brag about me or anything like that, but instead show you that you can do it too.</p>
+
+<h2 id="the-problem">The problem</h2>
+
+<p>First I came up with a problem, it’s better if it’s a problem you personally have.<br />
+It does not have to be some game changing idea, start small. The objective is to find people that have the same problem as you.</p>
+
+<p>My problem was that it’s a pain to read Twitter threads (or Tweetstorm) on the official Twitter website/app 
+and I think that all the Tweets put one after another in a <i>medium.com</i> alike page could be better.</p>
+
+<p>I made up a description of the idea plus a one-liner to check if it could interest anyone.<br />
+I will try to expose many people to that message and see how they react.</p>
+
+<div class="bs-callout bs-callout-info bs-callout-desc">
+    <strong class="bs-callout-title-desc">One-liner:</strong>
+    <p>Read Twitter threads with ease</p>
+    <strong class="bs-callout-title-desc">Detail:</strong>
+    <p>
+        The base idea is to allow people to better read Twitter threads.<br>
+        Let say one person needs to say more than can fit in a tweet, the way of doing that is to start a “thread”. 
+        A thread is a tweet followed by many replies to each others. 
+        So when you read the first one the others are linked and you can follow the full story, 
+        but in reality Twitter is not meant to be used that way, the user interface is less than optimal.<br> 
+        What about a service that helps you “unroll” a full Twitter thread 
+        on a dedicated beautifully designed page to allow an easy read of the whole story?<br>
+        Want to test it follow => <u>@ThreadReaderApp</u>
+    </p>
+</div>
+
+<p>For that specific idea, because it targets Twitter, I will use that same medium to start gather users.<br />
+But depending on your idea you could build a quick landing page to try to convince user with your message and ask for emails.
+To make a landing page you could use <a href="https://launchrock.com">launchrock.com</a> (mostly free with paying upgrades)</p>
+
+<hr>
+
+<p>We need to prepare a minimum of graphic assets to make it credible. 
+Of course nothing exists yet, so we will have to fake it.</p>
+
+<p>To illustrate the service I will take a real Twitter thread on web and show a fake result that looks like the final page.<br />
+For that I will use <i>medium.com</i> as an inspiration (for the design side) 
+and Photoshop to copy/paste elements from Twitter and make the illusion working.</p>
+
+<div class="bs-callout bs-callout-info bs-callout-desc" style="text-align:center">
+    <img src="/images/writing/tttthreads/fake-mokup-banner.png" style="border-radius:5px" /><br>
+    <small>I am not a pro of Photoshop 😆</small>
+</div>
+
+<p>To get that material online I created a new Twitter account <a href="https://twitter.com/threadreaderapp">@ThreadReaderApp</a>
+then use the bio, the header (for the image) and a Twitter thread to display the message.</p>
+
+<blockquote class="twitter-tweet" data-lang="en" data-align="center">
+    <p lang="en" dir="ltr">
+        The base idea that is meant to evolve is to allow people to better read twitter threads. 
+        Let say one person need to say more than can 1/x
+    </p>
+    &mdash; Thread Reader (@threadreaderapp) 
+    <a href="https://twitter.com/threadreaderapp/status/895882156517474304">August 11, 2017</a>
+</blockquote>
+
+<hr>
+
+<p>So now we have our message ready and online, how can we reach potential users?<br />
+It’s quite tricky, I guess you don’t want to bother your friends and to be realistic they won’t be honest with you.</p>
+
+<p>Where are you supposed to get those people?<br />
+<a href="https://betalist.com">Betalist.com</a> (and alike) are ok but it has a selection process that could last a few months.</p>
+
+<p>The solution is to think hard and find the right niche.<br />
+For Thread Reader I decided to target people using the <i>#thread</i> hashtag on Twitter!</p>
+
+<div class="bs-callout bs-callout-warning">
+    <strong>Note:</strong>
+    <p>You could use Google Ads to drive some customers on your landing and check the conversion rate 
+    (that’s another way to do it).</p>
+</div>
+
+<p>With the first positive user feedbacks I got, I decided to give that idea a chance!</p>
+
+<p>Let’s start building!</p>
+
+<h2 id="building">Building</h2>
+
+<p>During all the process you should stay close to your first users (prospects) and include them in the progress loop.</p>
+
+<p>It could be with update on Twitter, email, polls or anything.
+We must build something with minimum effort so it would be easy to iterate and to deploy.
+At that point it’s allowed to be buggy, but it must be online.</p>
+
+<p>For that project we will need a Twitter account and Twitter App</p>
+
+<h3 id="tech-stack">Tech stack</h3>
+
+<p>My choice will be the <a href="https://en.wikipedia.org/wiki/LAMP_(software_bundle)"><abbr title="Linux Apache MySQL PHP">LAMP</abbr></a> stack with the <a href="https://silex.symfony.com/">Silex framework</a>, Silex is a very minimal PHP framework. 
+I chose it because I like to work with it, 
+but also because it’s very close to raw PHP so you can understand the code (no specific framework code on our way).</p>
+
+<p>Now that our web App is ready and our Twitter App is created, 
+we are going to spend some time with the Twitter API and get around the official documentation.<br />
+See: <a href="https://dev.twitter.com/rest/public">https://dev.twitter.com/rest/public</a> and <a href="https://dev.twitter.com/overview/api/tweets">https://dev.twitter.com/overview/api/tweets</a></p>
+
+<p>Of course in our process we want to leverage the existing and do not reinvent the wheel 
+we will choose an existing PHP library that will allow us to interact with Twitter.<br />
+The choice of a library could be tricky, the best is to check if the platform has an official version and if not, see if they recommend any. 
+For Twitter, they list multiple PHP libraries.<br />
+So you have to check by yourself, see if the project is active, and how many stars it has on Github for example.
+I chose <strong>j7mbo/twitter-api-php</strong> after some testing.</p>
+
+<div class="bs-callout bs-callout-warning">
+    <strong>Note:</strong>
+    <p>This project is built live and you will see that, like any real project, 
+    we will encounter unexpected feasibility issues.</p>
+</div>
+
+<p>The next step is to get the replies to a specific tweet.</p>
+
+<p>My opinion is that this feature should be exposed somewhere in the API, so let’s read the documentation.<br />
+…<br />
+Ok, I can not find anything talking about “replies” in the documentation, 
+I’m quite sure I’m missing something but let’s check that on Google.</p>
+
+<p>Oops, as seen on a recent post of Stack overflow the Twitter API does not provide replies to a specific tweet. 
+OMG that’s a shame 😔</p>
+
+<p>People suggest using the Search API with specifics queries to get tweets related to the one we want.<br />
+We have no choice, let’s try that.</p>
+
+<div class="bs-callout bs-callout-warning">
+    <strong>Note:</strong>
+    <p>
+        During the building phase you’re going to have a lot of feature ideas.<br>
+        <strong>DO NOT IMPLEMENT THEM</strong><br>
+        Note them in a todo/idea list but you should be focused on something minimal 
+        and go live instead of a bigger project that will never hit the server.
+    </p>
+</div>
+
+<p>Let’s continue the code for now, a working proof of concept could be online soon, 
+then it will be easy to iterate and add features.</p>
+
+<p>The code quality is far from perfect but it’s not the goal here, 
+refactoring will be fun and cheap as we don’t put many features in it. 
+And to be honest in 90% of the time projects won’t succeed and you’re going to trash everything.</p>
+
+<p>Trust me on this one.<br />
+You should fail fast.</p>
+
+<h3 id="design">Design</h3>
+
+<p>Getting the data works!</p>
+
+<p>Now it’s time to put that in a great design, 
+then add some caching to prevent long loading time and Twitter API rate limitation.</p>
+
+<p>For that I will look for a public free template with a <i>medium.com</i> look 
+and built a static HTML+CSS page which I will integrate after.</p>
+
+<p>After spending some time on the Internet looking for a free template, I realize that it’s not that easy, 
+so I’m going to get some “inspiration” <small>(cough copy cough)</small> from <i>medium.com</i></p>
+
+<hr>
+
+<p>Design is always important so let’s use a good tool from the start: 
+Bootstrap and use one of their example as a starting base<br />
+<a href="https://getbootstrap.com/docs/4.0/examples/sticky-footer-navbar/">https://getbootstrap.com/examples/sticky-footer-navbar/</a></p>
+
+<p>Now that the data are in the template, we need to put some basic caching in place.
+It’s mainly because the Twitter API is quite slow, and we do have quotas to respect too.</p>
+
+<p>Expiry time has to be tweaked to get an optimal value, I would say between 3 and 5 minutes.</p>
+
+<div class="bs-callout bs-callout-warning">
+    <strong>Technical note:</strong>
+    <p>
+        Be careful as the caching mechanism in this implementation is not proof 
+        to the <a href="http://www.sobstel.org/blog/preventing-dogpile-effect/">dogpile effect</a> 
+        and need some more work but it’s enough for a MVP.
+    </p>
+</div>
+
+<p>We are almost ready to go live, let the user add some content to the site and it will be done.</p>
+
+<p>Great the user can unroll his URL, now it’s time to test with few real use cases
+and check if everything is alright…</p>
+
+<hr>
+
+<p>In this project the data is user generated, so we will encounter many edge cases. 
+Either the user will do something wrong, or we have a real bug, in both cases 
+we will have to help our users understand why they don’t get the expected result.</p>
+
+<p>The way to handle that could be an error message saying that it does not seem to be a thread 
+and to ask the user to make a report if he thinks it’s one indeed.</p>
+
+<p>I put that in the TODO list 😀</p>
+
+<h1 id="launching">Launching</h1>
+
+<h2 id="going-online">Going online</h2>
+
+<p>For a small PHP+MySQL MVP project you don’t need expensive server at start. 
+I checked for you <a href="https://www.000webhost.com/">000webhost.com</a> hosting and it looks like it can do the trick.</p>
+
+<p>I’ll let you check how you can push a project online, it’s not that complicated
+but you will have to pay a little to get a domain and a great service.</p>
+
+<p>On my side I’ll use my personal server for now. If you have AWS it would do too of course.</p>
+
+<div class="bs-callout bs-callout-warning">
+    <strong>Note:</strong>
+    <p>I did prepare a few video about pushing a project online but because 
+    I already have my server it’s not relevant, so I decided to not publish it.</p>
+</div>
+
+<h2 id="iterate">Iterate</h2>
+
+<p>Unfortunately the twitter search API has major limitation that goes on our way:</p>
+
+<ul>
+<li>First it does not index all tweets</li>
+<li>Then the index expires quite early (about 10 days)</li>
+<li>Finally we can not get more than 100 entries per call</li>
+</ul>
+
+<div class="bs-callout bs-callout-warning">
+    <strong>Note:</strong>
+    <p>
+        Remember that working on a specific platform is always risky.
+        We can hit platform limitations or even be banned or get our API point modified, that is the game.
+    </p>
+</div>
+
+<p>Let’s do our last technical improvement: remove twitter search and work with timeline instead.</p>
+
+<p>We also put in place a minimum of analytics, 
+the choice of a <abbr title="Key Performance Indicators">KPI</abbr> could be important too.<br />
+Here because it’s a website based service I will watch for users sessions (Google Analytics) 
+and as a second KPI I’ll take the number of unrolled thread (as seen in the database).</p>
+
+<hr>
+
+<p>At this point it misses many features: https, a domain name, display media, follow author, 
+polish design, share the page, replies, favicon, extension version, trends and more,
+but we need to resist and take some time to communicate and ask for feedback.</p>
+
+<p>Everything is online now, it’s communication time!</p>
+
+<h2 id="communication">Communication</h2>
+
+<p>I’m not a marketing guy, not at all.<br />
+But for this service, because it’s on Twitter, it seems easy to find a few growth hacks or
+dropping the buzzword: automated marketing.</p>
+
+<p>Here are some idea I got, as usual it takes time to implement, so I will test it manually first:</p>
+
+<ul>
+<li>When a thread has been unrolled on the service, the Twitter account could follow the main user and reply to the thread with a link to read it on the website.</li>
+<li>Use Twitter search to look for thread related keywords like #threads #unroll and so on, then unroll the thread if applicable and message the author.</li>
+</ul>
+
+<p>That’s right, I’m taking some human time to contact people and unroll thread by hand to get the tool some traction.
+Also, it allows me to talk with the user and see if they are interested.<br />
+I spent about 2 × 3h to do that (per week).</p>
+
+<p>Basically I search for "#thread" or "tweetstorm", 
+and it’s not so easy to find great content (something that our bot will have to deal with)</p>
+
+<div class="bs-callout bs-callout-warning">
+    <strong>Note:</strong>
+    <p>
+        As a rule of thumb we have to ask people to pay early to see if the service has value, 
+        but for this service I decided to offer it for free.
+    </p>
+</div>
+
+<p>Now that we are on tracks and can iterate fast, let’s ask user for feedbacks and start implements new features.</p>
+
+<h3 id="user-feedbacks">User feedbacks</h3>
+
+<p>You should contact every user you have and ask them for feedback,<br />
+I did contact many of them on Twitter and I got some interesting thoughts:</p>
+
+<ul>
+<li>“Can it be a browser extension, so I don’t have to leave Twitter?”</li>
+<li>“How can you be sure that people will remember about your product each time they need it, and how to be sure they will take the time to use it resisting the urge to see the story in the first place”</li>
+<li>“Hey can you make it so if you have a pic in first tweet it shows up w/in blue box?”</li>
+<li>“I like the idea but how you're going to handle the mobile version?”</li>
+<li>“Maybe it needs a refresh thread button?”</li>
+</ul>
+
+<hr>
+
+<p><strong>
+    In the <a href="/2017/10/20/thread-reader-from-lauch-to-traction">next episode</a> we will talk more in depth about communication and traction.
+</strong></p>
+
+<hr>
+
+<h1 id="annex">Annex</h1>
+
+<h2 id="todo-list">TODO List</h2>
+
+<p>This is an example of my TODO list at some point,<br />
+it’s here to show you that you don’t have to worry about having many things to do, it goes by:</p>
+
+<ul>
+<li>Show media</li>
+<li>Sometime people write "1/x" we could remove/lighten that?</li>
+<li>When a thread is too old the API does not allow to retrieve it</li>
+<li>Extended tweets has all the @mentions at the start of the tweet text, put them aside</li>
+<li>If the thread has only one tweet, show an error message (try to be explicit about the reason)</li>
+<li>Beautiful error pages</li>
+<li>Show embedded tweets/YouTube videos</li>
+<li>Sometime expended links are too long and break the design</li>
+<li>Add suggestion of what to read next in the bottom of the page</li>
+<li>Add a big CTA "share this thread" on top of the page</li>
+<li>Full Twitter user badge on each page</li>
+<li>Make a Twitter bot to do the job and explain that on the homepage</li>
+<li>Allow people to reclaim and/or remove a specific tttthreads (and block it)</li>
+<li>Polls are not shown, that’s ok but explicit it someway</li>
+<li>Make some GIF to show how it works (bot and full service)</li>
+<li>Make a waiting page if the thread had never been retrieved because it can be super long</li>
+<li>Block specific #hashtag (including for example #thread)</li>
+<li>Prepare the communication for websites</li>
+<li>Automated marketing, look for #thread and try to unroll, if the result is > 3 send the link to the user</li>
+<li>Preview should show textual information and hashtags instead of image</li>
+<li>Add trends on homepage</li>
+<li>If possible merge bots so mention would work with both or keep only one</li>
+<li>And so on…</li>
+</ul>
+
+<h2 id="youtube-videos">YouTube videos</h2>
+
+<p><small>Edit 2020, unfortunately those video are outdated, so I've deleted them</small></p>
+
+<ul>
+<li><a href="#video-not-available">Create a Twitter account and App</a></li>
+<li><a href="#video-not-available">Setup PHP and Silex framework</a></li>
+<li><a href="#video-not-available">Get your first Tweet from the Twitter API</a></li>
+<li><a href="#video-not-available">Get replies from a given Tweet with the Twitter search API</a></li>
+<li><a href="#video-not-available">Loop over each Tweet plus testing and debug</a></li>
+<li><a href="#video-not-available">Template using example from Twitter bootstrap</a></li>
+<li><a href="#video-not-available">Implement a caching mechanism</a></li>
+<li><a href="#video-not-available">Allow user to post new content to the site</a></li>
+<li><a href="#video-not-available">Switch from Twitter Search to Timeline</a></li>
+</ul>
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+    </section>
+    <footer class="pt-10">
+            </footer>
+    </article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+        <p class="text-right" style="opacity: 0.5;">
+            contact: jerome@gangneux.net
+        </p>
+    </footer>
+
+            </body>
+</html>

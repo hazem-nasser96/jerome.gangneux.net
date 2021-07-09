@@ -1,0 +1,104 @@
+<!doctype html>
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>weheartprojects</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/swfobject/2.2/swfobject.js"></script>
+    <script src="youmix.js"></script>
+    <style>
+      body {
+        font-family: sans-serif;
+        background: black;
+        color: white;
+      }
+      #left {
+      float: left;
+      width: 50%;
+      height: 100%;
+      background: #200;
+      }
+      #right {
+      float: right;
+      width: 50%;
+      background: #020;
+      }
+      .result {
+      height: 500px;
+      overflow: auto;
+      }
+      .result a {
+      display: block;
+      }
+      .result strong {
+        border-bottom: solid 2px white;
+        padding: 5px 0;
+        margin: 5px 0;
+        display: block;
+        font-size: 20px;
+        font-weight: normal;
+      }
+      #fullright {
+          float: right;
+      }
+      .padder { margin: 5px; background: #111; }
+      a,a:hover,button{
+        cursor: pointer;
+        text-decoration: none;
+        color: black;
+        background: white;
+        padding: 2px;
+        border: solid 1px #888;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="extern">Open popup for dual screen</button>
+    <div style="padding:10px;width:480px;margin:0 auto"><a href="#" id="fullright">RIGHT</a><a href="#" id="fullleft">LEFT</a><div id="slider"></div></div>
+    <div id="left">
+      <div class="padder">
+        <div id="video1"></div>
+        <div id="info1">
+          <span class="time">00:00</span> / <span class="duration">00:00</span>
+          <span class="loaded">0%</span> 
+          <a href="#" class="play">Play</a> <a href="#" class="pause">Pause</a>
+        </div>
+        <div id="search1" class="search">
+          <form>
+            <input type="text" name="search1" value="">
+            <button>Search</button>
+          </form>
+          <div id="result1" class="result"></div>
+        </div>
+      </div>
+    </div>
+    <div id="right">
+      <div class="padder">
+        <div id="video2"></div>
+        <div id="info2">
+          <span class="time">00:00</span> / <span class="duration">00:00</span>
+          <span class="loaded">0%</span>
+          <a href="#" class="play">Play</a> <a href="#" class="pause">Pause</a>
+        </div>
+        <div id="search2" class="search">
+          <form>
+            <input type="text" name="search2" value="">
+            <button>Search</button>
+          </form>
+          <div id="result2" class="result"></div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

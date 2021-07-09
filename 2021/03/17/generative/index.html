@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Generative - Jérôme Gangneux</title>
+                <meta name="description" content="This is a series of images, sounds and/or videos generated from multiple techniques, enjoy the beauty of generative art.">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="This is a series of images, sounds and/or videos generated from multiple techniques, enjoy the beauty of generative art.">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2021/03/17/generative" />
+        <meta property="og:title" content="Generative - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/art/generative-cover.png" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+            <div class="text-5xl font-semibold tracking-tight leading-none mb-12">
+                <a href="/">Jérôme Gangneux</a>
+                                :: Projects
+                            </div>
+            <div id="main-menu" class="mt-4">
+                <div class="flex sm:text-xl text-base flex-wrap">
+                                                            <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Projects</a>
+                    <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Art</a>
+                    <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Blog</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <style>#site-header { display: none; }</style>
+<nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>Generative</h1>
+        <p>March 17, 2021</p>
+    </header>
+    <section class="main">
+        <h1 id="squared-sin">Squared Sin()</h1>
+
+<p>This has been made with custom code.<br />
+Details: basically playing with the Sin() math function and gradients.</p>
+
+<p>You can make your own here: <a href="https://jerome.gangneux.net/experiments/sq/">experiments/sq</a></p>
+
+<p><section id="gallery">
+    <h2>Gallery</h2>
+    <div class="mx-auto max-w-2xl mt-6">
+        <div class="text-center">Click for more screenshots</div>
+        <div class="shadow-2xl relative">
+                        <div class="mySlides"><img class="image1 w-full w-full" src="/images/projects/generative/sq_0.png"></div>
+                        <div class="mySlides"><img class="image2 w-full w-full" src="/images/projects/generative/sq_1.png"></div>
+                        <div class="mySlides"><img class="image3 w-full w-full" src="/images/projects/generative/sq_2.png"></div>
+                        <div class="mySlides"><img class="image4 w-full w-full" src="/images/projects/generative/sq_3.png"></div>
+                        <div class="mySlides"><img class="image5 w-full w-full" src="/images/projects/generative/sq_4.png"></div>
+                        <div class="mySlides"><img class="image6 w-full w-full" src="/images/projects/generative/sq_5.png"></div>
+                        <span class="absolute left-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="z-index: 11;" onclick="plusSlides(-1)">❮</span>
+            <span class="absolute right-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="width: 100%;z-index: 10;justify-content: flex-end;" onclick="plusSlides(1)">❯</span>
+        </div>
+    </div>
+
+    <script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) { showSlides(slideIndex += n); return false; }
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex - 1].style.display = "block";
+    }
+    </script>
+</section>
+</p>
+
+<p>More work below ⬇️</p>
+
+<h1 id="from-movies">From Movies</h1>
+
+<p>Videos with sound generated from existing movies.</p>
+
+<p>This has been made with custom code.<br />
+Details: for a given movie,</p>
+
+<p>1/ Getting the average color of each frame, then putting pixel after pixel on the video<br />
+2/ Generating a music track from each color component (R/G/B) for the kick, piano, bass<br />
+3/ Merge all in the video at 200fps</p>
+
+<h2 id="generative-31104577f3">Generative 31104577f3</h2>
+
+<iframe src="https://player.vimeo.com/video/529744282?title=0&amp;byline=0&amp;portrait=0" width="100%" height="394" class="center" frameborder="0" allowfullscreen></iframe>
+
+<p><br>
+Note: the final video does not suffer from any compression artifacts.</p>
+
+<p>I my opinion, one of the best parts is around 4:30 
+where something very bright happen in the movie and is well reflected in the soundtrack</p>
+
+<p>The final image resulting from the process looks like:
+<!-- I hope this will make someone lol --><center>
+<img class="shadow-2xl center" src="https://jerome.gangneux.net/images/upload/m_1px_raw.png" />
+</center></p>
+
+<h2 id="generative-6c044c095b">Generative 6c044c095b</h2>
+
+<iframe src="https://player.vimeo.com/video/529745381?title=0&amp;byline=0&amp;portrait=0" width="100%" height="394" class="center" frameborder="0" allowfullscreen></iframe>
+
+<p><br>
+Note: the final video does not suffer from any compression artifacts.</p>
+
+<h2 id="for-sale">For sale</h2>
+
+<p>Those art piece are for sale, they come with:</p>
+
+<ul>
+<li>Full quality video with audio</li>
+<li>Full quality audio track</li>
+<li>Final image</li>
+<li>Intermediate files used to generate the video and audio</li>
+<li>Code made to generate that particular piece</li>
+<li>Documentation to understand the code</li>
+</ul>
+
+<p>contact me!</p>
+
+    </section>
+    <footer class="pt-10">
+            </footer>
+    </article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+        <p class="text-right" style="opacity: 0.5;">
+            contact: jerome@gangneux.net
+        </p>
+    </footer>
+
+            </body>
+</html>

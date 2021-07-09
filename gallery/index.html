@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+      <meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, user-scalable=no" />
+      <title>Photo album - Home</title>
+      <link rel="stylesheet" href="public/lightgallery/css/lightgallery.css" />
+      <link rel="stylesheet" href="public/videojs/video-js.min.css" />
+      <link rel="stylesheet" href="public/lightgallery/css/lg-exif.min.css" />
+      <link rel="stylesheet" href="public/core.css" />
+      <link rel="stylesheet" href="public/theme.css" />
+  </head>
+
+  <body>
+
+    
+    <div id="container">
+    
+      <!--
+        Gallery title
+      -->
+      <header>
+        <h1><a href="index.html">Photo album</a></h1>
+      </header>
+    
+      <!--
+        Breadcrumbs of parent albums
+      -->
+      <nav class="breadcrumbs">
+    <a class="breadcrumb-item" href="index.html">Home</a>
+      </nav>
+    
+      <!--
+        Nested albums, if any
+      -->
+      <div id="albums">
+    <a href="2015.html" style="background-image: url('media/large/2015/795c008dfbb47166dc5c5282d505004a.jpg')">
+            <div class="info">
+              <h3>2015</h3>
+              <div class="summary">3 photos</div>
+              <div class="date">28 Dec 2018 - 28 Dec 2018</div>
+            </div>
+          </a><a href="2016.html" style="background-image: url('media/large/2016/011b93f01cd9767896876bba06c33045.jpg')">
+            <div class="info">
+              <h3>2016</h3>
+              <div class="summary">37 photos</div>
+              <div class="date">28 Dec 2018 - 28 Dec 2018</div>
+            </div>
+          </a><a href="2017.html" style="background-image: url('media/large/2017/0d03644f924793f5f8681483eaadda87.jpg')">
+            <div class="info">
+              <h3>2017</h3>
+              <div class="summary">56 photos</div>
+              <div class="date">28 Dec 2018 - 28 Dec 2018</div>
+            </div>
+          </a><a href="2018.html" style="background-image: url('media/large/2018/0249b17e6eec55e7a5162eaebbbf37b4.jpg')">
+            <div class="info">
+              <h3>2018</h3>
+              <div class="summary">39 photos</div>
+              <div class="date">28 Dec 2018 - 28 Dec 2018</div>
+            </div>
+          </a><a href="FactAndFont.html" style="background-image: url('media/large/FactAndFont/000008_25738916383_o.jpg')">
+            <div class="info">
+              <h3>FactAndFont</h3>
+              <div class="summary">22 photos</div>
+              <div class="date">15 Nov 2018 - 15 Nov 2018</div>
+            </div>
+          </a><a href="argentiques.html" style="background-image: url('media/large/argentiques/argentique_26249603842_o.jpg')">
+            <div class="info">
+              <h3>argentiques</h3>
+              <div class="summary">48 photos</div>
+              <div class="date">15 Nov 2018 - 15 Nov 2018</div>
+            </div>
+          </a><a href="burning_man.html" style="background-image: url('media/large/burning_man/burningman2015_10_35093275850_o.jpg')">
+            <div class="info">
+              <h3>burning_man</h3>
+              <div class="summary">12 photos</div>
+              <div class="date">15 Nov 2018 - 15 Nov 2018</div>
+            </div>
+          </a><a href="disney.html" style="background-image: url('media/large/disney/ariel-final.png')">
+            <div class="info">
+              <h3>disney</h3>
+              <div class="summary">7 photos</div>
+              <div class="date">14 Dec 2015 - 14 Dec 2015</div>
+            </div>
+          </a><a href="hero.html" style="background-image: url('media/large/hero/captainamerica-final.png')">
+            <div class="info">
+              <h3>hero</h3>
+              <div class="summary">8 photos</div>
+              <div class="date">12 Nov 2017 - 12 Nov 2017</div>
+            </div>
+          </a><a href="nk.html" style="background-image: url('media/large/nk/img_0001_29802489720_o.jpg')">
+            <div class="info">
+              <h3>nk</h3>
+              <div class="summary">162 photos</div>
+              <div class="date">05 Sep 2016 - 15 Nov 2018</div>
+            </div>
+          </a><a href="starwars.html" style="background-image: url('media/large/starwars/bb8.png')">
+            <div class="info">
+              <h3>starwars</h3>
+              <div class="summary">14 photos</div>
+              <div class="date">14 Jan 2016 - 12 Nov 2017</div>
+            </div>
+          </a>  </div>
+    
+      <!--
+        All photos and videos
+      -->
+      <ul id="media" class="clearfix">
+      </ul>
+    
+      <!--
+        Optional footer
+      -->
+    
+    </div>
+    <!-- Video loader -->
+    <div id="videos">
+    </div>
+
+    <!-- jQuery -->
+    <script src="public/jquery.min.js"></script>
+    <!-- VideoJS -->
+    <script src="public/videojs/video.min.js"></script>
+    <!-- LightGallery -->
+    <script src="public/lightgallery/js/lightgallery.js"></script>
+    <script src="public/lightgallery/js/lg-autoplay.js"></script>
+    <script src="public/lightgallery/js/lg-pager.js"></script>
+    <script src="public/lightgallery/js/lg-thumbnail.js"></script>
+    <script src="public/lightgallery/js/lg-video.js"></script>
+    <script src="public/lightgallery/js/lg-exif.min.js"></script>
+
+    <script>
+      $(document).ready(function() {
+        $("#media").lightGallery({
+          thumbWidth: 80,
+          controls: true,
+          loop : false,
+          download: true,
+          counter: true,
+          videojs: true
+        });
+      });
+    </script>
+
+
+  </body>
+
+</html>
