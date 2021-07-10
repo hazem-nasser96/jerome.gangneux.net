@@ -1,0 +1,37 @@
+version: "3.3"
+services:
+
+    database:
+        image: mysql
+        container_name: bookmark_mysql
+        restart: always
+        # We set up a docker volume to store our database data
+        volumes:
+            - bookmark-mysql-data:/var/lib/mysql
+        environment:
+            MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+        networks:
+            - bookmark-network
+        # This option fix the "mbind: Operation not permitted" error that pops in the logs
+        # https://stackoverflow.com/a/55706057/696517
+        cap_add:
+            - SYS_NICE
+
+    php:
+        # Comes from the Dockerfile we talked about earlier
+        build: docker/php
+        container_name: bookmark_php
+        # We will mount our application code in this directory
+        volumes:
+            - ./:/var/www
+        restart: always
+        # Connect this to the common network
+        networks:
+            - bookmark-network
+
+# Common network among all the machines
+networks:
+    bookmark-network:
+
+volumes:
+    bookmark-mysql-data:

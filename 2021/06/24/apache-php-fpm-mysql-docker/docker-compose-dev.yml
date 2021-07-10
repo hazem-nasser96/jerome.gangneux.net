@@ -1,0 +1,47 @@
+version: "3.3"
+services:
+
+    database:
+        # For local development I expose the database
+        # Expose port 3306 (mysql default) and bind it to 3307 on the local machine
+        ports:
+          - "3307:3306"
+        # Not auto-restarting the container in local
+        restart: "no"
+
+    # I love this project for dev purpose, I let you check more about it here: https://github.com/maildev/maildev
+    # it's optional and I won't go in detail about it now
+    mail:
+        image: maildev/maildev
+        container_name: bookmark_maildev
+        command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
+        ports:
+          - "8083:80"
+        restart: "no"
+        networks:
+            - bookmark-network
+
+    php:
+        # Not auto-restarting the container in local
+        restart: "no"
+
+    apache:
+        # For local development I set up an Apache server
+        # It comes from the Dockerfile we talked about earlier
+        build: docker/apache
+        container_name: bookmark_apache
+        # Start after those image
+        depends_on:
+            - php
+            - database
+        # Expose port 80 and bind it to 9001 on the local machine
+        ports:
+            - "9001:80"
+        volumes:
+            # We will mount our application code in this directory
+            - ./:/var/www
+            # This one is to allow us to set up apache vhosts (see below)
+            - ./docker/apache/conf:/etc/apache2/sites-enabled
+        restart: "no"
+        networks:
+            - bookmark-network
