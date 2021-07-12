@@ -2,9 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://jerome.gangneux.net/la_vie_n_a_pas_de_sens</loc>
-    <lastmod>2020-12-17</lastmod>
+    <lastmod>2021-07-12</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+  </url>
+    <url>
+    <loc>https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/07/12</loc>
+    <lastmod>2021-07-12T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+    <url>
+    <loc>https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/06/01</loc>
+    <lastmod>2021-06-01T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
     <url>
     <loc>https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/05/29</loc>

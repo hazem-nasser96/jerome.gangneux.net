@@ -3,9 +3,23 @@
     <title><![CDATA[La vie n&#039;a pas de sens]]></title>
     <link href="https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/atom.xml" rel="self"/>
     <link href="https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/"/>
-    <updated>2020-12-17T15:19:24+00:00</updated>
+    <updated>2021-07-12T15:31:42+00:00</updated>
     <id>https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/</id>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+            <entry>
+            <title type="html"><![CDATA[Livre de mars]]></title>
+            <link href="https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/07/12"/>
+            <updated>2021-07-12T00:00:00+00:00</updated>
+            <id>https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/07/12</id>
+            <content type="html"><![CDATA[]]></content>
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[La machine]]></title>
+            <link href="https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/06/01"/>
+            <updated>2021-06-01T00:00:00+00:00</updated>
+            <id>https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/06/01</id>
+            <content type="html"><![CDATA[]]></content>
+        </entry>
             <entry>
             <title type="html"><![CDATA[29 mai 2020]]></title>
             <link href="https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/05/29"/>
@@ -60,20 +74,6 @@
             <link href="https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/05/20"/>
             <updated>2020-05-20T00:00:00+00:00</updated>
             <id>https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/05/20</id>
-            <content type="html"><![CDATA[]]></content>
-        </entry>
-            <entry>
-            <title type="html"><![CDATA[19 mai 2020]]></title>
-            <link href="https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/05/19"/>
-            <updated>2020-05-19T00:00:00+00:00</updated>
-            <id>https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/05/19</id>
-            <content type="html"><![CDATA[]]></content>
-        </entry>
-            <entry>
-            <title type="html"><![CDATA[18 mai 2020]]></title>
-            <link href="https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/05/18"/>
-            <updated>2020-05-18T00:00:00+00:00</updated>
-            <id>https://jerome.gangneux.net/la_vie_n_a_pas_de_sens/05/18</id>
             <content type="html"><![CDATA[]]></content>
         </entry>
     </feed>
