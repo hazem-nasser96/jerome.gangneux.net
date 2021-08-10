@@ -1,0 +1,139 @@
+#!/usr/bin/env php
+<?php
+
+const DB_FILE_NAME = './doubloon.sqlite';
+$shortOptions = [];
+// Index options
+$shortOptions['e:'] = 'File extension to check ; coma separated ; case insensitive ; default: "jpg,jpeg,gif,png"';
+$shortOptions['s:'] = 'Hash algorithm used ; available: md5, sha1 ; default "md5"';
+$shortOptions['r'] = 'Reset/rebuild index';
+// Program options
+$shortOptions['f'] = 'For a given doubloon ; keep the first and delete the others ; default: interactive mode: ask';
+$shortOptions['h'] = 'This help';
+
+$options = array_merge([
+    'e' => 'jpg,jpeg,gif,png',
+    's' => 'md5',
+], getopt(implode(array_keys($shortOptions)), []));
+
+function stdout($message)
+{
+    echo $message."\n";
+}
+
+function sqlite(bool $create)
+{
+    $sql = new SQLite3(DB_FILE_NAME);
+    if ($create) {
+        $sql->exec('CREATE TABLE "file" ("path" text NOT NULL, "hash" varchar NOT NULL, PRIMARY KEY (path));');
+    }
+
+    return $sql;
+}
+
+function findDoubloons()
+{
+    $hashes = [];
+    $db = sqlite(false);
+    $result = $db->query('SELECT * FROM `file` WHERE `hash` IN (
+        SELECT `hash` FROM `file` GROUP BY `hash` HAVING COUNT(*) >= 2
+    )');
+    while (($row = $result->fetchArray(SQLITE3_ASSOC))) {
+        $hashes[$row['hash']][] = $row['path'];
+    }
+
+    return $hashes;
+}
+
+function index(string $directory, string $extensions, string $hashAlgo)
+{
+    stdout('Building index...');
+    $extensionsRegex = '`\.('.str_replace(',', '|', preg_quote($extensions)).')$`i';
+    $find = shell_exec('find -L "'.$directory.'"'); // -L to follow symlinks
+    $data = explode("\n", $find);
+    $db = sqlite(true);
+    foreach ($data as $line) {
+        $line = trim($line);
+        if (!preg_match($extensionsRegex, $line)) {
+            continue;
+        }
+        if ('sha1' === $hashAlgo) {
+            $hash = sha1_file($line);
+        } else {
+            $hash = md5_file($line);
+        }
+        $statement = $db->prepare('INSERT OR IGNORE INTO `file` VALUES (:path, :hash);');
+        $statement->bindParam(':path', $line, SQLITE3_TEXT);
+        $statement->bindParam(':hash', $hash, SQLITE3_TEXT);
+        $statement->execute();
+
+        stdout($line.': '.$hash);
+    }
+
+    stdout('done.');
+
+    exit(0);
+}
+
+function remove($interactive)
+{
+    $hashes = findDoubloons();
+    $delete = [];
+    $progress = 0;
+    $total = count($hashes);
+    stdout('Started, type 99 to finish...');
+    foreach ($hashes as $hash => $paths) {
+        ++$progress;
+        stdout("Found doubloons ({$progress}/{$total}):");
+        stdout('    0. No action');
+        $candidates = [];
+        $c = 0;
+        foreach ($paths as $path) {
+            ++$c;
+            $candidates[$c] = $path;
+            stdout("    {$c}. {$path}");
+        }
+        if (!$interactive) {
+            $action = 1;
+        } else {
+            $action = (int) trim(readline("> keep [0-{$c}]: "));
+        }
+        if (0 == $action) {
+            continue;
+        }
+        if (99 == $action) {
+            break;
+        }
+        unset($candidates[$action]);
+        $delete = array_merge($delete, array_values($candidates));
+    }
+    stdout("Double check everything and execute:\n");
+    foreach ($delete as $d) {
+        stdout('rm "'.$d.'"');
+    }
+    stdout('rm '.DB_FILE_NAME);
+
+    return $delete;
+}
+
+if (array_key_exists('h', $options)) {
+    stdout("Usage: {$argv[0]} [options]");
+    foreach ($shortOptions as $name => $message) {
+        $name = trim($name, ':');
+        stdout("    -{$name}    {$message}");
+    }
+
+    exit(0);
+}
+
+if (array_key_exists('r', $options)) {
+    @unlink(DB_FILE_NAME);
+}
+
+if (!file_exists(DB_FILE_NAME)) {
+    // No index exist in this directory, build one
+    index('.', $options['e'], $options['s']);
+} else {
+    // the index already exist, start the program
+    remove(!array_key_exists('f', $options));
+}

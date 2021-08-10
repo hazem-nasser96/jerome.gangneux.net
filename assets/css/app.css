@@ -98,6 +98,12 @@ body {
     list-style: inside;
 }
 
+.post blockquote {
+    padding-left: 1rem;
+    font-style: italic;
+    border-left: solid 5px black;
+}
+
 code {
     font-size: 1rem;
     background-color: #272822;
@@ -134,6 +140,10 @@ code.filepath {
 
     .post a {
         color: #F472B6; /* equivalent to pink-100 */
+    }
+
+    .post blockquote {
+        border-left: solid 5px white;
     }
 
     code.filepath {

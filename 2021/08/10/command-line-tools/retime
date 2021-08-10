@@ -1,0 +1,64 @@
+#!/usr/bin/env php
+<?php
+
+function stdout($message)
+{
+    echo $message."\n";
+}
+
+if (2 != count($argv)) {
+    stdout('Rename media files to their original creation time (if possible)');
+    stdout("Usage {$argv[0]} source_media");
+
+    exit(1);
+}
+
+function exiftool(string $file): array
+{
+    $output = shell_exec('exiftool '.escapeshellarg($file));
+    $data = [];
+    foreach (explode("\n", $output) as $line) {
+        $l = explode(':', $line, 2);
+        $data[trim($l[0])] = trim($l[1]);
+    }
+
+    return $data;
+}
+
+$file = $argv[1];
+$directory = dirname($file);
+$extension = pathinfo($file, PATHINFO_EXTENSION);
+$data = exiftool($file);
+
+if (isset($data['Creation Date'])) {
+    $exifDate = $data['Creation Date'];
+} elseif (isset($data['Date Time Original'])) {
+    $exifDate = $data['Date Time Original'];
+} else {
+    stdout("Can not find relevant exif information for {$file}");
+
+    exit(1);
+}
+
+$date = date_create($exifDate);
+if (!$date) {
+    stdout("Can not parse date for {$file}");
+
+    exit(2);
+}
+
+$name = $date->format('Y-m-d H-i-s').'.'.$extension;
+$destination = $directory.DIRECTORY_SEPARATOR.$name;
+
+if (file_exists($destination)) {
+    stdout("A file with that name already exist {$name} for file {$file}");
+
+    exit(3);
+}
+
+rename($file, $destination);
+$touchDate = $date->format('YmdHi.s');
+shell_exec('touch -t '.$touchDate.' '.escapeshellarg($destination));
+stdout("Success: {$file} renamed in {$destination}");
+
+exit(0);
