@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Android Webview Texture - Jérôme Gangneux</title>
+                <meta name="description" content="[ARCHIVED] This is a working Webview Texture (VR compatible) for Android (Unity asset).">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="[ARCHIVED] This is a working Webview Texture (VR compatible) for Android (Unity asset).">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2017/02/01/android-vr-webview" />
+        <meta property="og:title" content="Android Webview Texture - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/projects/android-vr-webview-cover.jpg" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+            <div class="text-5xl font-semibold tracking-tight leading-none mb-12">
+                <a href="/">Jérôme Gangneux</a>
+                            </div>
+            <div id="main-menu" class="mt-4">
+                <div class="flex sm:text-xl text-base flex-wrap">
+                                                            <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Featured</a>
+                    <a href="/posts/category/projects" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Projects</a>
+                    <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Art</a>
+                    <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Blog</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <style>#site-header { display: none; }</style>
+<nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>Android Webview Texture</h1>
+        <p>February 1, 2017</p>
+    </header>
+    <section class="main">
+        <h1 id="android-webview-texture-vr-compatible">Android Webview Texture (VR compatible)</h1>
+
+<p>{:.no_toc}</p>
+
+<p><strong>This project is ARCHIVED, support is over, it has been removed from the Asset Store.</strong><br />
+If you want to know more about why, <a href="/blog/2017/09/23/android-webview-texture-is-over.html">I wrote about it here</a></p>
+
+<h2 id="pitch">Pitch</h2>
+
+<p>✨ This is a working Webview <strong>Texture</strong> for Android ✨<br />
+It also has been tested in VR ✅ and works well with both Google Cardboard SDK, Google Daydream SDK and GearVR.</p>
+
+<p>It is very fast because unlike some plugins this is a GL texture and not a bitmap copy of the view.</p>
+
+<h2 id="screenshots%2Fvideos">Screenshots/videos</h2>
+
+<h3 id="screenshot-3d-texture">Screenshot (3D texture)</h3>
+
+<p>This Webview will act like a standard texture, usage are limit-less:</p>
+
+<p style="text-align:center"><a href="/images/projects/android-vr-webview/webview-texture-example.png"><img src="/images/projects/android-vr-webview/webview-texture-example.jpg"></a></p>
+
+<!-- Checkout a working demo: **[APK demo](https://www.dropbox.com/s/me0fdigbt2ovyo2/demo-3d-v1.2.apk?dl=0)** -->
+
+<h3 id="video-vr-mode">Video (VR mode)</h3>
+
+<iframe width="100%" height="394" class="keep-ratio-16-9" src="https://www.youtube.com/embed/WSjZgeqAkpA" frameborder="0" allowfullscreen></iframe>
+
+<p>I want to thank Oculus that open sourced a part of their SDK and it has been a great source of inspiration for me, also want to thank Felix Jones who help me to get things right.</p>
+
+<h2 id="documentation">Documentation</h2>
+
+<h3 id="limitations">Limitations</h3>
+
+<p>This plugin require Android Kitkat 4.4 (API 19) or more.<br />
+It will only work with <strong>arm64</strong> devices!</p>
+
+<p>⚠️ It has some limitations (but I'm working on it)</p>
+
+<ul>
+<li>You can only have one VR Webview on your scene</li>
+<li>It works only for Android (no preview available on the Unity Editor) not working on iOS,</li>
+<li>The Webview itself is not hardware accelerated — read this it is important — it means that no WebGL websites will work, and more important, most video won't play (because they often use hardware rendering to play) and <code>&lt;canvas&gt;</code> won't be hardware accelerated</li>
+<li>Android API >= 19</li>
+</ul>
+
+<p>I am sorry about these limitations.</p>
+
+<h3 id="vr-configuration">VR Configuration</h3>
+
+<p><strong>Tested with Google Daydream and Google Cardboard</strong><br />
+other VR SDK could work but there is no guarantee.</p>
+
+<p>You must have a Google VR Unity version (-GVRXX) or use the last Unity beta (5.6)<br />
+Your build parameters (found in Build Settings > Player Settings) should look like this:</p>
+
+<p style="text-align:center"><img src="/images/projects/android-vr-webview/build_settings_help.png" style="max-width:100%"></p>
+
+<h3 id="events-mechanism">Events mechanism</h3>
+
+<p>The Webview will give you delegate messages for specific events:</p>
+
+<ul>
+<li>onPageStarted:string => when a new url is about to be loaded</li>
+<li>onPageFinished:string => when a new url has finished to load</li>
+<li>onReceivedError:string => when an error happen</li>
+<li>onResultEvaluateJavascript:string => result of a EvaluateJavascript call</li>
+</ul>
+
+<p>you can parse these messages and handle it as you wish</p>
+
+<p>Of course you can send touch event to the Webview, this will allow you to click links, scroll the view and much more.<br />
+➡️ A full working example is included.</p>
+
+<h2 id="download">Download</h2>
+
+<p>Download link has been removed.
+<!-- Checkout the extension on the **[Unity Asset store](https://www.assetstore.unity3d.com/#!/content/82379)**  --></p>
+
+<p>Note that the JAVA part of the source code is included in the asset.<br />
+The included source code is licensed under the MIT license.</p>
+
+<blockquote>
+  <p>Copyright (c) 2017 Jérôme Gangneux</p>
+  
+  <p>Permission is hereby granted, free of charge, to any person obtaining a copy
+  of this software and associated documentation files (the "Software"), to deal
+  in the Software without restriction, including without limitation the rights
+  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+  copies of the Software, and to permit persons to whom the Software is
+  furnished to do so, subject to the following conditions:</p>
+  
+  <p>The above copyright notice and this permission notice shall be included in all
+  copies or substantial portions of the Software.</p>
+  
+  <p>THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+  SOFTWARE.</p>
+</blockquote>
+
+    </section>
+    <footer class="pt-10">
+            </footer>
+    </article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+        <p class="text-right" style="opacity: 0.5;">
+            contact: jerome@gangneux.net
+        </p>
+    </footer>
+
+            </body>
+</html>

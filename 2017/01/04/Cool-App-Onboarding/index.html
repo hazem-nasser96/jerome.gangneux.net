@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Cool App Onboarding - Jérôme Gangneux</title>
+                <meta name="description" content="Let&#039;s see how I came with this idea: a chat bot to introduce the App features and onboard the user. It seems very logic for me.">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="Let&#039;s see how I came with this idea: a chat bot to introduce the App features and onboard the user. It seems very logic for me.">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2017/01/04/Cool-App-Onboarding" />
+        <meta property="og:title" content="Cool App Onboarding - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/writing/testOnboardingCool.gif" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+            <div class="text-5xl font-semibold tracking-tight leading-none mb-12">
+                <a href="/">Jérôme Gangneux</a>
+                            </div>
+            <div id="main-menu" class="mt-4">
+                <div class="flex sm:text-xl text-base flex-wrap">
+                                                            <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Featured</a>
+                    <a href="/posts/category/projects" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Projects</a>
+                    <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Art</a>
+                    <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Blog</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <style>#site-header { display: none; }</style>
+<nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>Cool App Onboarding</h1>
+        <p>January 4, 2017</p>
+    </header>
+    <section class="main">
+        <h1 id="introduction">Introduction</h1>
+
+<p>A few months ago I was working on <a href="https://jerome.gangneux.net/projects/2016-02-whask/">Whask</a>,
+and because we were looking for a market fit we were alway prototyping things,
+working to reduce the friction, accelerate the adoption, increase the conversion and keep up the retention.<br />
+Startup life.</p>
+
+<p>In this context, and even if it is not my job, I had a chance to work on the UX.
+I'm passionate about thinking of new ways to onboard user: it is challenging, and no clear winner has been found yet.</p>
+
+<p>Even today at Augment we are still working on user tests to found the best way to introduce augmented reality to our users. And trust me, it is not easy.</p>
+
+<h1 id="prototype">Prototype</h1>
+
+<p>At Whask we were targeting youth people, and the chat bot trend had just started.
+That's how I came with this idea: a chat bot to introduce the App features and onboard the user.<br />
+It seems very logic for me.</p>
+
+<p>At that time I made this GIF to show how it could work</p>
+
+<div style="text-align:center;margin:20px 0">
+    <img src="/images/writing/testOnboardingCool.gif" style="padding:10px;max-width:100%;"><br>
+    <strong>An image is worth a thousand words</strong>
+</div>
+
+<p>
+    <small>
+        <b>translation:</b>
+        <ul>
+            <li>Hello, welcome to Whask2</li>
+            <li>To learn about each other, tell me your name ?</li>
+            <li>Jérôme</li>
+            <li>Nice to meet you Jérôme</li>
+            <li>To create your account we need your phone number</li>
+            <li>0659919272</li>
+        </ul>
+    </small>
+</p>
+
+<p>But we haven't had a chance to test it, neither implement it, Whask didn't found its way.</p>
+
+<h1 id="live-code">Live code</h1>
+
+<p>Two or three months later I still wanted to test that idea on a real App.
+So we decided with my friend Damien (designer) to give it another try.<br />
+We use the old — still fashionable — good idea of <a href="https://jerome.gangneux.net/projects/2011-01-weekenddo/">Squarechat</a>: Geolocation + anonymous chat App to be the base for our experimentation.</p>
+
+<p>And this is the result:</p>
+
+<div style="width:100%">
+    <iframe style="width:320px;left:50%;height:565px;position:relative;margin-left:-160px;" width="320" height="565" src="https://www.youtube.com/embed/WKdm4R6KZaQ" frameborder="0" allowfullscreen></iframe>
+</div>
+
+<h1 id="conclusion">Conclusion</h1>
+
+<p>Of course the App is not finished at all<sup>*</sup></p>
+
+<p>But as you can see, the bot explains the concept of the App,
+ask for an avatar (not implemented), explain why the App needs location and notification, ask for it, and when the user responds it continues the discussion.</p>
+
+<p>It is very interactive and streamlined.</p>
+
+<p>I think it works pretty well. It has not been user tested but I have a good feeling about it.<br />
+For sure this was a Chat App so this kind of onboarding seems right, but I guess it could work for other things than chat App.</p>
+
+<p>As an user, it would not surprise me if an App starts that way,
+and for me it is a great improvement compared to any other kind of blocking tutorials.
+I hate 3 steps tutorials with sliders or other annoying overlays.</p>
+
+<p>I'm not saying it is the ultimate solution to all your onboarding problems, but give it a try :)</p>
+
+<p>Tell me what you think about it!</p>
+
+<p><small>* Squarechat2 will never goes live, I have <a href="https://jerome.gangneux.net/blog/vr/">other priorities</a></small></p>
+
+    </section>
+    <footer class="pt-10">
+            </footer>
+    </article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+        <p class="text-right" style="opacity: 0.5;">
+            contact: jerome@gangneux.net
+        </p>
+    </footer>
+
+            </body>
+</html>

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Android Webview Texture is over - Jérôme Gangneux</title>
+                <meta name="description" content="Few months ago I made an Unity Asset to help people get working webview in their Unity project. Today I decided to stop: learn why in this post.">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="Few months ago I made an Unity Asset to help people get working webview in their Unity project. Today I decided to stop: learn why in this post.">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2017/09/23/android-webview-texture-is-over" />
+        <meta property="og:title" content="Android Webview Texture is over - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/writing/unity_asset/unity_asset_vr_cover.png" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+            <div class="text-5xl font-semibold tracking-tight leading-none mb-12">
+                <a href="/">Jérôme Gangneux</a>
+                            </div>
+            <div id="main-menu" class="mt-4">
+                <div class="flex sm:text-xl text-base flex-wrap">
+                                                            <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Featured</a>
+                    <a href="/posts/category/projects" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Projects</a>
+                    <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Art</a>
+                    <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white sm:bg-transparent rounded-md ">Blog</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <style>#site-header { display: none; }</style>
+<nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>Android Webview Texture is over</h1>
+        <p>September 23, 2017</p>
+    </header>
+    <section class="main">
+        <p><img src="/images/writing/unity_asset/asset_capture.png" /></p>
+
+<p>On October 2016 I started to learn VR, it was trending and I wanted to understand the technologies behind it.<br />
+I bought a Google Pixel + Daydream headset (around 700€ at that time) and I started a blog post serie to log everything: <a href="https://jerome.gangneux.net/blog/vr/">/blog/vr</a></p>
+
+<p>It was quite an experience!</p>
+
+<h2 id="idea-and-building">Idea and building</h2>
+
+<p>I had to start from scratch as I never did any 3D related things before.<br />
+So I decided to use Unity and everything went quite smooth.</p>
+
+<p>At some point I wanted to get a Webview into one of my experimentation, 
+but I was unable to find something working on the Unity Asset store.</p>
+
+<p>I look all over the Internet for some tricks but nothing existed.<br />
+Thanks to a lot of patience, learning and reading 
+(and thanks to Oculus and <a href="http://www.felixjones.co.uk/neo%20website/">Felix</a> for inspiration),
+I built a working Webview Texture using OpenGL <code>shared_id<em></code><br>
+<small></em> this is a technical detail that means that is stay fast, unlike others ways of doing.</small></p>
+
+<p>At that time I wanted to monetise one of my side project, not to be rich, 
+but to learn that part of the “indie hacker” life 
+and also to get experience in the complete process from sales to support.</p>
+
+<p>I spent about 6 weeks building the asset, that’s a lot of time but I was learning so let’s say 
+it should have been something like 3 weeks for a person who knew Unity/OpenGL.</p>
+
+<p>Finally I created an Unity Asset on the Unity store.</p>
+
+<h2 id="publish-and-support">Publish and support</h2>
+
+<p>I put in place a support web page so people can contact me easily (<a href="/projects/2017-02-android-vr-webview/">here</a>)<br />
+and I tried to work on the message in the assets store, 
+tuning the title / description / images and price so it get more traction.</p>
+
+<p>Then of course I did updates and support.<br />
+I made 5 releases fixing bugs and adding documentation and examples.</p>
+
+<p>I received something like 150 emails related to that project, 
+some were “thank you” or trivial support but other needed many back and forth, time and concentration.<br />
+I even sometimes dive in others people’s project to check what was wrong.</p>
+
+<p><img src="/images/writing/unity_asset/support_emails_2parts.jpg" /></p>
+
+<p>On the support side I would say I did a premium support (and the review on the asset store agrees), 
+the asset itself get a 4 out of 5 stars for 7 reviews.<br />
+The only bad reviews were people that did not contact the support before complaining, 
+everyone else were very happy about the asset and the support.</p>
+
+<p><img src="/images/writing/unity_asset/reviews.png" /></p>
+
+<h2 id="money">Money</h2>
+
+<p>Today the asset has been online for 7 months and this is the full sale report:</p>
+
+<p>{:.table .table-bordered}
+|-----------|--------|------|
+<table>
+<thead>
+<tr>
+  <th>Month</th>
+  <th>$</th>
+  <th>Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>March</td>
+  <td>105.81</td>
+  <td>19</td>
+</tr>
+<tr>
+  <td>April</td>
+  <td>91.03</td>
+  <td>17</td>
+</tr>
+<tr>
+  <td>May</td>
+  <td>165.92</td>
+  <td>28</td>
+</tr>
+<tr>
+  <td>June</td>
+  <td>131.78</td>
+  <td>22</td>
+</tr>
+<tr>
+  <td>July</td>
+  <td>89.85</td>
+  <td>15</td>
+</tr>
+<tr>
+  <td>August</td>
+  <td>59.90</td>
+  <td>10</td>
+</tr>
+<tr>
+  <td>September</td>
+  <td>101.83</td>
+  <td>17</td>
+</tr>
+<tr>
+  <td>-----------</td>
+  <td>--------</td>
+  <td>------</td>
+</tr>
+<tr>
+  <td><strong>Total</strong></td>
+  <td><strong>746.12</strong></td>
+  <td><strong>128</strong></td>
+</tr>
+<tr>
+  <td>-----------</td>
+  <td>--------</td>
+  <td>------</td>
+</tr>
+</tbody>
+</table></p>
+
+<p>Unity take 30% so I got 552.28€ on my bank account
+<a href="/images/writing/unity_asset/sales_small.png">(full report)</a></p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>Of course all this was an experiment and I learnt a lot about people, 
+support and pricing, but now it is time to move on for me, as this is clearly not profitable 
+and also VR seems down a little (AR will take prevalence).</p>
+
+<p>Today I’m focusing on something else: I’m stopping that experiment.</p>
+
+<p>I may disappoint few of my users, but this asset had limitation anyway 
+and the Unity Editor is iterating so fast that it is hard to follow (3 versions in the last 7 months).<br />
+As this asset is very low level any little change in Unity may break it, it is safer to remove it.</p>
+
+<p>I’m quite sure people will find a replacement.<br />
+<small>Please contact me if you have a candidate</small></p>
+
+    </section>
+    <footer class="pt-10">
+            </footer>
+    </article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+        <p class="text-right" style="opacity: 0.5;">
+            contact: jerome@gangneux.net
+        </p>
+    </footer>
+
+            </body>
+</html>
