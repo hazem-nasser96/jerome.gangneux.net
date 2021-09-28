@@ -188,7 +188,7 @@ sudo defaults write /System/Library/LaunchDaemons/com.apple.backupd-auto StartIn
 <h1 id="general-shell">General shell</h1>
 
 <pre><code class="bash"># Redirect the error output to the standard output (stderr to stdout)
-echo 'test' 1&gt;&amp;2
+echo 'test' 2&gt;&amp;1
 # Mount a distant directory to the local filesystem
 sshfs username@example.com:/directory directory
 # Delete the line LINE_NUMBER in the file
