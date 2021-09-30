@@ -1,5 +1,4 @@
 User-agent: *
-Disallow: /posts/tags/
-Disallow: /posts/category/
+Allow: /
 
 Sitemap: /sitemap.xml
