@@ -39,6 +39,17 @@ body {
     background: #AAD;
 }
 
+.image_main_wrap {
+    text-align: center;
+}
+
+.image_main_wrap img {
+    max-width: 640px;
+    width: 100%;
+    border: solid 5px #444;
+    display: inline;
+}
+
 .post a {
     color: #ed64a6; /* equivalent to pink-500 */
     text-decoration: none;
