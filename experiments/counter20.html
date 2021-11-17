@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
+        <title>Timer</title>
+        <style>
+            html, body {
+                width: 100%;
+                padding: 0;
+                overflow: hidden;
+                height: 100%;
+                margin: 0;
+            }
+            #main {
+                color: white;
+                background-color: black;
+                font-family: sans-serif;
+                font-weight: bold;
+                text-align: center;
+                font-size: 10rem;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+            #counter1 {
+                transform: scale(-1);
+            }
+            #separator {
+                font-size: 0.1rem;
+                border-top: 1rem white solid;
+                width: 200%;
+                transform: rotate(15deg);
+                padding-top: 3rem;
+                margin-top: 3rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="main">
+            <span id="counter1">20</span>
+            <span id="separator">&nbsp;</span>
+            <span id="counter2">20</span>
+        </div>
+        <script>
+            var mainElement = document.getElementById('main');
+            var counter1Element = document.getElementById('counter1');
+            var counter2Element = document.getElementById('counter2');
+            var counter = 20;
+            var counterHandle = null;
+            function start() {
+                console.log('start called');
+                stop();
+                counter = 20;
+                counter1Element.innerText = '' + counter;
+                counter2Element.innerText = '' + counter;
+                mainElement.style.backgroundColor = '#000000';
+                counterHandle = setInterval(function () {
+                    counter--;
+                    counter1Element.innerText = '' + counter;
+                    counter2Element.innerText = '' + counter;
+                    if (counter <= 5) {
+                        mainElement.style.backgroundColor = '#c50000';
+                    }
+                    if (counter <= 0) {
+                        stop();
+                    }
+                }, 1 * 1000);
+            }
+            function stop() {
+                console.log('stop called');
+                if (counterHandle !== null) {
+                    clearInterval(counterHandle);
+                    counterHandle = null;
+                }
+            }
+            mainElement.addEventListener('click', start);
+            mainElement.addEventListener('touch', start);
+        </script>
+    </body>
+</html>
