@@ -3,11 +3,19 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2022-01-05T13:50:48+00:00</updated>
+    <updated>2022-01-12T19:28:23+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+        <entry>
+        <title type="html"><![CDATA[PHP Clone All The Things]]></title>
+        <link href="/2022/01/05/php-clone-all-the-things"/>
+        <updated>2022-01-05T00:00:00+00:00</updated>
+        <id>/2022/01/05/php-clone-all-the-things</id>
+        <content type="html"><![CDATA[<p>See more at (jolicode.com/blog/php-clone-all-the-things)[https://jolicode.com/blog/php-clone-all-the-things]</p>
+]]></content>
+    </entry>
         <entry>
         <title type="html"><![CDATA[Artillery Royale going free and open source!]]></title>
         <link href="/2021/11/01/artillery-royale-going-free-and-open-source"/>
@@ -1059,90 +1067,6 @@ And of course you can also record and export your video.</p>
                         <div class="mySlides"><img class="image7 w-full w-full" src="/images/projects/glitchclip/appstore/09.PNG"></div>
                         <div class="mySlides"><img class="image8 w-full w-full" src="/images/projects/glitchclip/midi.jpg"></div>
                         <div class="mySlides"><img class="image9 w-full w-full" src="/images/projects/glitchclip/appstore/06.PNG"></div>
-                        <span class="absolute left-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="z-index: 11;" onclick="plusSlides(-1)">❮</span>
-            <span class="absolute right-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="width: 100%;z-index: 10;justify-content: flex-end;" onclick="plusSlides(1)">❯</span>
-        </div>
-    </div>
-
-    <script>
-    var slideIndex = 1;
-    showSlides(slideIndex);
-
-    function plusSlides(n) { showSlides(slideIndex += n); return false; }
-    function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        if (n > slides.length) {
-            slideIndex = 1
-        }
-        if (n < 1) {
-            slideIndex = slides.length
-        }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slides[slideIndex - 1].style.display = "block";
-    }
-    </script>
-</section>
-</p>
-]]></content>
-    </entry>
-        <entry>
-        <title type="html"><![CDATA[Alchemy Quest]]></title>
-        <link href="/2019/03/01/alchemy-quest"/>
-        <updated>2019-03-01T00:00:00+00:00</updated>
-        <id>/2019/03/01/alchemy-quest</id>
-        <content type="html"><![CDATA[<style>.post-header { display: none; }</style>
-
-<h2 id="pitch">Pitch</h2>
-
-<p>The pleasure of an Alchemy game while adding the exploration part of an RPG.<br />
-Stroll around, collect elements and combine to find them all!</p>
-
-<p><a href="https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=1451729414&mt=8">Download the game on iOS</a><br></p>
-
-<hr />
-
-<p>With Alchemy Quest explore multiple worlds where life has mysteriously disappeared.
-Collect items found here and there, combine them to find missing ones and bring these lands back to life.
-Solve puzzles to move from one level to another.</p>
-
-<p>You will meet various characters who will help you in your quest, starting with the Mage who is responsible for this mess.</p>
-
-<p>Alchemy Quest is in between an Alchemy game and an RPG, this game is accessible to all.
-Moving around is very simple: touch the screen and the character goes there.
-The combinatorial mode is integrated in the RPG mode so that the game stay homogeneous.</p>
-
-<h2 id="confidentiality">Confidentiality</h2>
-
-<p><strong>Short version:</strong><br />
-Alchemy Quest do not use any of your personal information</p>
-
-<p><strong>Long version:</strong><br />
-Alchemy Quest do not collect your personal information, do not contact any external service.<br />
-You can play without Internet access.<br />
-Alchemy Quest is a paying game and has no vocation to make money with your data.</p>
-
-<h2 id="support">Support</h2>
-
-<p>If you have any question or suggestion please contact me by mail at: jerome@gangneux.net</p>
-
-<p><section id="gallery">
-    <h2>Gallery</h2>
-    <div class="mx-auto max-w-2xl mt-6">
-        <div class="text-center">Click for more screenshots</div>
-        <div class="shadow-2xl relative">
-                        <div class="mySlides"><img class="image1 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-01.png"></div>
-                        <div class="mySlides"><img class="image2 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-02.png"></div>
-                        <div class="mySlides"><img class="image3 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-03.png"></div>
-                        <div class="mySlides"><img class="image4 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-04.png"></div>
-                        <div class="mySlides"><img class="image5 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-05.png"></div>
-                        <div class="mySlides"><img class="image6 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-06.png"></div>
-                        <div class="mySlides"><img class="image7 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-07.png"></div>
-                        <div class="mySlides"><img class="image8 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-08.png"></div>
-                        <div class="mySlides"><img class="image9 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-09.png"></div>
-                        <div class="mySlides"><img class="image10 w-full w-full" src="/images/projects/AlchemyQuest/iphone/App-Store-Images-10.png"></div>
                         <span class="absolute left-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="z-index: 11;" onclick="plusSlides(-1)">❮</span>
             <span class="absolute right-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="width: 100%;z-index: 10;justify-content: flex-end;" onclick="plusSlides(1)">❯</span>
         </div>
