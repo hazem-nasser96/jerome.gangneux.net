@@ -3,11 +3,19 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2022-01-12T19:28:23+00:00</updated>
+    <updated>2022-02-01T17:00:28+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+        <entry>
+        <title type="html"><![CDATA[(Re)discover XPath selectors]]></title>
+        <link href="/2022/02/01/re-discover-xpath-selectors"/>
+        <updated>2022-02-01T00:00:00+00:00</updated>
+        <id>/2022/02/01/re-discover-xpath-selectors</id>
+        <content type="html"><![CDATA[<p>See more at (jolicode.com/blog/re-discover-xpath-selectors)[https://jolicode.com/blog/re-discover-xpath-selectors]</p>
+]]></content>
+    </entry>
         <entry>
         <title type="html"><![CDATA[PHP Clone All The Things]]></title>
         <link href="/2022/01/05/php-clone-all-the-things"/>
@@ -1030,70 +1038,6 @@ Note: the final video does not suffer from any compression artifacts.</p>
         <content type="html"><![CDATA[<h2 id="selection-of-the-best-art">Selection of the best art</h2>
 
 <p>Coming soon!</p>
-]]></content>
-    </entry>
-        <entry>
-        <title type="html"><![CDATA[Glitch Clip App]]></title>
-        <link href="/2019/11/01/glitch-clip"/>
-        <updated>2019-11-01T00:00:00+00:00</updated>
-        <id>/2019/11/01/glitch-clip</id>
-        <content type="html"><![CDATA[<p><strong>Note: This project has been acquired in 2020, I'm no longer the owner of Glitch Clip App</strong></p>
-
-<p>Glitch Clip is an App for iPad that allows you to create generative videos thanks to some artsy visual effects (kaleidoscope, mosaic, twist and 20+ more) or to make creative VJing shows with live music.</p>
-
-<h2 id="how-it-works">How it works</h2>
-
-<p>1/ Select short video clips and start remixing it. Add effects (kaleidoscope, mosaic, twist and more) and glitch things!<br />
-2/ Switch from one clip to another really fast, it's made for live performances. You can also import your own clips.<br />
-3/ Explore generative art, fine tune your effect stack to make artsy videos you can then share with your friends!<br />
-4/ Connect a keyboard or a MIDI controller to the app. From here everything is possible: play live from your controller or synchronize your DAW.</p>
-
-<p>Glitch Clip is made for video DJing (VJing) but you can simply use it to have fun in your own way!
-And of course you can also record and export your video.</p>
-
-<p>You can find the old help page here: <a href="https://jerome.gangneux.net/glitch-clip/">Glitch Clip Help</a></p>
-
-<p><section id="gallery">
-    <h2>Gallery</h2>
-    <div class="mx-auto max-w-2xl mt-6">
-        <div class="text-center">Click for more screenshots</div>
-        <div class="shadow-2xl relative">
-                        <div class="mySlides"><img class="image1 w-full w-full" src="/images/projects/glitchclip/appstore/01.PNG"></div>
-                        <div class="mySlides"><img class="image2 w-full w-full" src="/images/projects/glitchclip/twitter_card.jpg"></div>
-                        <div class="mySlides"><img class="image3 w-full w-full" src="/images/projects/glitchclip/appstore/02.PNG"></div>
-                        <div class="mySlides"><img class="image4 w-full w-full" src="/images/projects/glitchclip/review.png"></div>
-                        <div class="mySlides"><img class="image5 w-full w-full" src="/images/projects/glitchclip/appstore/04.PNG"></div>
-                        <div class="mySlides"><img class="image6 w-full w-full" src="/images/projects/glitchclip/appstore/07.PNG"></div>
-                        <div class="mySlides"><img class="image7 w-full w-full" src="/images/projects/glitchclip/appstore/09.PNG"></div>
-                        <div class="mySlides"><img class="image8 w-full w-full" src="/images/projects/glitchclip/midi.jpg"></div>
-                        <div class="mySlides"><img class="image9 w-full w-full" src="/images/projects/glitchclip/appstore/06.PNG"></div>
-                        <span class="absolute left-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="z-index: 11;" onclick="plusSlides(-1)">❮</span>
-            <span class="absolute right-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="width: 100%;z-index: 10;justify-content: flex-end;" onclick="plusSlides(1)">❯</span>
-        </div>
-    </div>
-
-    <script>
-    var slideIndex = 1;
-    showSlides(slideIndex);
-
-    function plusSlides(n) { showSlides(slideIndex += n); return false; }
-    function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        if (n > slides.length) {
-            slideIndex = 1
-        }
-        if (n < 1) {
-            slideIndex = slides.length
-        }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slides[slideIndex - 1].style.display = "block";
-    }
-    </script>
-</section>
-</p>
 ]]></content>
     </entry>
     </feed>
