@@ -3,11 +3,79 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2022-02-01T17:00:28+00:00</updated>
+    <updated>2022-03-23T09:30:38+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+        <entry>
+        <title type="html"><![CDATA[The myth of overnight success]]></title>
+        <link href="/2022/03/23/the-myth-of-overnight-success"/>
+        <updated>2022-03-23T00:00:00+00:00</updated>
+        <id>/2022/03/23/the-myth-of-overnight-success</id>
+        <content type="html"><![CDATA[<p>This is my personal testimony against overnight success and all those marketing stories that people try to sell — most of the time literally with ebooks or other products —.</p>
+
+<p>In 2019, I sold Thread Reader App, and that is some success in my point of view.</p>
+
+<p>I started to develop the projet as a side project, or to be more correct as a support for my videos tutorials, which was the side project. Then it went viral, and I had the chance to make it work.</p>
+
+<p>For some, it looks like an overnight success, but it was not.
+Before having that lucky shoot, I made, or participated in, plenty of projects.</p>
+
+<h3 id="most-of-it-failed.">Most of it failed.</h3>
+
+<p>This list is here to show you that it needed <strong>numerous</strong> tries.<br />
+Then you can understand that, before getting somewhere, you may have to try very hard.</p>
+
+<p>This list only contain projects that I wanted to make money with.<br />
+Note, when I say "made 0€" it really means, cost me a bunch of money + my own time.</p>
+
+<style>.ar { display: inline-block; margin: 0 0.5rem 0 1rem; }</style>
+
+<ul>
+<li>Randomkiss (2007): Facebook app to meet random new people, made 0€</li>
+<li>Shypic (2008): Event-based picture sharing website, did not make it to product</li>
+<li>Allobars (2010): <a href="/2010/02/01/allobars">see dedicated page</a>, made 0€</li>
+<li>Notes.git (2011): Note-taking app, made 0€</li>
+<li>Citroon (2011): <a href="/2011/09/01/citroon">see dedicated page</a>, made 0€</li>
+<li>Coffret cadeau addict (2011): Gift box comparator, made 0€</li>
+<li>Cosmoz (2012): <a href="/2012/04/01/cosmoz">see dedicated page</a>, made 0€</li>
+<li>Drink different (2012): Get good wine monthly subscription, did not make it to product</li>
+<li>Ping url (2012): Check if a given URL is live, did not make it to product</li>
+<li>Dailymood (2013): Every day, enter your mood and get yearly statistics, did not make it to product</li>
+<li>What to buy with bitcoins (2013): Blog about bitcoin, made 0€</li>
+<li>Newsbid (2013): Crowdfunding for journalists, did not make it to product</li>
+<li>Creamly (2013): Snapchat clone, made 0€</li>
+<li>My laboratory (2013): <a href="/2012/06/01/mylaboratory">see dedicated page</a><br />
+<span class="ar">→</span> 300k downloads, made some bucks, not much.</li>
+<li>Chkthatprice (2014): Price change alert for any web shop, made 0€</li>
+<li>Coloriage (2014): App to allow kids to coloriage, did not make it to product</li>
+<li>Patience (2014): Casual spelling game, did not make it to product</li>
+<li>A bunch of casual games (2014): made with the collective <a href="/2012/03/01/weheartprojects">weheartprojects</a><br />
+<span class="ar">→</span> made few bucks in ads.</li>
+<li>Budeal (2014): <a href="/2014/10/01/budeal">see dedicated page</a><br />
+<span class="ar">→</span> Spent almost a year full-time, got some traction, made a few euros but costed twice more.</li>
+<li>ilovepromo (2014): <a href="/2014/12/01/ilovepromo">see dedicated page</a>.<br />
+<span class="ar">→</span> Made some bucks, not much.</li>
+<li>Bonne Nouvelle (2015): Connected photo frame, did not make it to product</li>
+<li>Coach Sportif Video (2015): Create a video montage for your own sport coaching, did not make it to product</li>
+<li>Newswipe (2015): Newsreader with swiping like tinder, made 0€</li>
+<li>Mr. Smartphone (2015): <a href="/2015/07/01/mrsmartphone">see dedicated page</a><br />
+<span class="ar">→</span> Good call but a bit late, I was burning out.</li>
+<li>RSS Offline (2015): RSS reader with offline capability, made 0€</li>
+<li>Filter for Slack (2017): <a href="/2017/01/01/filter-for-slack">see dedicated page</a>, made 0€</li>
+<li>Android VR Webview (2017): <a href="/2017/02/01/android-vr-webview">see dedicated page</a>.<br />
+<span class="ar">→</span> Made some euros, not worth the trouble</li>
+<li>Thread Reader App (2017): <strong><a href="/posts/category/threadreader/">At least something happened!</a></strong></li>
+</ul>
+
+<p>And then after I started a bunch of new <strike>failures</strike> projects, namely: snooze.me, Glitch App, toFeed, Artillery Royale (the later cost me 10k€ and I got nothing from it).</p>
+
+<p>Ten years, about 33 projects, only one lucky shoot…</p>
+
+<p>There is no overnight success.</p>
+]]></content>
+    </entry>
         <entry>
         <title type="html"><![CDATA[(Re)discover XPath selectors]]></title>
         <link href="/2022/02/01/re-discover-xpath-selectors"/>
@@ -1028,16 +1096,6 @@ Note: the final video does not suffer from any compression artifacts.</p>
         <content type="html"><![CDATA[<h1 id="la-vie-n%27a-pas-de-sens.">La vie n'a pas de sens.</h1>
 
 <p>Vous voulez en savoir plus ? <a href="/la_vie_n_a_pas_de_sens">Suivez le lapin blanc</a></p>
-]]></content>
-    </entry>
-        <entry>
-        <title type="html"><![CDATA[Glitch Videos]]></title>
-        <link href="/2019/11/01/glitch-video"/>
-        <updated>2019-11-01T00:00:00+00:00</updated>
-        <id>/2019/11/01/glitch-video</id>
-        <content type="html"><![CDATA[<h2 id="selection-of-the-best-art">Selection of the best art</h2>
-
-<p>Coming soon!</p>
 ]]></content>
     </entry>
     </feed>
