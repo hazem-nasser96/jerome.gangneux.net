@@ -1,0 +1,14 @@
+version: "3.3"
+services:
+
+    apache:
+        build: docker/apache
+        volumes:
+            - "your-project-name-volume:/var/www"
+# Instead of
+#        volumes:
+#            - "./:/var/www"
+
+volumes:
+    your-project-name-volume:
+        external: true

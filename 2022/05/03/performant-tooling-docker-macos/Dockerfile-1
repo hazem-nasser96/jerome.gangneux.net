@@ -1,0 +1,61 @@
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        curl wget build-essential coreutils openssh-server git bash \
+        inotify-tools monit supervisor rsync ruby tzdata \
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+# Install OCAML: adapt version number from your own local setup
+RUN wget http://caml.inria.fr/pub/distrib/ocaml-4.12/ocaml-4.12.0.tar.gz \
+    && tar xvf ocaml-4.12.0.tar.gz -C /tmp \
+    && cd /tmp/ocaml-4.12.0 \
+    && ./configure \
+    && make world \
+    && make opt \
+    && umask 022 \
+    && make install \
+    && make clean \
+    && rm -rf /tmp/ocaml-4.12.0 \
+    && rm /ocaml-4.12.0.tar.gz
+
+# Install Unison: adapt version number from your own local setup
+RUN curl -L https://github.com/bcpierce00/unison/archive/v2.52.0.tar.gz | tar zxv -C /tmp \
+    && cd /tmp/unison-2.52.0 \
+    # needed for < 2.51.4 with OCALM 4.12 - see https://github.com/bcpierce00/unison/pull/480
+    # and https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/unison.rb#L13
+    # && curl https://github.com/bcpierce00/unison/commit/14b885316e0a4b41cb80fe3daef7950f88be5c8f.patch?full_index=1 -o patch.diff \
+    # && ([[ "2.52.0" == "2.51.3" ]] && git apply patch.diff); \
+    # rm patch.diff \
+    && sed -i -e 's/GLIBC_SUPPORT_INOTIFY 0/GLIBC_SUPPORT_INOTIFY 1/' src/fsmonitor/linux/inotify_stubs.c \
+    && make UISTYLE=text NATIVE=true STATIC=true \
+    && cp src/unison src/unison-fsmonitor /usr/local/bin \
+    && rm -rf /tmp/unison-2.52.0
+
+# These can be overridden later
+ENV TZ="Europe/Paris" \
+    LANG="C.UTF-8" \
+    UNISON_DIR="/data" \
+    HOME="/root"
+
+# Install SSH packages
+RUN apt-get update && \
+    apt-get install openssh-server -y --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+RUN mkdir -p /run/sshd
+RUN mkdir -p /root/.ssh
+
+# You should insert your public key in this file
+COPY authorized_keys /root/.ssh/authorized_keys
+
+# Editing the SSHD config file
+RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config
+
+# Make port 22 available to the world outside this container
+EXPOSE 22
+
+# Run SSHD when the container starts
+CMD ["/usr/sbin/sshd", "-D"]

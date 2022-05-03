@@ -3,11 +3,190 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2022-03-28T15:17:25+00:00</updated>
+    <updated>2022-05-03T19:03:08+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+        <entry>
+        <title type="html"><![CDATA[Performant tooling with Docker and macOS]]></title>
+        <link href="/2022/05/03/performant-tooling-docker-macos"/>
+        <updated>2022-05-03T00:00:00+00:00</updated>
+        <id>/2022/05/03/performant-tooling-docker-macos</id>
+        <content type="html"><![CDATA[<h1 id="performant-tooling-with-docker-and-macos">Performant tooling with Docker and macOS</h1>
+
+<p>Developers love performant tools, I mean, developers NEED performant tools!</p>
+
+<p>I'm not going to talk about whether you should use macOS to develop.<br />
+Personally, I do, not gonna argument here.</p>
+
+<p>Problem is, I use Docker, and it's sad that this sentence starts with "problem".<br />
+Docker has helped the dev community and I like this tools, I mean, I like the idea and the possibilities it offers.</p>
+
+<p><strong>But on macOS it's slow as hell.</strong></p>
+
+<p>To be honest, it's not slow in every situation but only some, unfortunately the one that are mostly the main usage of Docker in a development environment.<br />
+<a href="https://github.com/docker/for-mac/issues/77">This is not new as you can see on this issue reported in 2016</a>.</p>
+
+<p>Issues are related to volume performance, specifically the way volumes are mounted on macOS.<br />
+And for applications which perform many I/O disk operations, it can become almost not usable.</p>
+
+<p>Unfortunately, I'm in that case, being a web/symfony developper I handle projects with many dependencies/cache and thus many I/O.</p>
+
+<p>I heard that Docker decided to have a <a href="https://www.docker.com/blog/speed-boost-achievement-unlocked-on-docker-desktop-4-6-for-mac/">look at this issue</a>.<br />
+It took them far too much time to do so, but that's another topic.<br />
+Their effort seems to go somewhere for some people, not so much for me.</p>
+
+<p>Of course, I tried every option before, and trust me on this one.<br />
+Being <a href="http://docker-sync.io">docker-sync</a> (which was the best tradeoff), mutagen, VM with docker inside, and other fancy other attempts.</p>
+
+<p>And today, I'm thrilled to tell you that I compiled the best of all those errands into a solution that's quite acceptable.<br />
+It is the solution I use for all my projects, and so far, it has been a pleasure again to use Docker on macOS.</p>
+
+<p>This solution is heavily inspired by docker-sync and I basically removed a layer, and thus it gives more control on the whole process.<br />
+It can be resumed like this: don't use <code>-v</code> ever, instead make specific docker volumes and synchronize them with <code>unison</code> &lt;3</p>
+
+<p>Let's dive in, code is coming.</p>
+
+<h2 id="part-one%3A-building">Part one: building</h2>
+
+<h3 id="installing-unison-local%2Fdocker">Installing unison local/docker</h3>
+
+<p>We want to install unison on our local machine, it will then connect to our container that has the mounted volume.</p>
+
+<p><code>$ brew install unison</code></p>
+
+<p>Then get the version, as it is important to have the same version on both the client (your local machine) and the server (the docker container with the volume).</p>
+
+<pre><code class="shell">$ unison -version
+unison version 2.52.0 (ocaml 4.12.0)
+</code></pre>
+
+<p>Now we build a docker image with <code>unison</code> at the same version (both unison and ocaml version should match)</p>
+
+<p><code class="filepath">Dockerfile</code></p>
+
+<pre><code class="language-bash">FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update &amp;&amp; \
+    apt-get install -y --no-install-recommends \
+        curl wget build-essential coreutils openssh-server git bash \
+        inotify-tools monit supervisor rsync ruby tzdata \
+    &amp;&amp; rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+# Install OCAML: adapt version number from your own local setup
+RUN wget http://caml.inria.fr/pub/distrib/ocaml-4.12/ocaml-4.12.0.tar.gz \
+    &amp;&amp; tar xvf ocaml-4.12.0.tar.gz -C /tmp \
+    &amp;&amp; cd /tmp/ocaml-4.12.0 \
+    &amp;&amp; ./configure \
+    &amp;&amp; make world \
+    &amp;&amp; make opt \
+    &amp;&amp; umask 022 \
+    &amp;&amp; make install \
+    &amp;&amp; make clean \
+    &amp;&amp; rm -rf /tmp/ocaml-4.12.0 \
+    &amp;&amp; rm /ocaml-4.12.0.tar.gz
+
+# Install Unison: adapt version number from your own local setup
+RUN curl -L https://github.com/bcpierce00/unison/archive/v2.52.0.tar.gz | tar zxv -C /tmp \
+    &amp;&amp; cd /tmp/unison-2.52.0 \
+    # needed for &lt; 2.51.4 with OCALM 4.12 - see https://github.com/bcpierce00/unison/pull/480
+    # and https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/unison.rb#L13
+    # &amp;&amp; curl https://github.com/bcpierce00/unison/commit/14b885316e0a4b41cb80fe3daef7950f88be5c8f.patch?full_index=1 -o patch.diff \
+    # &amp;&amp; ([[ &quot;2.52.0&quot; == &quot;2.51.3&quot; ]] &amp;&amp; git apply patch.diff); \
+    # rm patch.diff \
+    &amp;&amp; sed -i -e &#039;s/GLIBC_SUPPORT_INOTIFY 0/GLIBC_SUPPORT_INOTIFY 1/&#039; src/fsmonitor/linux/inotify_stubs.c \
+    &amp;&amp; make UISTYLE=text NATIVE=true STATIC=true \
+    &amp;&amp; cp src/unison src/unison-fsmonitor /usr/local/bin \
+    &amp;&amp; rm -rf /tmp/unison-2.52.0
+
+# These can be overridden later
+ENV TZ=&quot;Europe/Paris&quot; \
+    LANG=&quot;C.UTF-8&quot; \
+    UNISON_DIR=&quot;/data&quot; \
+    HOME=&quot;/root&quot;
+
+# Install SSH packages
+RUN apt-get update &amp;&amp; \
+    apt-get install openssh-server -y --no-install-recommends &amp;&amp; \
+    rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+
+RUN mkdir -p /run/sshd
+RUN mkdir -p /root/.ssh
+
+# You should insert your public key in this file
+COPY authorized_keys /root/.ssh/authorized_keys
+
+# Editing the SSHD config file
+RUN echo &#039;PermitRootLogin yes&#039; &gt;&gt; /etc/ssh/sshd_config
+
+# Make port 22 available to the world outside this container
+EXPOSE 22
+
+# Run SSHD when the container starts
+CMD [&quot;/usr/sbin/sshd&quot;, &quot;-D&quot;]
+</code></pre>
+
+<p>You may need to adapt a bit, see comments</p>
+
+<h3 id="create-the-docker-volume-and-container">Create the Docker volume and container</h3>
+
+<p><code>docker volume create --name your-project-name-volume</code></p>
+
+<p><code>docker create -h your-project-name --name your-project-name-sync -it -p PORT:22 -v your-project-name-volume:/data your/image /bin/bash</code>
+Replace <code>PORT</code> with some available port on your machine.</p>
+
+<h2 id="part-two%3A-usage">Part two: usage</h2>
+
+<h3 id="configuration-in-your-docker-compose">Configuration in your docker-compose</h3>
+
+<p>Now, everywhere you need those project files, instead of linking the local filesystem with <code>-v</code> or <code>volumes</code> you reference <code>your-project-name-volume</code> instead!</p>
+
+<p><code class="filepath">docker-compose.yml</code></p>
+
+<pre><code class="language-yaml">version: &quot;3.3&quot;
+services:
+
+    apache:
+        build: docker/apache
+        volumes:
+            - &quot;your-project-name-volume:/var/www&quot;
+# Instead of
+#        volumes:
+#            - &quot;./:/var/www&quot;
+
+volumes:
+    your-project-name-volume:
+        external: true
+</code></pre>
+
+<h3 id="start-the-container-and-sync">Start the container and sync</h3>
+
+<p><code>docker start your-project-name-sync</code></p>
+
+<p><code>cd PROJECT</code>
+<code>unison . ssh://root@127.0.0.1:PORT//data -repeat=watch -auto -batch -ignore 'Path .git' -ignore 'Path var'</code>
+Replace <code>PORT</code> with some available port on your machine.</p>
+
+<p>Of course, you can put that into a bash script:</p>
+
+<pre><code class="bash">#!/bin/bash
+
+docker start your-project-name-sync &amp;&amp; \
+unison ./ ssh://root@127.0.0.1:PORT//data -repeat=watch -auto -batch -ignore 'Path .git' -ignore 'Path var'
+</code></pre>
+
+<h2 id="tradeoffs">Tradeoffs</h2>
+
+<p>This solution comes with some tradeoffs, 
+mainly the fact that your code base is duplicated on a Docker volume, thus duplicating the disk space required.
+The first start will take some time too as it needs to synchronize the whole projet.</p>
+
+<p>I reckon, it's a bit of configuration to do, but to me that works so well that I consider those a detail.</p>
+]]></content>
+    </entry>
         <entry>
         <title type="html"><![CDATA[The myth of overnight success]]></title>
         <link href="/2022/03/23/the-myth-of-overnight-success"/>
@@ -1086,16 +1265,6 @@ Note: the final video does not suffer from any compression artifacts.</p>
         <content type="html"><![CDATA[<h1 id="artillery-royale">Artillery Royale</h1>
 
 <p>Want to know more? <a href="https://weheartprojects.com/2020/07/artillery-royale/">Follow the white rabbit</a></p>
-]]></content>
-    </entry>
-        <entry>
-        <title type="html"><![CDATA[La vie n&#039;a pas de sens.]]></title>
-        <link href="/2020/03/01/la-vie-n-a-pas-de-sens"/>
-        <updated>2020-03-01T00:00:00+00:00</updated>
-        <id>/2020/03/01/la-vie-n-a-pas-de-sens</id>
-        <content type="html"><![CDATA[<h1 id="la-vie-n%27a-pas-de-sens.">La vie n'a pas de sens.</h1>
-
-<p>Vous voulez en savoir plus ? <a href="/la_vie_n_a_pas_de_sens">Suivez le lapin blanc</a></p>
 ]]></content>
     </entry>
     </feed>
