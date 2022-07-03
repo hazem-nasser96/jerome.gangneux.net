@@ -3,11 +3,61 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2022-05-03T19:03:08+00:00</updated>
+    <updated>2022-07-03T13:22:48+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+        <entry>
+        <title type="html"><![CDATA[Duolingo Flashcards]]></title>
+        <link href="/2022/07/03/duolingo-to-flashcards"/>
+        <updated>2022-07-03T00:00:00+00:00</updated>
+        <id>/2022/07/03/duolingo-to-flashcards</id>
+        <content type="html"><![CDATA[<h1 id="duolingo-flashcards">Duolingo Flashcards</h1>
+
+<h2 id="long-intro">Long Intro</h2>
+
+<p>You may — or may not — know me, but let me tell you one of my passion in life: connect everything together.</p>
+
+<p>When I was young — let's say 15 — I tried to connect a landline phone to my computer sound card, learning a lesson here: landline in France carry a bit of electricity and my computer did not like it. I had to play without sound for a while.</p>
+
+<p>I also have a project in the work about connecting plants to synthesizers, so we could hear them grow — but I have yet to find more time to work on it.</p>
+
+<p>And of course, a part of my job is to connect programs (APIs) together to build products and services.</p>
+
+<p>Anyway, today I'm going to talk about a more down to earth usage, hacky one, but a need I had.</p>
+
+<p>I'm trying to learn a new language (Spanish) mostly for fun and brain practice. And for that, I'm using the app Duolingo. It's good (for now) but it does not have a feature I love: flashcards.</p>
+
+<blockquote>
+  <p>A flashcard is a card bearing information on both sides, which is intended to be used as an aid in memorization. Each flashcard bears a question on one side and an answer on the other. Flashcards are often used to memorize vocabulary, historical dates, formulas or any subject matter that can be learned via a question-and-answer format. Flashcards can be virtual (part of a flashcard software), or physical. <a href="https://en.wikipedia.org/wiki/Flashcard" title="❤️ wikipedia">Wikipedia</a></p>
+</blockquote>
+
+<p>On the other side, it exists free flashcard apps like: Ankiapp that allows user to make their own flashcard set, and even in that case, import CSV into it.</p>
+
+<p>Say no more, let's connect those together.</p>
+
+<h2 id="connect-everything">Connect Everything</h2>
+
+<p>First, I need an API point on the Duolingo part, but unfortunately, it does not exist… The internet being a magic place full of ressources, I found someone working on an unofficial API. Thank you, <a href="#">@KartikTalwar</a>, for <a href="#">github.com/KartikTalwar/Duolingo</a>.</p>
+
+<p>I took me sometime to explore the API (without doc) and found some endpoints that would do the job.</p>
+
+<p>The next step is the easy one, take my favorite scripting language PHP and build a CSV file from this info. After a bit of test, it works as expected, I cleaned up the whole projet and decided to put it online, so you could use it too.</p>
+
+<p>Find it here <a href="https://github.com/jrmgx/duo-vocabulary">github.com/jrmgx/duo-vocabulary</a> you have all the information to use it on the repository. It's easy with docker, you don't have to install anything <code>docker run jrmgx/duo-vocabulary [parameters] &gt; output.csv</code></p>
+
+<h2 id="limitations">Limitations</h2>
+
+<ul>
+<li>It has some specific hardcoded rules to remove feminine and plural words, but those rules only work for Spanish (the language I'm learning right now).</li>
+<li>Duolingo does not provide an official API, for that reason, it may stop working at anytime (without any way to fix it).</li>
+<li>From what I understood, calls to <code>dictionary/hints</code> endpoint are limited in payload size, it may have to be split at some point, but for now, with my current usage it works like that.</li>
+</ul>
+
+<p>Enjoy!</p>
+]]></content>
+    </entry>
         <entry>
         <title type="html"><![CDATA[Performant tooling with Docker and macOS]]></title>
         <link href="/2022/05/03/performant-tooling-docker-macos"/>
@@ -1255,16 +1305,6 @@ Note: the final video does not suffer from any compression artifacts.</p>
 </ul>
 
 <p>contact me!</p>
-]]></content>
-    </entry>
-        <entry>
-        <title type="html"><![CDATA[Artillery Royale]]></title>
-        <link href="/2020/05/01/ChessBattle-game"/>
-        <updated>2020-05-01T00:00:00+00:00</updated>
-        <id>/2020/05/01/ChessBattle-game</id>
-        <content type="html"><![CDATA[<h1 id="artillery-royale">Artillery Royale</h1>
-
-<p>Want to know more? <a href="https://weheartprojects.com/2020/07/artillery-royale/">Follow the white rabbit</a></p>
 ]]></content>
     </entry>
     </feed>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Duolingo Flashcards - Jérôme Gangneux</title>
+                <meta name="description" content="I&#039;m using the app Duolingo to learn Spanish. It&#039;s good but it does not have a feature I love: flashcards. I have a solution for you!">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="I&#039;m using the app Duolingo to learn Spanish. It&#039;s good but it does not have a feature I love: flashcards. I have a solution for you!">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2022/07/03/duolingo-to-flashcards" />
+        <meta property="og:title" content="Duolingo Flashcards - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/writing/duolingo-to-flashcard.png" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>Duolingo Flashcards</h1>
+        <p>July 3, 2022</p>
+    </header>
+    <section class="main">
+                <div class="image_main_wrap mb-12">
+            <img alt="" src="/images/writing/duolingo-to-flashcard.png">
+        </div>
+                <h1 id="duolingo-flashcards">Duolingo Flashcards</h1>
+
+<h2 id="long-intro">Long Intro</h2>
+
+<p>You may — or may not — know me, but let me tell you one of my passion in life: connect everything together.</p>
+
+<p>When I was young — let's say 15 — I tried to connect a landline phone to my computer sound card, learning a lesson here: landline in France carry a bit of electricity and my computer did not like it. I had to play without sound for a while.</p>
+
+<p>I also have a project in the work about connecting plants to synthesizers, so we could hear them grow — but I have yet to find more time to work on it.</p>
+
+<p>And of course, a part of my job is to connect programs (APIs) together to build products and services.</p>
+
+<p>Anyway, today I'm going to talk about a more down to earth usage, hacky one, but a need I had.</p>
+
+<p>I'm trying to learn a new language (Spanish) mostly for fun and brain practice. And for that, I'm using the app Duolingo. It's good (for now) but it does not have a feature I love: flashcards.</p>
+
+<blockquote>
+  <p>A flashcard is a card bearing information on both sides, which is intended to be used as an aid in memorization. Each flashcard bears a question on one side and an answer on the other. Flashcards are often used to memorize vocabulary, historical dates, formulas or any subject matter that can be learned via a question-and-answer format. Flashcards can be virtual (part of a flashcard software), or physical. <a href="https://en.wikipedia.org/wiki/Flashcard" title="❤️ wikipedia">Wikipedia</a></p>
+</blockquote>
+
+<p>On the other side, it exists free flashcard apps like: Ankiapp that allows user to make their own flashcard set, and even in that case, import CSV into it.</p>
+
+<p>Say no more, let's connect those together.</p>
+
+<h2 id="connect-everything">Connect Everything</h2>
+
+<p>First, I need an API point on the Duolingo part, but unfortunately, it does not exist… The internet being a magic place full of ressources, I found someone working on an unofficial API. Thank you, <a href="#">@KartikTalwar</a>, for <a href="#">github.com/KartikTalwar/Duolingo</a>.</p>
+
+<p>I took me sometime to explore the API (without doc) and found some endpoints that would do the job.</p>
+
+<p>The next step is the easy one, take my favorite scripting language PHP and build a CSV file from this info. After a bit of test, it works as expected, I cleaned up the whole projet and decided to put it online, so you could use it too.</p>
+
+<p>Find it here <a href="https://github.com/jrmgx/duo-vocabulary">github.com/jrmgx/duo-vocabulary</a> you have all the information to use it on the repository. It's easy with docker, you don't have to install anything <code>docker run jrmgx/duo-vocabulary [parameters] &gt; output.csv</code></p>
+
+<h2 id="limitations">Limitations</h2>
+
+<ul>
+<li>It has some specific hardcoded rules to remove feminine and plural words, but those rules only work for Spanish (the language I'm learning right now).</li>
+<li>Duolingo does not provide an official API, for that reason, it may stop working at anytime (without any way to fix it).</li>
+<li>From what I understood, calls to <code>dictionary/hints</code> endpoint are limited in payload size, it may have to be split at some point, but for now, with my current usage it works like that.</li>
+</ul>
+
+<p>Enjoy!</p>
+
+    </section>
+    <footer class="pt-10">
+                    <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/blob/main/2022/07/03/duolingo-to-flashcards">Did you find an error or want to make a change? Open a PR</a><br>
+            <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/issues/3">Follow this link to add a comment on this page</a>
+            </footer>
+    </article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+        <p class="text-right" style="opacity: 0.5;">
+            contact: jerome@gangneux.net
+        </p>
+    </footer>
+
+            </body>
+</html>
