@@ -3,7 +3,7 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2022-07-03T13:22:48+00:00</updated>
+    <updated>2022-07-11T12:05:44+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
@@ -116,7 +116,7 @@ unison version 2.52.0 (ocaml 4.12.0)
 
 <p><code class="filepath">Dockerfile</code></p>
 
-<pre><code class="language-bash">FROM ubuntu:20.04
+<pre><code class="language-dockerfile">FROM ubuntu:20.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
