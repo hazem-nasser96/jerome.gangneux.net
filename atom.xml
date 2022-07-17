@@ -3,7 +3,7 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2022-07-11T12:05:44+00:00</updated>
+    <updated>2022-07-17T17:35:17+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
@@ -54,6 +54,10 @@
 <li>Duolingo does not provide an official API, for that reason, it may stop working at anytime (without any way to fix it).</li>
 <li>From what I understood, calls to <code>dictionary/hints</code> endpoint are limited in payload size, it may have to be split at some point, but for now, with my current usage it works like that.</li>
 </ul>
+
+<h2 id="update">Update</h2>
+
+<p>I made a <a href="https://telegram.me/FlashCartesBot?start=perso">telegram bot</a> that can handle those CSV to be used as a flashcard bot</p>
 
 <p>Enjoy!</p>
 ]]></content>
