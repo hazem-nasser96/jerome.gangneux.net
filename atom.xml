@@ -3,11 +3,93 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2022-07-17T17:35:17+00:00</updated>
+    <updated>2022-10-22T09:08:36+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+        <entry>
+        <title type="html"><![CDATA[web3 (Avril/mai 2022)]]></title>
+        <link href="/2022/10/22/web3"/>
+        <updated>2022-10-22T00:00:00+00:00</updated>
+        <id>/2022/10/22/web3</id>
+        <content type="html"><![CDATA[<h1 id="web3-avril%2Fmai-2022">web3 (Avril/mai 2022)</h1>
+
+<p>J'ai passé un mois dans le monde du web3 pour vous : voici mon avis d'un point de vue de développeur.</p>
+
+<p><small class="text-sm">Notez qu'entre-temps, il y a eu un krach des crypto monnaies et NFT et que ce sujet n'est plus trop d'actualité. Ça m'apprendra à tarder à publier mes articles.</small></p>
+
+<h2 id="pourquoi-%3F">Pourquoi ?</h2>
+
+<p>J'y suis allé sincèrement pour me tenir informé des évolutions techniques, mais également en espérant y découvrir quelque chose. Et, sans trop d'à priori, car comme vous le savez sans doute, je ne suis pas contre les crypto comme monnaie non étatique, <a href="https://jerome.gangneux.net/2017/06/08/state-of-bitcoin-mid-2017/">voir un précédent article</a>. J'imagine que ça peut servir dans certains pays.</p>
+
+<p>Concernant l'état actuel de ce qui est appelé le web3, je suis beaucoup plus critique. Ce qui ne veut pas dire que rien n'en restera.</p>
+
+<h2 id="le-saut">Le saut</h2>
+
+<p>Concrètement, j'ai appris le langage Solidity (pour développer sur la blockchain Ethereum) et déployé un smart contract. De plus, j'ai parlé avec des communautés en suivant leurs projets divers et variés (mais pas tant varié que ça, surtout des NFT).</p>
+
+<h2 id="la-fi%C3%A8vre">La fièvre</h2>
+
+<p>Actuellement, ce que je vois, c'est que c'est le far west. L'analogie tient autant pour le côté sans foi ni loi, mais aussi (et surtout) pour l'aspect fièvre de l'or. Cet aspect est important, il participe à l'émulation des uns et des autres (ou au FOMO selon votre point de vue).</p>
+
+<p>Pour être honnête avec vous, j'ai moi-même eu la fièvre un temps. La question que tout le monde se pose est : « Pourquoi je n'arriverai pas à gagner plein d'argent moi aussi ? »
+En y passant du temps, j'ai bien vu que l'on nous mentait... qui ? Personne. C'est le grand mensonge décentralisé. À défaut de décentraliser quoi que ce soit d'autre.</p>
+
+<p>Les quelques gagnants font leur promotion et les autres veulent leurs parts du gâteau.</p>
+
+<h2 id="la-bulle">La bulle</h2>
+
+<p>Il y a aussi une bulle évidente, ça sent l'argent magique à plein nez (notons que ça s'est bien calmé à l'heure où j'écris ces lignes). Tout le monde ferme les yeux, personne ne veut regarder les vrais metrics. Quand un projet se lance, les gens vont s'extasier sur des chiffres qui ne veulent rien dire plutôt que de compter combien de personnes utilisent le projet et comment le projet gagne de l'argent. Et, si jamais un projet parle d'argent, il parlera en fait de token ou d'argent du futur, rien de tangible.</p>
+
+<p>D'ailleurs, 90 % des projets sont des NFT qui se ressemblent autant dans leur concept que dans leur art. Il y a plusieurs collections de singe par exemple (quelle drôle de phrase je viens d'écrire).</p>
+
+<p>Quand c'est possible, les projets essaient de s'accrocher au "metaverse" à venir. Le problème, c'est que ce "metaverse" n'existe pas, c'est encore qu'un concept (et qui à mon avis est aussi flou que lointain dans le temps).</p>
+
+<h2 id="bon-point">Bon point</h2>
+
+<p>Il y a quand même un point intéressant, je trouve, c'est le wallet (en tant que concept et technique). Il permet à un utilisateur de se connecter à des services sans créer d'identifiant et mot de passe. Le wallet permet aussi de chiffrer tout de bout en bout si besoin et facilement. Si les utilisateurs prennent ce réflexe plutôt que de se connecter via des plateformes centralisées telles que Google ou Facebook, c'est un bon point.</p>
+
+<h2 id="scam-d%C3%A9centralis%C3%A9">Scam décentralisé</h2>
+
+<p>Qui dit Far West, dit, dans le jargon adapté d'internet, Scam.
+Cas pratique : vous êtes convaincu et que vous voulez acheter un NFT, disons qu'une collection vous plaise. Vous allez sur le serveur Discord du projet et vous attendez des nouvelles. Un jour, vous recevez un message privé qui semble venir du serveur en question et votre renvoi vers une page pour récupérer votre NFT. Sauf qu'étant débutant, vous ne savez pas réellement quelle est la procédure normale, pas de site officiel pour les projets, ou des domaines peu communs… Comment faire la différence avec un scam ?</p>
+
+<p>Je l'ai vu en action et je peux vous dire que beaucoup de gens doivent tomber dans le piège. À qui faire une réclamation après ? Personne.</p>
+
+<p>C'est décentralisé, personne n'est responsable.</p>
+
+<h2 id="pour-les-d%C3%A9veloppeurs.">Pour les développeurs.</h2>
+
+<p>Les smart contracts sont excitants pour un temps, le temps de l'apprentissage, puis finalement les limitations sont monstrueuses et les frais de transaction (nécessaire pour exécuter le code du smart contract) trop importants. Certes, les créateurs de chaine travaillent sur ce point, mais en multipliant les chaines et en créant maintenant diverses incompatibilités.</p>
+
+<p>La promesse de décentralisation est aussi limitée par le fait qu'il faille (pour vous simplifier la tâche) utiliser des plateformes web classiques (Alchemy par exemple) pour que votre app web3 se connecte à la blockchain. Le tout donne un air de centralisation, et des frais supplémentaires pour les développeurs, car ces services tiers sont payants.</p>
+
+<h2 id="pas-que-des-nft">Pas que des NFT</h2>
+
+<p>Il y a d'autres projets plus ou moins intéressant sur la blockchain. La DeFi (decentralized finance) par exemple, qui au-delà du trading sauvage pourrait servir à faire des micros emprunts. Et, bien d'autres concepts qui restent minoritaires.</p>
+
+<h2 id="le-vrai-d%C3%A9centralis%C3%A9">Le vrai décentralisé</h2>
+
+<p>Si vous voulez participer à une expérience décentralisée, pourquoi ne pas tout simplement utiliser l'email (de préférence de chez <a href="https://proton.me">Proton</a> mail). Le bon vieux protocole email est un parfait exemple de web décentralisé (sous réserve que l'on ne soit pas chez Gmail).</p>
+
+<p>Mieux, soyez fou et installez un serveur web avec votre site dessus, ce serveur peut même être installé chez vous (plutôt que dans le cloud). Du bon vieil internet tout simplement. Ou, plus accessible, un wordpress sur votre nom de domaine, ce sera toujours un bon pied de nez au web centralisé d'aujourd'hui (à savoir l'internet des plateformes GAFAM qui vous spolient votre contenu en échange de cœurs ou de pouces).</p>
+
+<p>Il existe tout un tas de façon d'être décentralisé, il faut juste se le rappeler : ça s'appelle Internet (hors GAFAM). Le web1 en quelque sorte.</p>
+
+<p>Et, si vous voulez être à la pointe de ce qui se fait : il y a les vraies expériences décentralisées telles que :</p>
+
+<ul>
+<li><a href="https://ipfs.tech">IPFS</a> : protocole de stockage de fichier décentralisé, très utilisé en web3 mais pas lié ni au web3 ni au crypto.</li>
+<li><a href="https://solidproject.org">Solid Project</a> : proposition de nouveaux standards web qui remettent la donnée au centre du protocole pour plus de contrôle de la part de l'utilisateur.</li>
+</ul>
+
+<h2 id="finalement">Finalement</h2>
+
+<p>J'ai pris un paracétamol, une bonne nuit de sommeil et c'est passé.<br>
+En espérant qu'il restera de bonnes choses de cette expérience web3 !</p>
+]]></content>
+    </entry>
         <entry>
         <title type="html"><![CDATA[Duolingo Flashcards]]></title>
         <link href="/2022/07/03/duolingo-to-flashcards"/>
@@ -1253,58 +1335,6 @@ Details: basically playing with the Sin() math function and gradients.</p>
 
 <ul>
 <li>Access to the <a href="/images/projects/generative/code_generator_screen.jpg">full generator</a> that will allow you to make an tweak similar art</li>
-<li>Documentation to understand the code</li>
-</ul>
-
-<p>contact me!</p>
-]]></content>
-    </entry>
-        <entry>
-        <title type="html"><![CDATA[From Movies]]></title>
-        <link href="/2021/02/17/generative-movies"/>
-        <updated>2021-02-17T00:00:00+00:00</updated>
-        <id>/2021/02/17/generative-movies</id>
-        <content type="html"><![CDATA[<p>Videos with sound generated from existing movies.</p>
-
-<p>This has been made with custom code.<br />
-Details: for a given movie,</p>
-
-<p>1/ Getting the average color of each frame, then putting pixel after pixel on the video<br />
-2/ Generating a music track from each color component (R/G/B) for the kick, piano, bass<br />
-3/ Merge all in the video at 200fps</p>
-
-<h2 id="matrix">Matrix</h2>
-
-<iframe src="https://player.vimeo.com/video/529744282?title=0&amp;byline=0&amp;portrait=0" width="100%" height="394" class="center" frameborder="0" allowfullscreen></iframe>
-
-<p><br>
-Note: the final video does not suffer from any compression artifacts.</p>
-
-<p>I my opinion, one of the best parts is around 4:30 
-where something very bright happen in the movie and is well reflected in the soundtrack</p>
-
-<p>The final image resulting from the process looks like:
-<!-- I hope this will make someone lol --><center>
-<img class="shadow-2xl center" src="https://jerome.gangneux.net/images/upload/m_1px_raw.png" />
-</center></p>
-
-<h2 id="kill-bill">Kill Bill</h2>
-
-<iframe src="https://player.vimeo.com/video/529745381?title=0&amp;byline=0&amp;portrait=0" width="100%" height="394" class="center" frameborder="0" allowfullscreen></iframe>
-
-<p><br>
-Note: the final video does not suffer from any compression artifacts.</p>
-
-<h2 id="for-sale">For sale</h2>
-
-<p>Those art piece are for sale, they come with:</p>
-
-<ul>
-<li>Full quality video with audio</li>
-<li>Full quality audio track</li>
-<li>Final image</li>
-<li>Intermediate files used to generate the video and audio</li>
-<li>Code made to generate that particular piece</li>
 <li>Documentation to understand the code</li>
 </ul>
 
