@@ -3,11 +3,84 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2022-11-08T20:48:33+00:00</updated>
+    <updated>2022-11-20T18:16:08+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+        <entry>
+        <title type="html"><![CDATA[Geek Stuff]]></title>
+        <link href="/2022/11/20/geek-stuff"/>
+        <updated>2022-11-20T00:00:00+00:00</updated>
+        <id>/2022/11/20/geek-stuff</id>
+        <content type="html"><![CDATA[<h1 id="geek-stuff">Geek Stuff</h1>
+
+<p>Two stupid yet useful things I've done recently on my local setup.</p>
+
+<h2 id="languagetool-desktop-app-spoofing">LanguageTool Desktop App spoofing</h2>
+
+<p>I like <a href="languagetool.org">LanguageTool</a>: a multilingual grammar, style, and spell checker. <br>
+It is a great help for me, in both English and French.</p>
+
+<p>I have the browser extension setup on each of my browser. But I was not so happy about the text I wrote been sent to servers.
+Fortunately, LanguageTool is open source, and they provide all the needed info about setting up a server.</p>
+
+<p>So of course I did it and install a server on my local machine.
+Then on the browser extension they allow you to specify a custom server URL.
+Thank you for being so kind and open.</p>
+
+<p>That setup worked like a charm for a while.
+But I needed more than having LanguageTool in the browser!
+Those kinds of tool become quickly a must-have.</p>
+
+<p>Luckily, LanguageTool is actually working on a <a href="https://languagetool.org/mac-desktop">desktop app</a>.
+This app allows you to have the spell checker in desktops apps, not only the browser. Nice!</p>
+
+<p>Unfortunately, the same privacy question emerge, and that time, the desktop app does not provide a way to specify an external server.
+I was having mixed feelings: wanting the tool really bad, but without sending my email/notes content to an external server.</p>
+
+<p><strong>Enters the geek inside me!</strong></p>
+
+<p>I decided to spoof the official language tool server with my local version.</p>
+
+<p>The trick is straightforward — even if it took me some time to get right —
+I updated my <code>/etc/hosts</code> file to have <code>api.languagetool.org</code> pointing on my local machine and then set up a <code>docker</code> + <code>mkcert</code> + <code>traefick</code> stack to make the spoof complete.
+Luckily, the official API has the same endpoints as the open-source version, so it worked effortlessly.</p>
+
+<p>I now have LanguageTool Desktop app working with my local version of the server, and no data leaves my computer!</p>
+
+<h2 id="shared-browser-extension-settings-across-multiple-browser">Shared browser extension settings across multiple browser</h2>
+
+<p>Recently, I discovered the <a href="https://darkreader.org">darkreader.org</a> browser extension.<br>
+It allows you to get a dark mode version of any websites, it works by adding some custom styling to the page. That's a nice one to have.</p>
+
+<p>Problem is, the extension changes all websites, even the ones that already have a dark theme — or are dark by nature —
+fortunately a blacklist feature is present in the extension, so you can disable the extension on specific domains.</p>
+
+<p>Still, I got annoyed because, as you can imagine, I'm using multiple browsers with multiple accounts (work, perso, etc.).
+So, each browser has its own instance of the extension; thus, each one had different settings, and so I had to blacklist each same website on each browser/account.
+How is this acceptable?</p>
+
+<p><strong>The geek enters again!</strong></p>
+
+<p>This extension is open source, that's a chance.<br>
+I decided to build a small local server that expose a basic key/value API on top of a SQLite database.
+Then I updated the extension, so it uses that localhost API instead of the browser storage.</p>
+
+<p>And voilà! I now have multiple instances of that same extension, but with synchronised settings.<br>
+The funny side effect is that I can see all the settings this extension is using in my SQLite database.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>I love to play those little games.</p>
+
+<p>Having a perfect local setup allows me to be more productive.
+It's like polishing your tool to get a better work done.
+Well, I can't help, I'm a geek.</p>
+
+<p><em>Note: Those tricks are not available because they are too specific to my setup, but also, let's be honest, they are not the most beautiful code I've written. If you are interested in some details, contact me.</em></p>
+]]></content>
+    </entry>
         <entry>
         <title type="html"><![CDATA[web3 (Avril/mai 2022)]]></title>
         <link href="/2022/10/22/web3"/>
@@ -1267,78 +1340,6 @@ ServerName localhost
 <p><link rel="stylesheet" href="/assets/css/monokai.min.css">
 <script type="text/javascript" src="/assets/js/highlight.min.js"></script>
 <script>hljs.highlightAll();</script></p>
-]]></content>
-    </entry>
-        <entry>
-        <title type="html"><![CDATA[Squared Sin()]]></title>
-        <link href="/2021/03/17/generative"/>
-        <updated>2021-03-17T00:00:00+00:00</updated>
-        <id>/2021/03/17/generative</id>
-        <content type="html"><![CDATA[<p>This has been made with custom code.<br />
-Details: basically playing with the Sin() math function and gradients.</p>
-
-<p>You can make your own here: <a href="https://jerome.gangneux.net/experiments/sq/">experiments/sq</a></p>
-
-<p><section id="gallery">
-    <h2>Gallery</h2>
-    <div class="mx-auto max-w-2xl mt-6">
-        <div class="text-center">Click for more screenshots</div>
-        <div class="shadow-2xl relative">
-                        <div class="mySlides"><img class="image1 w-full w-full" src="/images/projects/generative/sq_0.png"></div>
-                        <div class="mySlides"><img class="image2 w-full w-full" src="/images/projects/generative/sq_1.png"></div>
-                        <div class="mySlides"><img class="image3 w-full w-full" src="/images/projects/generative/sq_2.png"></div>
-                        <div class="mySlides"><img class="image4 w-full w-full" src="/images/projects/generative/sq_3.png"></div>
-                        <div class="mySlides"><img class="image5 w-full w-full" src="/images/projects/generative/sq_4.png"></div>
-                        <div class="mySlides"><img class="image6 w-full w-full" src="/images/projects/generative/sq_5.png"></div>
-                        <div class="mySlides"><img class="image7 w-full w-full" src="/images/projects/generative/sq_6_fire.png"></div>
-                        <div class="mySlides"><img class="image8 w-full w-full" src="/images/projects/generative/sq_7.png"></div>
-                        <div class="mySlides"><img class="image9 w-full w-full" src="/images/projects/generative/sq_8.png"></div>
-                        <div class="mySlides"><img class="image10 w-full w-full" src="/images/projects/generative/sq_9_barcode.png"></div>
-                        <div class="mySlides"><img class="image11 w-full w-full" src="/images/projects/generative/sq_10_ocean.png"></div>
-                        <div class="mySlides"><img class="image12 w-full w-full" src="/images/projects/generative/sq_11_vibrate.png"></div>
-                        <div class="mySlides"><img class="image13 w-full w-full" src="/images/projects/generative/sq_12.png"></div>
-                        <div class="mySlides"><img class="image14 w-full w-full" src="/images/projects/generative/sq_13_pool.png"></div>
-                        <div class="mySlides"><img class="image15 w-full w-full" src="/images/projects/generative/sq_14_grass.png"></div>
-                        <div class="mySlides"><img class="image16 w-full w-full" src="/images/projects/generative/sq_15.png"></div>
-                        <div class="mySlides"><img class="image17 w-full w-full" src="/images/projects/generative/sq_16.png"></div>
-                        <span class="absolute left-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="z-index: 11;" onclick="plusSlides(-1)">❮</span>
-            <span class="absolute right-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="width: 100%;z-index: 10;justify-content: flex-end;" onclick="plusSlides(1)">❯</span>
-        </div>
-    </div>
-
-    <script>
-    var slideIndex = 1;
-    showSlides(slideIndex);
-
-    function plusSlides(n) { showSlides(slideIndex += n); return false; }
-    function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        if (n > slides.length) {
-            slideIndex = 1
-        }
-        if (n < 1) {
-            slideIndex = slides.length
-        }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-        }
-        slides[slideIndex - 1].style.display = "block";
-    }
-    </script>
-</section>
-</p>
-
-<h2 id="for-sale">For sale</h2>
-
-<p>Those art piece are for sale, they come with:</p>
-
-<ul>
-<li>Access to the <a href="/images/projects/generative/code_generator_screen.jpg">full generator</a> that will allow you to make an tweak similar art</li>
-<li>Documentation to understand the code</li>
-</ul>
-
-<p>contact me!</p>
 ]]></content>
     </entry>
     </feed>
