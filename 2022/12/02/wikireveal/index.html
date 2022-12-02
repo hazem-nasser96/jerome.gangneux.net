@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>WikiReveal - Jérôme Gangneux</title>
+                <meta name="description" content="WikiReveal is a multilingual version of redactle.com published at wikireveal.com">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="WikiReveal is a multilingual version of redactle.com published at wikireveal.com">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2022/12/02/wikireveal" />
+        <meta property="og:title" content="WikiReveal - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/writing/wikireveal.png" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>WikiReveal</h1>
+        <p>December 2, 2022</p>
+    </header>
+    <section class="main">
+                <div class="image_main_wrap mb-12">
+            <img alt="" src="/images/writing/wikireveal.png">
+        </div>
+                <h1 id="wikireveal">WikiReveal</h1>
+
+<p>WikiReveal is a multilingual version of redactle.com published at <a href="https://wikireveal.com">wikireveal.com</a></p>
+
+<blockquote>
+  <p>It is a daily browser game where the user tries to determine the subject of a random obfuscated Wikipedia article chosen from Wikipedia's 10,000 Vital Articles (Level 4).</p>
+</blockquote>
+
+<p>Wikireveal embrace user contributions and open-source, with a focus on implementing multiples languages and letting anyone contribute easily.</p>
+
+<p>If you are interested in contributing to the project, please check out the <a href="https://github.com/jrmgx/wikireveal.com">GitHub repository</a>.</p>
+
+<p>For now it has English, French and Spanish available!
+<a href="https://wikireveal.com">Try a game and share you score!</a></p>
+
+<p><em>Read more about the technicals after the screenshot ...</em></p>
+
+<p><section id="gallery">
+    <h2>Gallery</h2>
+    <div class="mx-auto max-w-2xl mt-6">
+        <div class="text-center">Click for more screenshots</div>
+        <div class="shadow-2xl relative">
+                        <div class="mySlides"><img class="image1 w-full w-full" src="/images/projects/wikireveal/01.png"></div>
+                        <div class="mySlides"><img class="image2 w-full w-full" src="/images/projects/wikireveal/02.png"></div>
+                        <span class="absolute left-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="z-index: 11;" onclick="plusSlides(-1)">❮</span>
+            <span class="absolute right-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="width: 100%;z-index: 10;justify-content: flex-end;" onclick="plusSlides(1)">❯</span>
+        </div>
+    </div>
+
+    <script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) { showSlides(slideIndex += n); return false; }
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex - 1].style.display = "block";
+    }
+    </script>
+</section>
+</p>
+
+<h2 id="technical-stack">Technical Stack</h2>
+
+<p>The projet was kind of fun to implement. I did not wanted to have a server running it so I decided to took advantage of GitHub pages.</p>
+
+<p>The idea was, not to build a web application as usual, but instead build a static page generator. Wikireveal being a daily puzzle it was meant to be. Plus, this version — as opposed to other copies — does not have any user data stored, a perfect match for a static website.</p>
+
+<p>Side effect, it is fully private; no data collecting, no ads; that was something I wanted too.</p>
+
+<h3 id="php-and-symfony">PHP and Symfony</h3>
+
+<p>As you can imagine I went for my tools of predilection: PHP with Symfony.</p>
+
+<p>I build a very simple controller, with some services to fetch the page on wikipedia and clean the article of the day for the gameplay (removing link, images, etc.).
+I added a PHP interface for implementing languages so anyone can create a new one with a few line of code. Then the controller is called via a symfony command and the result saved into a basic HTML file.</p>
+
+<p>I decided to use a controller and then render it in a second step. That way you can have a local version for developing, I thought it was a good approche to ease feature iteration.</p>
+
+<p>Thanks to that simple base, I could use GitHub actions to run the symfony command <a href="https://github.com/jrmgx/wikireveal.com/actions">every day</a>. And voilà.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>There are lots of things that can be improved. The code could be made even more flexible. But for now, I'm happy with the result.</p>
+
+<p><a href="https://wikireveal.com">Let's play your first game!</a></p>
+
+<p><em>Note: this post has been written with some help from an AI.</em></p>
+
+    </section>
+    <footer class="pt-10">
+            </footer>
+    </article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+        <p class="text-right" style="opacity: 0.5;">
+            contact: jerome@gangneux.net / also on <a rel="me" href="https://mamot.fr/@jrmgx">Mastodon</a>
+        </p>
+    </footer>
+
+            </body>
+</html>

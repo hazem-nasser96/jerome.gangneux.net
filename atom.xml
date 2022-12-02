@@ -3,11 +3,96 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2022-11-20T18:16:08+00:00</updated>
+    <updated>2022-12-02T12:46:18+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+        <entry>
+        <title type="html"><![CDATA[WikiReveal]]></title>
+        <link href="/2022/12/02/wikireveal"/>
+        <updated>2022-12-02T00:00:00+00:00</updated>
+        <id>/2022/12/02/wikireveal</id>
+        <content type="html"><![CDATA[<h1 id="wikireveal">WikiReveal</h1>
+
+<p>WikiReveal is a multilingual version of redactle.com published at <a href="https://wikireveal.com">wikireveal.com</a></p>
+
+<blockquote>
+  <p>It is a daily browser game where the user tries to determine the subject of a random obfuscated Wikipedia article chosen from Wikipedia's 10,000 Vital Articles (Level 4).</p>
+</blockquote>
+
+<p>Wikireveal embrace user contributions and open-source, with a focus on implementing multiples languages and letting anyone contribute easily.</p>
+
+<p>If you are interested in contributing to the project, please check out the <a href="https://github.com/jrmgx/wikireveal.com">GitHub repository</a>.</p>
+
+<p>For now it has English, French and Spanish available!
+<a href="https://wikireveal.com">Try a game and share you score!</a></p>
+
+<p><em>Read more about the technicals after the screenshot ...</em></p>
+
+<p><section id="gallery">
+    <h2>Gallery</h2>
+    <div class="mx-auto max-w-2xl mt-6">
+        <div class="text-center">Click for more screenshots</div>
+        <div class="shadow-2xl relative">
+                        <div class="mySlides"><img class="image1 w-full w-full" src="/images/projects/wikireveal/01.png"></div>
+                        <div class="mySlides"><img class="image2 w-full w-full" src="/images/projects/wikireveal/02.png"></div>
+                        <span class="absolute left-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="z-index: 11;" onclick="plusSlides(-1)">❮</span>
+            <span class="absolute right-0 inset-y-0 flex items-center px-4 dark:text-pink-600 text-pink-500 cursor-pointer text-3xl font-extrabold" style="width: 100%;z-index: 10;justify-content: flex-end;" onclick="plusSlides(1)">❯</span>
+        </div>
+    </div>
+
+    <script>
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) { showSlides(slideIndex += n); return false; }
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlides");
+        if (n > slides.length) {
+            slideIndex = 1
+        }
+        if (n < 1) {
+            slideIndex = slides.length
+        }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slides[slideIndex - 1].style.display = "block";
+    }
+    </script>
+</section>
+</p>
+
+<h2 id="technical-stack">Technical Stack</h2>
+
+<p>The projet was kind of fun to implement. I did not wanted to have a server running it so I decided to took advantage of GitHub pages.</p>
+
+<p>The idea was, not to build a web application as usual, but instead build a static page generator. Wikireveal being a daily puzzle it was meant to be. Plus, this version — as opposed to other copies — does not have any user data stored, a perfect match for a static website.</p>
+
+<p>Side effect, it is fully private; no data collecting, no ads; that was something I wanted too.</p>
+
+<h3 id="php-and-symfony">PHP and Symfony</h3>
+
+<p>As you can imagine I went for my tools of predilection: PHP with Symfony.</p>
+
+<p>I build a very simple controller, with some services to fetch the page on wikipedia and clean the article of the day for the gameplay (removing link, images, etc.).
+I added a PHP interface for implementing languages so anyone can create a new one with a few line of code. Then the controller is called via a symfony command and the result saved into a basic HTML file.</p>
+
+<p>I decided to use a controller and then render it in a second step. That way you can have a local version for developing, I thought it was a good approche to ease feature iteration.</p>
+
+<p>Thanks to that simple base, I could use GitHub actions to run the symfony command <a href="https://github.com/jrmgx/wikireveal.com/actions">every day</a>. And voilà.</p>
+
+<h2 id="conclusion">Conclusion</h2>
+
+<p>There are lots of things that can be improved. The code could be made even more flexible. But for now, I'm happy with the result.</p>
+
+<p><a href="https://wikireveal.com">Let's play your first game!</a></p>
+
+<p><em>Note: this post has been written with some help from an AI.</em></p>
+]]></content>
+    </entry>
         <entry>
         <title type="html"><![CDATA[Geek Stuff]]></title>
         <link href="/2022/11/20/geek-stuff"/>
@@ -1022,320 +1107,6 @@ if (!file_exists(DB_FILE_NAME)) {
 <p>I made other scripts that are probably to specific and too messy to be published here,
 one I like an used a lot was a PHP script (+ command line tools) that split a mbox file and extract message/attachment to a database. 
 Worked well to save my emails when I left gmail. Let me know if you are interested :)</p>
-
-<p><link rel="stylesheet" href="/assets/css/monokai.min.css">
-<script type="text/javascript" src="/assets/js/highlight.min.js"></script>
-<script>hljs.highlightAll();</script></p>
-]]></content>
-    </entry>
-        <entry>
-        <title type="html"><![CDATA[Apache + PHP FPM + Mysql with docker]]></title>
-        <link href="/2021/06/24/apache-php-fpm-mysql-docker"/>
-        <updated>2021-06-24T00:00:00+00:00</updated>
-        <id>/2021/06/24/apache-php-fpm-mysql-docker</id>
-        <content type="html"><![CDATA[<h1 id="introduction">Introduction</h1>
-
-<p>It was about time, I decided to update my stack and use docker on my servers.</p>
-
-<p>For the ones that follows me I usually prefer to set up a bare metal server with Debian Apache PHP and MySQL installed on it.<br />
-My excuses — if I even need some — were a mix between performances and simplicity.</p>
-
-<p>But today I'm experimenting with multiple small projects, and they all are on the same server.
-It's still a bare metal server, and I'm not — yet — changing this for a cloud provider, we can talk about this in another blog post.</p>
-
-<p>Multiple projects with a single server can lead to some incompatible dependencies,
-in my specific scenario I need some PHP extension that is obsolete and works only with older PHP version, but I don't want to carry this limitation to all my projects.</p>
-
-<p>Why Apache and not Nginx? <a href="https://youtu.be/-rmf5EqJVDw?t=16">No reason &copy;</a>.</p>
-
-<p>Let's see how I built my LAMP stack with Docker (should we say DAMP?)</p>
-
-<h1 id="php">PHP</h1>
-
-<p>I used the <code>php:7.4-fpm</code> base image and added some extensions, those vary depending on the current project.</p>
-
-<p>I added composer because it's always handy to have it there, plus, and this may be up for discussion, I added NodeJS + PM2 in this image too.</p>
-
-<p>Node is often needed for the front end (compiling asset and such) and I did not want the complexity of another image (but I'm open for comment/PR on this one)
-as well as <a href="pm2.keymetrics.io/">PM2</a> that I use for my background scripts. 
-For example like this: <code>pm2 start --name php_messenger_consume php -- bin/console -n messenger:consume async --limit=10 --memory-limit=128M --time-limit=3600</code></p>
-
-<p>It's very handy to have it on the same image as PHP, and does not look even possible otherwise (let me know in the comments).</p>
-
-<p><code class="filepath">file:///docker/php/Dockerfile</code></p>
-
-<pre><code class="language-dockerfile">
-FROM php:7.4-fpm
-
-# PHP and related
-RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
-        locales \
-        apt-utils \
-        git \
-        g++ \
-        libicu-dev \
-        libpng-dev \
-        libxml2-dev \
-        libzip-dev \
-        libonig-dev \
-        libxslt-dev \
-        unzip \
-        libfreetype6-dev \
-        libjpeg62-turbo-dev \
-    &amp;&amp; docker-php-ext-configure gd --with-freetype --with-jpeg \
-    &amp;&amp; docker-php-ext-configure intl \
-    &amp;&amp; docker-php-ext-install \
-        pdo \
-        pdo_mysql \
-        opcache \
-        intl \
-        zip \
-        calendar \
-        dom \
-        mbstring \
-        gd \
-        xsl \
-    &amp;&amp; pecl install apcu \
-    &amp;&amp; docker-php-ext-enable apcu \
-\
-    &amp;&amp;  curl -sS https://getcomposer.org/installer | php -- \
-    &amp;&amp;  mv composer.phar /usr/local/bin/composer
-
-RUN mv &quot;$PHP_INI_DIR/php.ini-production&quot; &quot;$PHP_INI_DIR/php.ini&quot;
-
-# Node 14 and related
-RUN curl -fsSL https://deb.nodesource.com/setup_14.x | bash - \
-    &amp;&amp; apt-get install -y --no-install-recommends nodejs \
-    &amp;&amp; npm install pm2@5.0 -g \
-    &amp;&amp; pm2 install pm2-logrotate \
-    &amp;&amp; pm2 set pm2-logrotate:compress true
-
-</code></pre>
-
-<h1 id="apache">Apache</h1>
-
-<p>This on is a bit more tricky.</p>
-
-<p>First on my production server I won't use it, the server will have a real Apache with vhosts configured properly forwarding to each different projects.
-Those final vhosts will look similar to the one below that I use in the development image.</p>
-
-<p>So for the dev env (hence the <code>docker-compose-dev.yml</code> coming up below) it will have Apache.</p>
-
-<p>The goal is to redirect the query that hit the server to PHP FPM.</p>
-
-<p>For this, I first tried to use the base image <code>httpd:2.4</code> it seemed logic to me but for some reason I never succeeded to make it work, (have you? PR welcome).
-I ended up using a debian base <code>debian:buster-slim</code> and installed Apache on my own (probably not optimal, but we are on a dev environment).</p>
-
-<p>It has <em>mod proxy fast CGI</em> and <em>mod rewrite</em> activated as we will use it in our config.</p>
-
-<p><code class="filepath">file:///docker/apache/Dockerfile</code></p>
-
-<pre><code class="language-dockerfile">
-FROM debian:buster-slim
-
-RUN apt-get update &amp;&amp; apt-get install -y --no-install-recommends \
-    apache2 \
-    &amp;&amp; a2enmod proxy_fcgi \
-    &amp;&amp; a2enmod rewrite
-
-CMD /usr/sbin/apache2ctl -D FOREGROUND
-
-</code></pre>
-
-<h1 id="mysql">MySQL</h1>
-
-<p>I'm using the base image <code>mysql</code> with some options like <code>MYSQL_ALLOW_EMPTY_PASSWORD</code> and <code>cap_add: SYS_NICE</code>. 
-The later prevent the error message "mbind: Operation not permitted" as seen on <a href="https://stackoverflow.com/a/55706057/696517">stackoverflow.com</a></p>
-
-<h1 id="connecting-everything-together">Connecting everything together</h1>
-
-<p>The idea now it to put everything together:</p>
-
-<ul>
-<li>Apache will be exposed to some port and redirect requests to PHP-FPM.</li>
-<li>PHP will be able to connect to the database.</li>
-<li>And also we can use PHP as a command line on our server to execute PHP commands.</li>
-</ul>
-
-<p>I added comments on the file directly, so you have the context.</p>
-
-<p><small>Note: the name of the project is "bookmark" in this example</small></p>
-
-<h2 id="production">Production</h2>
-
-<p><code class="filepath">file:///docker-compose.yml</code></p>
-
-<pre><code class="language-yaml">
-version: &quot;3.3&quot;
-services:
-
-    database:
-        image: mysql
-        container_name: bookmark_mysql
-        restart: always
-        # We set up a docker volume to store our database data
-        volumes:
-            - bookmark-mysql-data:/var/lib/mysql
-        environment:
-            MYSQL_ALLOW_EMPTY_PASSWORD: &quot;yes&quot;
-        networks:
-            - bookmark-network
-        # This option fix the &quot;mbind: Operation not permitted&quot; error that pops in the logs
-        # https://stackoverflow.com/a/55706057/696517
-        cap_add:
-            - SYS_NICE
-
-    php:
-        # Comes from the Dockerfile we talked about earlier
-        build: docker/php
-        container_name: bookmark_php
-        # We will mount our application code in this directory
-        volumes:
-            - ./:/var/www
-        restart: always
-        # Connect this to the common network
-        networks:
-            - bookmark-network
-
-# Common network among all the machines
-networks:
-    bookmark-network:
-
-volumes:
-    bookmark-mysql-data:
-
-</code></pre>
-
-<p>This is the version used in production, so without Apache.</p>
-
-<p>Now the version for local dev</p>
-
-<h2 id="development">Development</h2>
-
-<p>As you probably now, docker-compose config files cascade (like CSS), and we can supersede options
-Again I added comment strait in the file for context.</p>
-
-<p><code class="filepath">file:///docker-compose-dev.yml</code></p>
-
-<pre><code class="language-yaml">
-version: &quot;3.3&quot;
-services:
-
-    database:
-        # For local development I expose the database
-        # Expose port 3306 (mysql default) and bind it to 3307 on the local machine
-        ports:
-          - &quot;3307:3306&quot;
-        # Not auto-restarting the container in local
-        restart: &quot;no&quot;
-
-    # I love this project for dev purpose, I let you check more about it here: https://github.com/maildev/maildev
-    # it&#039;s optional and I won&#039;t go in detail about it now
-    mail:
-        image: maildev/maildev
-        container_name: bookmark_maildev
-        command: bin/maildev --web 80 --smtp 25 --hide-extensions STARTTLS
-        ports:
-          - &quot;8083:80&quot;
-        restart: &quot;no&quot;
-        networks:
-            - bookmark-network
-
-    php:
-        # Not auto-restarting the container in local
-        restart: &quot;no&quot;
-
-    apache:
-        # For local development I set up an Apache server
-        # It comes from the Dockerfile we talked about earlier
-        build: docker/apache
-        container_name: bookmark_apache
-        # Start after those image
-        depends_on:
-            - php
-            - database
-        # Expose port 80 and bind it to 9001 on the local machine
-        ports:
-            - &quot;9001:80&quot;
-        volumes:
-            # We will mount our application code in this directory
-            - ./:/var/www
-            # This one is to allow us to set up apache vhosts (see below)
-            - ./docker/apache/conf:/etc/apache2/sites-enabled
-        restart: &quot;no&quot;
-        networks:
-            - bookmark-network
-
-</code></pre>
-
-<h2 id="glue-in-between">Glue in between</h2>
-
-<p>Be it in production or development, having apache on the server or in a docker image,
-you know have to redirect web request to PHP FPM</p>
-
-<p>This is done with an Apache config file (here called <code>vhosts.conf</code> for historical reasons)</p>
-
-<p>This config file is similar between a production environment and a dev environment,
-main differences will be explained in inline comments</p>
-
-<p>Note: the base version here is the dev environment.</p>
-
-<p><code class="filepath">file:///apache/conf/vhosts.conf</code></p>
-
-<pre><code class="language-apache">
-ServerName localhost
-# Listening on port 80, I use cloudflare, and they handle the SSL part,
-# otherwise you will need a second similar section for SSL
-&lt;VirtualHost *:80&gt;
-    # Follow important Auth headers
-    SetEnvIfNoCase ^Authorization$ &quot;(.+)&quot; HTTP_AUTHORIZATION=$1
-
-    # Define our app directory
-    DocumentRoot /var/www/public
-
-    # Rule to redirect request to PHP files to our PHP docker image
-    # in production environment you would have to expose the PHP docker image and update the fcgi uri below with the right hostname and port
-    &lt;FilesMatch \.php$&gt;
-        SetHandler proxy:fcgi://php:9000
-    &lt;/FilesMatch&gt;
-
-    # Rules for our main directory
-    &lt;Directory /var/www/public&gt;
-        # Will rewrite requests
-        RewriteEngine On
-
-        # If the request is a file or a directory, skip the rewrite
-        RewriteCond %{REQUEST_FILENAME} !-f
-        RewriteCond %{REQUEST_FILENAME} !-d
-
-        # Remove the index.php from the URL
-        RewriteRule ^(.*)$ index.php [QSA,L]
-
-        # Other quite basic config
-        # see apache doc
-        AllowOverride None
-        Require all granted
-        Allow from All
-        FallbackResource /index.php
-    &lt;/Directory&gt;
-
-    # These are basic configuration option (optional)
-    # see apache doc
-    &lt;Directory /var/www&gt;
-        Options FollowSymlinks
-    &lt;/Directory&gt;
-
-    &lt;Directory /var/www/public/build&gt;
-        DirectoryIndex disabled
-        FallbackResource disabled
-    &lt;/Directory&gt;
-
-    CustomLog /proc/self/fd/1 common
-    ErrorLog /proc/self/fd/2
-
-&lt;/VirtualHost&gt;
-
-</code></pre>
 
 <p><link rel="stylesheet" href="/assets/css/monokai.min.css">
 <script type="text/javascript" src="/assets/js/highlight.min.js"></script>
