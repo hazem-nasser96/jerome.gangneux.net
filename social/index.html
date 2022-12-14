@@ -4,13 +4,13 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Perso - Jérôme Gangneux</title>
+        <title>Social - Jérôme Gangneux</title>
                 <meta name="description" content="Jérôme Gangneux — Personal Website">
         <meta name="twitter:site" content="@jeromegx_" />
         <meta property="og:description" content="Jérôme Gangneux — Personal Website">
         <meta property="og:type" content="article">
-        <meta property="og:url" content="https://jerome.gangneux.net/posts/tags/perso/" />
-        <meta property="og:title" content="Perso - Jérôme Gangneux" />
+        <meta property="og:url" content="https://jerome.gangneux.net/social" />
+        <meta property="og:title" content="Social - Jérôme Gangneux" />
         <meta name="twitter:card" content="summary_large_image">
                 <meta property="og:image" content="https://jerome.gangneux.net/images/og.jpg" />
                         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -32,44 +32,70 @@
                 <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
             <h1 class="text-5xl font-semibold tracking-tight leading-none mb-12">
                 <a href="/">Jérôme Gangneux</a>
-                                —&nbsp;Perso
                             </h1>
             <div id="main-menu" class="mt-4">
                 <div class="flex sm:text-xl text-base flex-wrap">
                                                             <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Projects</a>
                     <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
                     <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Blog</a>
-                    <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+                    <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Micro Blog</a>
                 </div>
             </div>
         </nav>
         
         <div class="container mx-auto mt-4" style="max-width:1024px">
-            <!-- <h1>Perso</h1> -->
-
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-            <article class="shadow-xl p-4 m-4 bg-white dark:bg-gray-700 grid-item _rounded-md">
-                <header class="text-xl font-bold">
-                        <a href="/2016/07/01/thtr" class="img-4-3 _rounded" style="background-image: url(/images/projects/thtr-cover.png);"></a>
-        <h2 class="pt-2 pb-1">
-            <a href="/2016/07/01/thtr">THTR</a>
-        </h2>
-    </header>
+            <style>
+.invisible { visibility: visible !important; }
+.loading {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+</style>
+<h3 id="loading" class="loading text-gray-500 dark:text-gray-300">Loading Mastodon Public post for @jerome@social.gangneux.net ...</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" id="list">
+</div>
+<script>
+    function template(url, image, date, content) {
+        let imageTemplate = '';
+        if (image) {
+            imageTemplate = `
+<header class="text-xl font-bold">
+    <a href="${url}" class="img-4-3 _rounded" style="background-image: url(${image});"></a>
+</header>`;
+        }
+return `
+<article class="shadow-xl p-4 m-4 bg-white dark:bg-gray-700 grid-item _rounded-md">
+    ${imageTemplate}
     <div class="pb-2">
-                <a href="/posts/category/projects" class="tag">Projects</a>
-                                <a href="/posts/tags/ios" class="tag">Ios</a>
-                                <a href="/posts/tags/app" class="tag">App</a>
-                                <a href="/posts/tags/perso" class="tag">Perso</a>
-                                <a href="/posts/tags/2016" class="tag">2016</a>
-                            </div>
-    <div class="text-gray-700 dark:text-gray-100 mb-3">
-        <a href="/2016/07/01/thtr">THTR offers a very interactive experience of plays reading. Immerse yourself in the play like you were talking this the characters.</a>
+        <span class="tag-date">${date}</span>
     </div>
-</article>
+    <div class="text-gray-900 dark:text-gray-100 mb-3">
+        ${content}<br>
+        <small><a href="${url}">→ See on Mastodon</a></small>
     </div>
+</article>`;
+    }
+    fetch('https://social.gangneux.net/users/jerome/outbox?page=true')
+        .then(data => data.json())
+        .then(data => {
+            document.getElementById('loading').style.display = 'none';
+            for (let item of data.orderedItems) {
+                let url = item.object.url;
+                let image = null;
+                if (item.object.attachment[0]) {
+                    image = item.object.attachment[0].url;
+                }
+                let date = (new Date(item.object.published)).toLocaleDateString();
+                let content = item.object.content;
+                const placeholder = document.createElement("div");
+                placeholder.innerHTML = template(url, image, date, content);
+                const node = placeholder.firstElementChild;
+                document.getElementById('list').appendChild(node);
+            }
+        });
 
-<nav class="p-4">
-    </nav>        </div>
+</script>        </div>
     </div>
 
     <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
