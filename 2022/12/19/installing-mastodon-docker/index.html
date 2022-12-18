@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Installing Your Mastodon Instance With Docker - Jérôme Gangneux</title>
+                <meta name="description" content="This tutorial is for people that have some knowledge of admin sys, you should already have Docker installed, also we are going to use Traefik instead of nginx.">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="This tutorial is for people that have some knowledge of admin sys, you should already have Docker installed, also we are going to use Traefik instead of nginx.">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2022/12/19/installing-mastodon-docker" />
+        <meta property="og:title" content="Installing Your Mastodon Instance With Docker - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/writing/mastodon-w-docker.jpg" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>Installing Your Mastodon Instance With Docker</h1>
+        <p>December 19, 2022</p>
+    </header>
+    <section class="main">
+                <div class="image_main_wrap mb-12">
+            <img alt="" src="/images/writing/mastodon-w-docker.jpg">
+        </div>
+                <h1 id="installing-your-own-mastodon-instance-with-docker-compose">Installing Your Own Mastodon Instance With Docker Compose</h1>
+
+<p>Mastodon is a free, open-source social networking platform that is designed to be decentralised and run on users' own servers.
+In this post, we will go over how to install Mastodon on a server running Ubuntu 20.10 using Docker.</p>
+
+<p>This tutorial is for people that have some knowledge of admin sys (but not that much is required),
+you should already have Docker + docker compose up and running.</p>
+
+<p>I decided to write this down as the described process on the official doc was not up-to-date,
+and also I have an opinionated setup using Traefik that I use for all my docker projects on my server.</p>
+
+<p><em>Note: this installation is only valid for a one-person server (up to your whole family) but not a publicly open instance.
+For that matter, you would have to tune multiple option for performance, add backup layer, storage, monitoring, etc.</em></p>
+
+<p>This has been tested with Mastodon v4.0.2 on December 2022<br>
+Docker version 20.10.12 and docker-compose version 1.29.2</p>
+
+<h2 id="step-by-step-guide">Step-by-step guide</h2>
+
+<h3 id="git-clone-mastodon">Git clone Mastodon</h3>
+
+<p>Easy step, we start with cloning the mastodon project on our server<br>
+<code>git clone https://github.com/mastodon/mastodon</code></p>
+
+<p>Note: for some reason, the <code>--link</code> option in the <code>Dockerfile</code> did not work, so I simply removed it.</p>
+
+<p>See my updated <code>Dockerfile</code> below:</p>
+
+<pre><code class="language-dockerfile"># syntax=docker/dockerfile:1.4
+# This needs to be bullseye-slim because the Ruby image is built on bullseye-slim
+ARG NODE_VERSION=&quot;16.17.1-bullseye-slim&quot;
+
+FROM ghcr.io/moritzheiber/ruby-jemalloc:3.0.4-slim as ruby
+FROM node:${NODE_VERSION} as build
+
+COPY --from=ruby /opt/ruby /opt/ruby
+
+ENV DEBIAN_FRONTEND=&quot;noninteractive&quot; \
+    PATH=&quot;${PATH}:/opt/ruby/bin&quot;
+
+SHELL [&quot;/bin/bash&quot;, &quot;-o&quot;, &quot;pipefail&quot;, &quot;-c&quot;]
+
+WORKDIR /opt/mastodon
+COPY Gemfile* package.json yarn.lock /opt/mastodon/
+
+RUN apt update &amp;&amp; \
+    apt-get install -y --no-install-recommends build-essential \
+        ca-certificates \
+        git \
+        libicu-dev \
+        libidn11-dev \
+        libpq-dev \
+        libjemalloc-dev \
+        zlib1g-dev \
+        libgdbm-dev \
+        libgmp-dev \
+        libssl-dev \
+        libyaml-0-2 \
+        ca-certificates \
+        libreadline8 \
+        python3 \
+        shared-mime-info &amp;&amp; \
+    bundle config set --local deployment &#039;true&#039; &amp;&amp; \
+    bundle config set --local without &#039;development test&#039; &amp;&amp; \
+    bundle config set silence_root_warning true &amp;&amp; \
+    bundle install -j&quot;$(nproc)&quot; &amp;&amp; \
+    yarn install --pure-lockfile
+
+FROM node:${NODE_VERSION}
+
+ARG UID=&quot;991&quot;
+ARG GID=&quot;991&quot;
+
+COPY --from=ruby /opt/ruby /opt/ruby
+
+SHELL [&quot;/bin/bash&quot;, &quot;-o&quot;, &quot;pipefail&quot;, &quot;-c&quot;]
+
+ENV DEBIAN_FRONTEND=&quot;noninteractive&quot; \
+    PATH=&quot;${PATH}:/opt/ruby/bin:/opt/mastodon/bin&quot;
+
+RUN apt-get update &amp;&amp; \
+    echo &quot;Etc/UTC&quot; &gt; /etc/localtime &amp;&amp; \
+    groupadd -g &quot;${GID}&quot; mastodon &amp;&amp; \
+    useradd -u &quot;$UID&quot; -g &quot;${GID}&quot; -m -d /opt/mastodon mastodon &amp;&amp; \
+    apt-get -y --no-install-recommends install whois \
+        wget \
+        procps \
+        libssl1.1 \
+        libpq5 \
+        imagemagick \
+        ffmpeg \
+        libjemalloc2 \
+        libicu67 \
+        libidn11 \
+        libyaml-0-2 \
+        file \
+        ca-certificates \
+        tzdata \
+        libreadline8 \
+        tini &amp;&amp; \
+    ln -s /opt/mastodon /mastodon
+
+COPY --chown=mastodon:mastodon . /opt/mastodon
+COPY --chown=mastodon:mastodon --from=build /opt/mastodon /opt/mastodon
+
+ENV RAILS_ENV=&quot;production&quot; \
+    NODE_ENV=&quot;production&quot; \
+    RAILS_SERVE_STATIC_FILES=&quot;true&quot; \
+    BIND=&quot;0.0.0.0&quot;
+
+# Set the run user
+USER mastodon
+WORKDIR /opt/mastodon
+
+# Precompile assets
+RUN OTP_SECRET=precompile_placeholder SECRET_KEY_BASE=precompile_placeholder rails assets:precompile &amp;&amp; \
+    yarn cache clean
+
+# Set the work dir and the container entry point
+ENTRYPOINT [&quot;/usr/bin/tini&quot;, &quot;--&quot;]
+EXPOSE 3000 4000
+</code></pre>
+
+<p><br>&nbsp;</p>
+
+<h3 id="the-docker-compose.yml">The docker-compose.yml</h3>
+
+<p>This file is quite different from the official one, it is opinionated, that's why I told you that this specific setup would only work for small instances.</p>
+
+<p>Let's see which decision I made:</p>
+
+<ul>
+<li>I have a shell container for the solo purpose of executing commands</li>
+<li>I use labels on the streaming and web container to configure Traefik</li>
+<li>I use a volume for the public user data</li>
+<li>I share the <code>.env.production</code> file across all containers</li>
+</ul>
+
+<p><code>docker-compose.yml</code></p>
+
+<pre><code class="language-yaml">version: &#039;3.7&#039;
+
+networks:
+    traefik_default:
+        external: true
+        name: &quot;traefik_default&quot;
+
+volumes:
+    mastodon-postgres-data:
+    mastodon-redis-data:
+    mastodon-web-data:
+
+services:
+  db:
+    restart: always
+    image: postgres:14-alpine
+    shm_size: 256mb
+    env_file: .env.production
+    networks:
+      - traefik_default
+    healthcheck:
+      test: [&#039;CMD&#039;, &#039;pg_isready&#039;, &#039;-U&#039;, &#039;postgres&#039;]
+    volumes:
+      - mastodon-postgres-data:/var/lib/postgresql/data
+
+  redis:
+    restart: always
+    image: redis:7-alpine
+    env_file: .env.production
+    networks:
+      - traefik_default
+    healthcheck:
+      test: [&#039;CMD&#039;, &#039;redis-cli&#039;, &#039;ping&#039;]
+    volumes:
+      - mastodon-redis-data:/data
+
+  web:
+    build: .
+    image: tootsuite/mastodon
+    restart: always
+    env_file: .env.production
+    command: bash -c &quot;rm -f /mastodon/tmp/pids/server.pid; bundle exec rails s -p 3000&quot;
+    networks:
+      - traefik_default
+    healthcheck:
+      test: [&#039;CMD-SHELL&#039;, &#039;wget -q --spider --proxy=off localhost:3000/health || exit 1&#039;]
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - mastodon-web-data:/mastodon/public/system
+    labels:
+      - &quot;traefik.enable=true&quot;
+      - &quot;traefik.http.routers.mastodon.rule=Host(`mastodon.test`)&quot;
+      - &quot;traefik.http.routers.mastodon.tls=true&quot;
+      - &quot;traefik.http.routers.mastodon-unsecure.rule=Host(`mastodon.test`)&quot;
+      - &quot;traefik.http.services.mastodon.loadbalancer.server.port=3000&quot;
+
+  # use like that: `docker-compose -f docker-compose.yml run --rm shell /bin/bash`
+  shell:
+    image: tootsuite/mastodon
+    env_file: .env.production
+    command: /bin/bash
+    restart: &quot;no&quot;
+    networks:
+      - traefik_default
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - mastodon-web-data:/mastodon/public/system
+
+  streaming:
+    build: .
+    image: tootsuite/mastodon
+    restart: always
+    env_file: .env.production
+    command: node ./streaming
+    networks:
+      - traefik_default
+    healthcheck:
+      test: [&#039;CMD-SHELL&#039;, &#039;wget -q --spider --proxy=off localhost:4000/api/v1/streaming/health || exit 1&#039;]
+    depends_on:
+      - db
+      - redis
+    labels:
+      - &quot;traefik.enable=true&quot;
+      - &quot;traefik.http.routers.mastodon-api.rule=Host(`mastodon.test`) &amp;&amp; PathPrefix(`/api/v1/streaming`)&quot;
+      - &quot;traefik.http.routers.mastodon-api.tls=true&quot;
+      - &quot;traefik.http.routers.mastodon-api-unsecure.rule=Host(`mastodon.test`) &amp;&amp; PathPrefix(`/api/v1/streaming`)&quot;
+      - &quot;traefik.http.services.mastodon-api.loadbalancer.server.port=4000&quot;
+
+  sidekiq:
+    build: .
+    image: tootsuite/mastodon
+    restart: always
+    env_file: .env.production
+    command: bundle exec sidekiq
+    depends_on:
+      - db
+      - redis
+    networks:
+      - traefik_default
+    volumes:
+      - mastodon-web-data:/mastodon/public/system
+    healthcheck:
+      test: [&#039;CMD-SHELL&#039;, &quot;ps aux | grep &#039;[s]idekiq\ 6&#039; || false&quot;]
+</code></pre>
+
+<p><br>&nbsp;</p>
+
+<h3 id="customise-our-.env.production-file">Customise our .env.production file</h3>
+
+<p>Copy/past the <code>.env.production</code> file below and adapt fields for your needs.</p>
+
+<pre><code class="language-shell"># General configuration
+LOCAL_DOMAIN=mastodon.test
+RAILS_ENV=production
+NODE_ENV=production
+DEFAULT_LOCALE=en
+
+# Redirect to the first profile
+SINGLE_USER_MODE=true
+
+# Concurrency
+WEB_CONCURRENCY=2
+MAX_THREADS=5
+
+# Redis
+REDIS_HOST=redis
+REDIS_PORT=6379
+
+# Database
+# Postgres side
+POSTGRES_USER=mastodon
+POSTGRES_DB=mastodon_production
+POSTGRES_PASSWORD=change_me_fca92730f229c508e07d5d752076c0
+# Application side
+DB_HOST=db
+DB_USER=mastodon
+DB_NAME=mastodon_production
+DB_PASS=change_me_fca92730f229c508e07d5d752076c0
+DB_PORT=5432
+
+# Secrets
+SECRET_KEY_BASE=change_me_d53e9903ba93af1035bc8...
+OTP_SECRET=change_me_ec7dc9e021ef40445d6fcc8c80...
+
+# Web Push
+VAPID_PRIVATE_KEY=invalid_61da0819c462fe4a5a130b41ba911f=
+VAPID_PUBLIC_KEY=invalid_5af5c77a53508911dbebe1c9c...
+
+# Sending mail
+SMTP_SERVER=smtp.service.org
+SMTP_PORT=587
+SMTP_LOGIN=mastodon@service.org
+SMTP_PASSWORD=invalid_c4d9c04ee31a28aaa3a20939
+SMTP_FROM_ADDRESS=mastodon@mastodon.test
+
+# File storage (optional)
+S3_ENABLED=false
+S3_BUCKET=files.example.com
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+S3_ALIAS_HOST=files.example.com
+
+# IP and session retention
+# Make sure to modify the scheduling of ip_cleanup_scheduler in config/sidekiq.yml
+# to be less than daily if you lower IP_RETENTION_PERIOD below two days (172800).
+IP_RETENTION_PERIOD=31556952
+SESSION_RETENTION_PERIOD=31556952
+</code></pre>
+
+<p><br>&nbsp;</p>
+
+<ul>
+<li><code>LOCAL_DOMAIN=mastodon.test</code><br>You want to specify your domain here.
+<br>&nbsp;</li>
+<li><code>POSTGRES_PASSWORD=change_me_fca92730f229c508e07d5d752076c0</code><br>
+You have to generate an uniq password, you can use <code>openssl rand -hex 15</code> for that matter. This password is used twice in the file (see <code>DB_PASS</code>)
+<br>&nbsp;</li>
+<li><code>SECRET_KEY_BASE=change_me_d53e9903ba93af1035bc8...</code> and <code>OTP_SECRET=change_me_ec7dc9e021ef40445d6fcc8c80...</code><br>
+You have to specify two unique secrets for those keys. You can do so easily with this command: <code>docker-compose -f docker-compose.yml run --rm shell bundle exec rake secret</code>
+<br>&nbsp;</li>
+<li><code>VAPID_PRIVATE_KEY=invalid_61da0819c462fe4a5a130b41ba911f=</code> and <code>VAPID_PUBLIC_KEY=invalid_5af5c77a53508911dbebe1c9c...</code><br>
+You should generate the <code>VAPID</code> private and public keys with: <code>docker-compose -f docker-compose.yml run --rm shell bundle exec rake mastodon:webpush:generate_vapid_key</code>
+<br>&nbsp;</li>
+</ul>
+
+<h3 id="initialise-the-database">Initialise the database</h3>
+
+<p>From now, you can start and initialise the database.</p>
+
+<p>First, run <code>docker-compose -f docker-compose.yml run --rm shell bundle exec rake db:setup</code><br>
+when it's done you can continue with: <code>docker-compose -f docker-compose.yml run --rm shell bundle exec rake db:migrate</code></p>
+
+<h3 id="create-your-user">Create your user</h3>
+
+<p>Basically, the setup is done.
+Now you can boot the whole project with: <code>docker-compose -f docker-compose.yml up -d</code>.<br>
+Wait a bit, so everything is ready (you can check the status with <code>docker ps</code>)</p>
+
+<p>Then create your first (and only) user: <code>docker-compose -f docker-compose.yml run --rm shell bin/tootctl accounts create NICKAME --email EMAIL@PROVIDER.LTD --confirmed --role Owner</code></p>
+
+<p>Thereafter, you may want to disable registrations: <code>docker-compose -f docker-compose.yml run --rm shell bin/tootctl settings registrations close</code></p>
+
+<h3 id="admin-tasks-for-later-use">Admin tasks for later use</h3>
+
+<p>As you already saw, you have access to the <code>tootctl</code> utility for basic maintenance tasks: <code>docker-compose -f docker-compose.yml run --rm shell tootctl</code>.</p>
+
+<p>Check the official doc if you need more details on it.</p>
+
+<h2 id="web-server">Web server</h2>
+
+<p>Most tutorials on the web will help you install and configure a web server, probably <em>nginx</em>, but I, personally, use <a href="https://traefik.io">Traefik</a> for that matter.</p>
+
+<p>You can check out <a href="https://sleeplessbeastie.eu/2022/05/02/how-to-take-advantage-of-docker-to-install-mastodon/#install-web-server">sleeplessbeastie.eu/.../how-to-take-advantage-of-docker-to-install-mastodon</a>
+where you will find how to configure nginx for your instance or <a href="https://gist.github.com/TrillCyborg/84939cd4013ace9960031b803a0590c4">gist.github.com/TrillCyborg</a> where you have some other options.</p>
+
+<p>Still, I recommend you also have a look at traefik, it handles multiples docker projects running, SSL certificates, and more.
+You may have noted some weird looking <code>labels</code> in the <code>docker-compose.yml</code> file: that's how I configured <em>Traefik</em> for Mastodon, and it works like a charm along my other docker-based project on that same server.</p>
+
+<h2 id="you-made-it%21">You made it!</h2>
+
+<p>That's it! You have successfully installed Mastodon on your server using Docker. You can now use your Mastodon instance to connect with other users and share your thoughts and ideas.</p>
+
+<p>Enjoy!</p>
+
+    </section>
+    <footer class="pt-10">
+                    <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/blob/main/2022/12/19/installing-mastodon-docker">Did you find an error or want to make a change? Open a PR</a><br>
+            <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/issues/4">Follow this link to add a comment on this page</a>
+            </footer>
+    </article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+        <p class="text-right" style="opacity: 0.5;">
+            contact: jerome@gangneux.net / also on <a rel="me" href="https://social.gangneux.net/@jerome">Mastodon</a>
+        </p>
+    </footer>
+
+            </body>
+</html>
