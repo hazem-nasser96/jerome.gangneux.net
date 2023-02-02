@@ -80,7 +80,9 @@ return `
         .then(data => data.json())
         .then(data => {
             document.getElementById('loading').style.display = 'none';
+            let cpt = 0;
             for (let item of data.orderedItems) {
+                if (cpt++ >= 24) break;
                 let url = item.object.url;
                 let image = null;
                 if (item.object.attachment[0]) {
@@ -99,7 +101,11 @@ return `
     </div>
 
     <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
-        <p class="text-right" style="opacity: 0.5;">
+
+        <p class="text-right" style="opacity: 0.75;">
+            <a style="float: left; display: block;" href="http://www.april.org">
+                <img src="http://www.april.org/files/association/documents/bannieres/boutons/bouton-april-80x15.png" alt="Promouvoir et soutenir le logiciel libre"/>
+            </a>
             contact: jerome@gangneux.net / also on <a rel="me" href="https://social.gangneux.net/@jerome">Mastodon</a>
         </p>
     </footer>
