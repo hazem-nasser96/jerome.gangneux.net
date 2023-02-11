@@ -5,9 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Installing Your Mastodon Instance With Docker - Jérôme Gangneux</title>
-                <meta name="description" content="This tutorial is for people that have some knowledge of admin sys, you should already have Docker installed, also we are going to use Traefik instead of nginx.">
+                <meta name="description" content="This tutorial is for people that have some knowledge of sysadmin, you should already have Docker installed, also we are going to use Traefik instead of nginx.">
         <meta name="twitter:site" content="@jeromegx_" />
-        <meta property="og:description" content="This tutorial is for people that have some knowledge of admin sys, you should already have Docker installed, also we are going to use Traefik instead of nginx.">
+        <meta property="og:description" content="This tutorial is for people that have some knowledge of sysadmin, you should already have Docker installed, also we are going to use Traefik instead of nginx.">
         <meta property="og:type" content="article">
         <meta property="og:url" content="https://jerome.gangneux.net/2022/12/19/installing-mastodon-docker" />
         <meta property="og:title" content="Installing Your Mastodon Instance With Docker - Jérôme Gangneux" />
@@ -39,18 +39,27 @@
 <article class="post mt-12 p-4">
     <header class="mb-12">
         <h1>Installing Your Mastodon Instance With Docker</h1>
-        <p>December 19, 2022</p>
-    </header>
+                <p>December 19, 2022</p>
+            </header>
     <section class="main">
                 <div class="image_main_wrap mb-12">
             <img alt="" src="/images/writing/mastodon-w-docker.jpg">
         </div>
-                <h1 id="installing-your-own-mastodon-instance-with-docker-compose">Installing Your Own Mastodon Instance With Docker Compose</h1>
+                <p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/monokai-sublime.min.css">
+<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/twig.min.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</p>
 
-<p>Mastodon is a free, open-source social networking platform that is designed to be decentralised and run on users' own servers.
+<h1 id="installing-your-own-mastodon-instance-with-docker-compose">Installing Your Own Mastodon Instance With Docker Compose</h1>
+
+<p>Mastodon is a free, open-source social networking platform that is designed to be decentralized and run on users' own servers.
 In this post, we will go over how to install Mastodon on a server running Ubuntu 20.10 using Docker.</p>
 
-<p>This tutorial is for people that have some knowledge of admin sys (but not that much is required),
+<p>This tutorial is for people that have some knowledge of sysadmin (but not that much is required),
 you should already have Docker + docker compose up and running.</p>
 
 <p>I decided to write this down as the described process on the official doc was not up-to-date,
@@ -296,7 +305,7 @@ services:
 
 <p><br>&nbsp;</p>
 
-<h3 id="customise-our-.env.production-file">Customise our .env.production file</h3>
+<h3 id="customize-our-.env.production-file">Customize our .env.production file</h3>
 
 <p>Copy/past the <code>.env.production</code> file below and adapt fields for your needs.</p>
 
@@ -364,7 +373,7 @@ SESSION_RETENTION_PERIOD=31556952
 <li><code>LOCAL_DOMAIN=mastodon.test</code><br>You want to specify your domain here.
 <br>&nbsp;</li>
 <li><code>POSTGRES_PASSWORD=change_me_fca92730f229c508e07d5d752076c0</code><br>
-You have to generate an uniq password, you can use <code>openssl rand -hex 15</code> for that matter. This password is used twice in the file (see <code>DB_PASS</code>)
+You have to generate a unique password, you can use <code>openssl rand -hex 15</code> for that matter. This password is used twice in the file (see <code>DB_PASS</code>)
 <br>&nbsp;</li>
 <li><code>SECRET_KEY_BASE=change_me_d53e9903ba93af1035bc8...</code> and <code>OTP_SECRET=change_me_ec7dc9e021ef40445d6fcc8c80...</code><br>
 You have to specify two unique secrets for those keys. You can do so easily with this command: <code>docker-compose -f docker-compose.yml run --rm shell bundle exec rake secret</code>
@@ -374,9 +383,9 @@ You should generate the <code>VAPID</code> private and public keys with: <code>d
 <br>&nbsp;</li>
 </ul>
 
-<h3 id="initialise-the-database">Initialise the database</h3>
+<h3 id="initialize-the-database">Initialize the database</h3>
 
-<p>From now, you can start and initialise the database.</p>
+<p>From now, you can start and initialize the database.</p>
 
 <p>First, run <code>docker-compose -f docker-compose.yml run --rm shell bundle exec rake db:setup</code><br>
 when it's done you can continue with: <code>docker-compose -f docker-compose.yml run --rm shell bundle exec rake db:migrate</code></p>
@@ -418,7 +427,7 @@ You may have noted some weird looking <code>labels</code> in the <code>docker-co
                     <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/blob/main/2022/12/19/installing-mastodon-docker">Did you find an error or want to make a change? Open a PR</a><br>
             <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/issues/4">Follow this link to add a comment on this page</a>
             </footer>
-    </article>
+</article>
         </div>
     </div>
 

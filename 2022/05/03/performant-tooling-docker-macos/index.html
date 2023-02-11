@@ -39,8 +39,8 @@
 <article class="post mt-12 p-4">
     <header class="mb-12">
         <h1>Performant tooling with Docker and macOS</h1>
-        <p>May 3, 2022</p>
-    </header>
+                <p>May 3, 2022</p>
+            </header>
     <section class="main">
                 <div class="image_main_wrap mb-12">
             <img alt="" src="/images/writing/2022-05-03-performant-tooling-docker-macos.jpg">
@@ -49,33 +49,33 @@
 
 <p>Developers love performant tools, I mean, developers NEED performant tools!</p>
 
-<p>I'm not going to talk about whether you should use macOS to develop.<br />
+<p>I'm not going to talk about whether you should use macOS to develop.<br>
 Personally, I do, not gonna argument here.</p>
 
-<p>Problem is, I use Docker, and it's sad that this sentence starts with "problem".<br />
+<p>Problem is, I use Docker, and it's sad that this sentence starts with "problem".<br>
 Docker has helped the dev community and I like this tools, I mean, I like the idea and the possibilities it offers.</p>
 
 <p><strong>But on macOS it's slow as hell.</strong></p>
 
-<p>To be honest, it's not slow in every situation but only some, unfortunately the one that are mostly the main usage of Docker in a development environment.<br />
+<p>To be honest, it's not slow in every situation but only some, unfortunately the one that are mostly the main usage of Docker in a development environment.<br>
 <a href="https://github.com/docker/for-mac/issues/77">This is not new as you can see on this issue reported in 2016</a>.</p>
 
-<p>Issues are related to volume performance, specifically the way volumes are mounted on macOS.<br />
+<p>Issues are related to volume performance, specifically the way volumes are mounted on macOS.<br>
 And for applications which perform many I/O disk operations, it can become almost not usable.</p>
 
-<p>Unfortunately, I'm in that case, being a web/symfony developper I handle projects with many dependencies/cache and thus many I/O.</p>
+<p>Unfortunately, I'm in that case, being a web/symfony developer I handle projects with many dependencies/cache and thus many I/O.</p>
 
-<p>I heard that Docker decided to have a <a href="https://www.docker.com/blog/speed-boost-achievement-unlocked-on-docker-desktop-4-6-for-mac/">look at this issue</a>.<br />
-It took them far too much time to do so, but that's another topic.<br />
+<p>I heard that Docker decided to have a <a href="https://www.docker.com/blog/speed-boost-achievement-unlocked-on-docker-desktop-4-6-for-mac/">look at this issue</a>.<br>
+It took them far too much time to do so, but that's another topic.<br>
 Their effort seems to go somewhere for some people, not so much for me.</p>
 
-<p>Of course, I tried every option before, and trust me on this one.<br />
+<p>Of course, I tried every option before, and trust me on this one.<br>
 Being <a href="http://docker-sync.io">docker-sync</a> (which was the best tradeoff), mutagen, VM with docker inside, and other fancy other attempts.</p>
 
-<p>And today, I'm thrilled to tell you that I compiled the best of all those errands into a solution that's quite acceptable.<br />
+<p>And today, I'm thrilled to tell you that I compiled the best of all those errands into a solution that's quite acceptable.<br>
 It is the solution I use for all my projects, and so far, it has been a pleasure again to use Docker on macOS.</p>
 
-<p>This solution is heavily inspired by docker-sync and I basically removed a layer, and thus it gives more control on the whole process.<br />
+<p>This solution is heavily inspired by docker-sync and I basically removed a layer, and thus it gives more control on the whole process.<br>
 It can be resumed like this: don't use <code>-v</code> ever, instead make specific docker volumes and synchronize them with <code>unison</code> &lt;3</p>
 
 <p>Let's dive in, code is coming.</p>
@@ -212,9 +212,9 @@ unison ./ ssh://root@127.0.0.1:PORT//data -repeat=watch -auto -batch -ignore 'Pa
 
 <h2 id="tradeoffs">Tradeoffs</h2>
 
-<p>This solution comes with some tradeoffs, 
+<p>This solution comes with some tradeoffs,
 mainly the fact that your code base is duplicated on a Docker volume, thus duplicating the disk space required.
-The first start will take some time too as it needs to synchronize the whole projet.</p>
+The first start will take some time too as it needs to synchronize the whole project.</p>
 
 <p>I reckon, it's a bit of configuration to do, but to me that works so well that I consider those a detail.</p>
 
@@ -223,7 +223,7 @@ The first start will take some time too as it needs to synchronize the whole pro
                     <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/blob/main/2022/05/03/performant-tooling-docker-macos">Did you find an error or want to make a change? Open a PR</a><br>
             <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/issues/3">Follow this link to add a comment on this page</a>
             </footer>
-    </article>
+</article>
         </div>
     </div>
 

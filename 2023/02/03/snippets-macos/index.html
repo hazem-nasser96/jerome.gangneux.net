@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>macOS - Jérôme Gangneux</title>
+                <meta name="description" content="I&#039;m a macOS user, and I like this operating system because it is based on UNIX and thus has great command line support.">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="I&#039;m a macOS user, and I like this operating system because it is based on UNIX and thus has great command line support.">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2023/02/03/snippets-macos" />
+        <meta property="og:title" content="macOS - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/snippet/macos.png" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>macOS</h1>
+                <p>Last update: February 3, 2023</p>
+            </header>
+    <section class="main">
+                <p>I'm a macOS user, and I like this operating system because it is based on UNIX and thus has great command line support.</p>
+
+<h2 id="show-hidden-files">Show hidden files</h2>
+
+<p><kbd>Shift</kbd> + <kbd>Command</kbd> + <kbd>.</kbd></p>
+
+<h2 id="special-startup-modes">Special startup modes</h2>
+
+<p>Start up in single-user, verbose mode or target mode:<br></p>
+
+<ul>
+<li>Shut down your Mac if it is on.</li>
+<li>Press the power button to start the computer.</li>
+<li>Immediately press and hold the one of the following:
+
+<ul>
+<li>the <kbd>Command</kbd> + <kbd>s</kbd> key for single-user mode</li>
+<li>the <kbd>Command</kbd> + <kbd>v</kbd> key for verbose mode</li>
+<li>the <kbd>t</kbd> key (no command for this one) for target mode</li>
+</ul></li>
+</ul>
+
+<p><em>single user mode is also called root mode</em></p>
+
+<h2 id="check-encryption-status">Check encryption status</h2>
+
+<pre><code class="language-bash">diskutil cs list | grep Conversion</code></pre>
+
+<h2 id="macos-specific-command">macOS specific command</h2>
+
+<pre><code class="language-bash">say "a sentence"
+echo "copy that" | pbcopy # Copy in clipboard from the term
+pbpaste # Past from clipboard
+mdfind # Find files
+tput bel # Make the term beep
+hdiutil attach /path/to/diskimage.dmg # mount disk image</code></pre>
+
+<h2 id="change-the-time-between-two-time-machine-saves">Change the time between two time machine saves</h2>
+
+<pre><code class="language-bash">sudo defaults write /System/Library/LaunchDaemons/com.apple.backupd-auto StartInterval -int 1800 # seconds</code></pre>
+
+<h2 id="brew">Brew</h2>
+
+<p>The Missing Package Manager for macOS (or Linux)</p>
+
+<p>Brew basic commands:</p>
+
+<pre><code class="language-bash">brew doctor
+brew search ***
+brew info ***
+brew help</code></pre>
+
+<h3 id="a-list-of-brew-packages-i-use">A list of brew packages I use</h3>
+
+<ul>
+<li>ack</li>
+<li>imagemagick</li>
+<li>mosh</li>
+<li>exiftool</li>
+<li>ffmpeg</li>
+<li>wget</li>
+<li>fswatch</li>
+</ul>
+
+<h2 id="disable-ipv6-from-the-command-line">Disable IPv6 from the command line</h2>
+
+<p>This trick has been important for me as it fix a docker-compose network crash.</p>
+
+<p>If your active network is WiFi enter the following command:<br>
+<code>networksetup -setv6off Wi-Fi</code><br>
+If you are on Ethernet:<br>
+<code>networksetup -setv6off Ethernet</code><br>
+To re-enable IPv6, you need to replace setv6off to setv6automatic (the default state in macOS), for example:<br>
+<code>networksetup -setv6automatic Wi-Fi</code></p>
+
+<h2 id="list-of-opinionated-app-i-use-or-like">List of opinionated App I use or like</h2>
+
+<ul>
+<li>1Password</li>
+<li>Ableton Live</li>
+<li>Adobe Photoshop</li>
+<li>Android Studio</li>
+<li>Backblaze</li>
+<li>BetterTouchTool</li>
+<li>Docker</li>
+<li>Electrum</li>
+<li>FileZilla</li>
+<li>Firefox</li>
+<li>GrandPerspective</li>
+<li>ImageOptim</li>
+<li>iStat Menus</li>
+<li>Jumpcut</li>
+<li>LibreOffice</li>
+<li>Max</li>
+<li>Meld</li>
+<li>Steam</li>
+<li>Subtitles</li>
+<li>The Unarchiver</li>
+<li>Transmission</li>
+<li>VirtualBox</li>
+<li>Visual Studio Code</li>
+<li>VLC</li>
+<li>Vysor</li>
+<li>Xcode</li>
+<li>Audacity</li>
+<li>Audio Hijack Pro</li>
+<li>Gephi</li>
+<li>OpenEmu</li>
+<li>Vosyr</li>
+</ul>
+
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/monokai-sublime.min.css">
+<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/twig.min.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</p>
+
+    </section>
+    <footer class="pt-10">
+                    <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/blob/main/2023/02/03/snippets-macos">Did you find an error or want to make a change? Open a PR</a><br>
+            <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/issues/8">Follow this link to add a comment on this page</a>
+            </footer>
+</article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+
+        <p class="text-right" style="opacity: 0.75;">
+            <a style="float: left; display: block;" href="http://www.april.org">
+                <img src="http://www.april.org/files/association/documents/bannieres/boutons/bouton-april-80x15.png" alt="Promouvoir et soutenir le logiciel libre"/>
+            </a>
+            contact: jerome@gangneux.net / also on <a rel="me" href="https://social.gangneux.net/@jerome">Mastodon</a>
+        </p>
+    </footer>
+
+            </body>
+</html>

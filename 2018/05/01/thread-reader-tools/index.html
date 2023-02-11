@@ -39,8 +39,8 @@
 <article class="post mt-12 p-4">
     <header class="mb-12">
         <h1>Thread Reader: Let&#039;s explore my tooling (technical post)</h1>
-        <p>May 1, 2018</p>
-    </header>
+                <p>May 1, 2018</p>
+            </header>
     <section class="main">
                 <div class="image_main_wrap mb-12">
             <img alt="" src="/images/writing/threadreader-series.jpg">
@@ -92,7 +92,7 @@ It has memcached for some caching layer, even if most of the content is cached o
 
 <p>On my laptop, I have a term open on my server with a <code>tail -f</code> on logs (I use SSH + <a href="https://mosh.org/">mosh</a>).</p>
 
-<p>Logs include many things: payments hooks, Apache errors, bot mentions and replies, job outputs and more.<br />
+<p>Logs include many things: payments hooks, Apache errors, bot mentions and replies, job outputs and more.<br>
 These logs are also accessible on the web via an admin page I have access to.</p>
 
 <h2 id="in-case-of-emergency">In case of emergency</h2>
@@ -108,9 +108,9 @@ These logs are also accessible on the web via an admin page I have access to.</p
 <p>Most of the time it is not a performance issue but more a bug that cause some edge case.</p>
 
 <p>For example last one was some thread that was unrolled and posted on Twitter,
-got something like 300 RT and then the author deleted the thread. 
-So any visitor would arrive at the thread page but nothing was found on the database 
-and so the bot tried to unroll it but it was not on Twitter any more (times 1000 visits). Made a mess. Fixed now.</p>
+got something like 300 RT and then the author deleted the thread.
+So any visitor would arrive at the thread page but nothing was found on the database
+and so the bot tried to unroll it, but it was not on Twitter anymore (times 1000 visits). Made a mess. Fixed now.</p>
 
 <h2 id="web-admin-interface">Web Admin interface</h2>
 
@@ -150,26 +150,26 @@ These are started in a <code>screen</code> that is configured to auto start if t
 
 <h2 id="queue-and-job-mechanism">Queue and job mechanism</h2>
 
-<p>Thread Reader needs a queuing mechanism for two reasons:<br />
+<p>Thread Reader needs a queuing mechanism for two reasons:<br>
 long processing jobs (like thread archiving) and relative scheduled actions (DM/emails alerts)</p>
 
 <p>This one is so low tech that I'm almost ashamed to talk about but...</p>
 
-<p>It is a MySQL table where I enqueue a command name with its arguments, 
-I add the time when I want it to be executed and a return code to check later.<br />
+<p>It is a MySQL table where I enqueue a command name with its arguments,
+I add the time when I want it to be executed and a return code to check later.<br>
 Then a script pulls entries one by one and execute them.</p>
 
 <h1 id="backup-and-security">Backup and security</h1>
 
 <ul>
 <li>SSH via public key and no root</li>
-<li>Every port closed (via <code>ufw</code>) except ssh and http/s</li>
+<li>Every port closed (via <code>ufw</code>) except ssh and http/s<br></li>
 <li>Apache and PHP are configured with paranoia in mind</li>
 </ul>
 
-<p>Thread Reader is quite a special case about data as it does not have so much content, nor original content.<br />
-Still. A full dump of the database is saved every day (cron script), 
-encrypted and sync to <a href="https://dropbox.com">dropbox.com</a> (true)<br />
+<p>Thread Reader is quite a special case about data as it does not have so much content, nor original content.<br>
+Still. A full dump of the database is saved every day (cron script),
+encrypted and sync to <a href="https://dropbox.com">dropbox.com</a> (true)<br>
 No other data are saved as it is only caching.</p>
 
 <h1 id="external-services-and-tools">External Services and Tools</h1>
@@ -179,35 +179,35 @@ No other data are saved as it is only caching.</p>
 <ul>
 <li><a href="https://www.mailgun.com/">Mail Gun</a> to send emails: I chose them because the registration was the most straight forward and the pricing competitive.</li>
 <li><a href="https://stripe.com">Stripe</a> to allow people to pay by Credit Card: They are the best for developers for sure.</li>
-<li>Paypal so people can pay without giving any bank info: It is widely used even if it is a pain for developers.</li>
+<li>PayPal so people can pay without giving any bank info: It is widely used even if it is a pain for developers.</li>
 <li>Google Analytics and Google AdSense for analytics and ads.</li>
 </ul>
 
 <h2 id="support-and-twitter-ecosystem">Support and Twitter ecosystem</h2>
 
-<p>I use services to keep in touch with my users on Twitter:<br />
-I did use <a href="https://tweetdeck.twitter.com/">Tweetdeck</a> 
-but I changed to (the ugly) <a href="https://hootsuite.com/">Hootsuite</a> recently 
-as they allow to see your DM inbox separately of the outbox.
+<p>I use services to keep in touch with my users on Twitter:<br>
+I did use <a href="https://tweetdeck.twitter.com/">Tweetdeck</a>,
+but I changed to (the ugly) <a href="https://hootsuite.com/">Hootsuite</a> recently
+as they allow seeing your DM inbox separately of the outbox.
 This is very important because I use the same account for the support and the bot (it sends thousands of DM by day).</p>
 
 <p>Most of the support is done by Twitter and email (inbox by Gmail setup with custom domain).</p>
 
 <h2 id="development-software-and-services">Development Software and Services</h2>
 
-<p>I have a private <a href="https://github.com">Github</a> repository for the code, 
+<p>I have a private <a href="https://github.com">Github</a> repository for the code,
 I use the issue tracking and the project view to keep my TODOs.
-I use github for deployment too, <code>master</code> is clean and get pulled on production every 5 minutes.</p>
+I use GitHub for deployment too, <code>master</code> is clean and get pulled on production every 5 minutes.</p>
 
-<p>For big updates that need a database change I jump on the server and do the necessary manually. 
+<p>For big updates that need a database change I jump on the server and do the necessary manually.
 This is very rare as the service is quite well-structured now.</p>
 
-<p>To connect to my database I use <a href="https://www.sequelpro.com/">Sequel Pro</a> via SSH, 
-it has some custom options to plays nicely with the database (like not requesting full blobs etc).</p>
+<p>To connect to my database I use <a href="https://www.sequelpro.com/">Sequel Pro</a> via SSH,
+it has some custom options to plays nicely with the database (like not requesting full blobs etc.).</p>
 
 <h1 id="conclusion">Conclusion</h1>
 
-<p>As you can see nothing fancy, it is good old technology.<br />
+<p>As you can see nothing fancy, it is good old technology.<br>
 Boring working stuff.</p>
 
 <p>I made a bunch of shell scripts to interact with Twitter API, but in general I am not in favor of making my own tools.</p>
@@ -224,7 +224,7 @@ I'm quite sure it can go up to 5000 before showing any sign of slowness.</p>
     </section>
     <footer class="pt-10">
             </footer>
-    </article>
+</article>
         </div>
     </div>
 

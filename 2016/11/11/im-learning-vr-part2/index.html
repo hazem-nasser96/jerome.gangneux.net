@@ -39,8 +39,8 @@
 <article class="post mt-12 p-4">
     <header class="mb-12">
         <h1>Learning VR (part 2)</h1>
-        <p>November 11, 2016</p>
-    </header>
+                <p>November 11, 2016</p>
+            </header>
     <section class="main">
                 <div class="image_main_wrap mb-12">
             <img alt="" src="/images/vr/part2-cover.png">
@@ -71,17 +71,17 @@ So I want a working web browser to start with.</p>
 I even restarted to test the feasibility of this project outside of Unity (native android)
 to check if it could be easier (and it is not).
 I spent hours on the Internet, looking for documentation and examples.
-I found that Samsung and Oculus got this working so it gave me some hope.</p>
+I found that Samsung and Oculus got this working, so it gave me some hope.</p>
 
 <p>Oculus has released some code that could be a good start for me,
-I was very lucky because it was part of the Oculus SDK 1.0.3
+I was very lucky because it was part of the Oculus SDK 1.0.3,
 and it disappeared on the next version (I don't know why)</p>
 
 <p>In this code, Oculus implemented a MediaPlayer (from the Android MediaPlayer class)
-streaming to a Unity texture (as an example of their SDK), a good start for my project.<br />
+streaming to a Unity texture (as an example of their SDK), a good start for my project.<br>
 In the same time I discovered that any android view could be rendered into an OpenGL texture,
 thanks to Felix Jones who wrote a
-<a href="http://www.felixjones.co.uk/neo%20website/Android_View/">very good article</a> about that.<br />
+<a href="http://www.felixjones.co.uk/neo%20website/Android_View/">very good article</a> about that.<br>
 That was it, all the pieces are available,
 it must be possible to use these to get my idea working!</p>
 
@@ -137,7 +137,7 @@ it is the link between these two worlds.</p>
 The trickiest one that I discovered was that the Android's WebView
 is hardware accelerated when created in Android, so it messes up the OpenGL context.
 It is important to remove any hardware acceleration on the Android's views.
-From that point I decided to restart all my experimentations with a basic TextView first.</p>
+From that point I decided to restart all my experimentation with a basic TextView first.</p>
 
 <p>Today, the proof of concept is almost working, I only have a last problem,
 the texture that comes from the Android view (a TextView in my example)
@@ -151,7 +151,7 @@ I will find a solution!</p>
 so when I will get the WebView working I may look at that.
 Also, I want people to get visual feedback about the real world around them,
 so I'll try to get a live video stream from the camera into the VR world.
-I have much more idea but I need to go step by step because it is quite hard.</p>
+I have much more idea, but I need to go step by step because it is quite hard.</p>
 
 <h1 id="useful-links">Useful links</h1>
 
@@ -184,7 +184,7 @@ I have much more idea but I need to go step by step because it is quite hard.</p
     </section>
     <footer class="pt-10">
             </footer>
-    </article>
+</article>
         </div>
     </div>
 

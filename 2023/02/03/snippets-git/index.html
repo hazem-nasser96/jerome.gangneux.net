@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Git - Jérôme Gangneux</title>
+                <meta name="description" content="To be honest I now use GitFox App but those can always be useful">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="To be honest I now use GitFox App but those can always be useful">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2023/02/03/snippets-git" />
+        <meta property="og:title" content="Git - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/snippet/git.png" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>Git</h1>
+                <p>Last update: February 3, 2023</p>
+            </header>
+    <section class="main">
+                <p>To be honest I now use GitFox App but those can always be useful.</p>
+
+<h2 id="change-commit-date">Change commit date</h2>
+
+<p><code>git commit --amend --no-edit --date "$(date)"</code></p>
+
+<h2 id="using-vscode-as-git-editor-and-diff-tool">Using VSCode as git editor and diff tool</h2>
+
+<pre><code>git config --global diff.tool vscode
+git config --global difftool.vscode.cmd "code --wait --diff $LOCAL $REMOTE"
+git config --global core.editor "code --wait"
+</code></pre>
+
+<h2 id="submodules">Submodules</h2>
+
+<p><code>git submodule add dist.git local_dir</code></p>
+
+<h3 id="and-checking-out-submodules-after-cloning">And checking out submodules after cloning</h3>
+
+<pre><code>git submodule init
+git submodule update
+</code></pre>
+
+<h2 id="bisecting-workflow">Bisecting workflow</h2>
+
+<pre><code>git bisect start
+git bisect bad # actual commit
+git bisect good &lt;commit&gt; # last good commit
+</code></pre>
+
+<p>then git bisect good/bad regarding the case</p>
+
+<pre><code>git bisect reset
+git branch --track LOCAL_NAME remotes/origin/DIST_NAME
+</code></pre>
+
+<h2 id="follow-a-branch">Follow a branch</h2>
+
+<p><code>git fetch origin branch-dist:branch-local</code></p>
+
+<h2 id="add-a-branch">Add a branch</h2>
+
+<p><code>git push origin branch-name</code></p>
+
+<h2 id="delete-dist-branch">Delete dist branch</h2>
+
+<p><code>git push origin :branch-name</code></p>
+
+<h2 id="checkout-tag">Checkout tag</h2>
+
+<pre><code>git tag -l
+git checkout tags/&lt;name&gt;
+</code></pre>
+
+<h2 id="git-merge-with-parent">Git merge with parent</h2>
+
+<pre><code>git remote add parent &lt;parent-url&gt;
+git pull parent
+</code></pre>
+
+<h1 id="create-a-new-repository-for-collaboration">Create a new repository for collaboration</h1>
+
+<h2 id="on-the-distant-server-and-accessible-from-ssh%3A">On the distant server (and accessible from ssh):</h2>
+
+<p><code>git init --bare</code></p>
+
+<h2 id="on-the-local-machine%3A">On the local machine:</h2>
+
+<pre><code>git clone ssh://serveurdistant/full/path/name.git name
+git add
+git commit
+git push origin master
+</code></pre>
+
+<p>if the local repository was already started:</p>
+
+<pre><code>git remote add origin ssh://distant_server/full/path/name.git
+git branch --set-upstream-to=origin/master master
+</code></pre>
+
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/monokai-sublime.min.css">
+<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/twig.min.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</p>
+
+    </section>
+    <footer class="pt-10">
+                    <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/blob/main/2023/02/03/snippets-git">Did you find an error or want to make a change? Open a PR</a><br>
+            <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/issues/7">Follow this link to add a comment on this page</a>
+            </footer>
+</article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+
+        <p class="text-right" style="opacity: 0.75;">
+            <a style="float: left; display: block;" href="http://www.april.org">
+                <img src="http://www.april.org/files/association/documents/bannieres/boutons/bouton-april-80x15.png" alt="Promouvoir et soutenir le logiciel libre"/>
+            </a>
+            contact: jerome@gangneux.net / also on <a rel="me" href="https://social.gangneux.net/@jerome">Mastodon</a>
+        </p>
+    </footer>
+
+            </body>
+</html>

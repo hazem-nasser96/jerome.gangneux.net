@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>SQL and MySQL - Jérôme Gangneux</title>
+                <meta name="description" content="Queries and related commands">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="Queries and related commands">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2023/02/03/snippets-mysql-sql" />
+        <meta property="og:title" content="SQL and MySQL - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/snippet/sql.png" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>SQL and MySQL</h1>
+                <p>Last update: February 3, 2023</p>
+            </header>
+    <section class="main">
+                <h2 id="reset-the-auto-increment-value">Reset the auto increment value</h2>
+
+<pre><code class="language-sql">ALTER TABLE tablename AUTO_INCREMENT = X</code></pre>
+
+<h2 id="querying-from-the-command-line">Querying from the command line</h2>
+
+<pre><code class="language-bash">mysql -u root -p root -D test -e 'show tables from test;'</code></pre>
+
+<pre><code class="language-sql">show columns from table_name;
+show tables;
+show full processlist # load</code></pre>
+
+<h2 id="query-to-get-inspiration-from">Query to get inspiration from</h2>
+
+<pre><code class="language-sql">-- ON DUPLICATE
+INSERT INTO table (id, time) VALUES (1,1),(2,2),...,(10,10) ON DUPLICATE KEY UPDATE time=VALUES (time)
+
+-- ORDER BY FIELD
+SELECT * FROM medias_contributions WHERE marker IN ('media:a','media:b','media:c') ORDER BY FIELD (marker, 'media:c', 'media:a', 'media:b')
+
+-- LAST_INSERT_ID
+UPDATE table SET num=num+10, id=LAST_INSERT_ID(...)
+
+-- REGEX
+SELECT * FROM animal WHERE nom REGEXP "^.{5}$";
+
+-- NATURAL SORTING TRICK
+SELECT names FROM your_table ORDER BY names + 0, name
+
+-- COUNT ROW (this is not more efficient than two queries)
+SELECT SQL_CALC_FOUND_ROWS t1.* (count les row malgre le limit) puis SELECT FOUND_ROWS()
+
+-- DATES
+UPDATE events SET date_starts = DATE_ADD(date_starts, INTERVAL 14 DAY)
+update contributions set updated = adddate(updated,interval 3 day),  created = adddate(created,interval 3 day), published = adddate(published,interval 3 day) where id > 40000
+
+-- GROUP CONCAT
+SET [GLOBAL | SESSION] group_concat_max_len = val;
+select group_concat(images.id order by images.id, ','), contributions.id
+from images join contributions on images.object_id = contributions.id
+where (object_type = 1 or object_type is null) and place = 1 group by contributions.id having count(*) > 1</code></pre>
+
+<h2 id="geolocation">Geolocation</h2>
+
+<pre><code class="language-sql">SET @latitude := 48.890980579936;
+SET @longitude := 2.4131774995498;
+SELECT city_name,
+(6366*acos(cos(radians(@latitude))*cos(radians(`city_latitude_deg`))*cos(radians(`city_longitude_deg`) -radians(@longitude))+sin(radians(@latitude))*sin(radians(`city_latitude_deg`)))) AS dist
+FROM cities_france
+HAVING dist <= 10
+ORDER by dist ASC</code></pre>
+
+<h2 id="variables-in-sql">Variables in SQL</h2>
+
+<pre><code class="language-sql">$sql = "SET @rank := 0;";
+$sql = '/* update_skill update */ UPDATE skill SET skill = 100-((100*(bayesian_time_taken-'.$data['min'].'))/('.$data['max'].'-'.$data['min'].')), rank = greatest(0,@rank := @rank + 1) ORDER BY bayesian_time_taken ASC';</code></pre>
+
+<h2 id="count-and-date">Count and date</h2>
+
+<pre><code class="language-sql">SELECT 'Week 1', COUNT(*) FROM Ads WHERE FROM_UNIXTIME(createdAt) BETWEEN DATE_ADD('2014-12-29 00:00', INTERVAL 0*7 DAY) AND DATE_ADD('2014-12-29 00:00', INTERVAL 1*7 DAY) -- UNION ... etc</code></pre>
+
+<pre><code class="language-sql">SELECT
+   extract(week from FROM_UNIXTIME(createdAt)),
+   extract(year from FROM_UNIXTIME(createdAt)),
+count(*) FROM Ads GROUP BY
+   extract(week from FROM_UNIXTIME(createdAt)),
+   extract(year from FROM_UNIXTIME(createdAt))
+;</code></pre>
+
+<h2 id="saving">Saving</h2>
+
+<pre><code class="language-bash">mysqldump --user=save --password=save --all-databases | bzip2 > /root/save/databases_$(date +%Y%m%d%H%M).sql.bz2`</code></pre>
+
+<h2 id="performance-check">Performance check</h2>
+
+<pre><code class="language-sql">EXPLAIN SELECT SQL_NO_CACHE</code></pre>
+
+<h2 id="int-type-and-size">Int type and size</h2>
+
+<table>
+<thead>
+<tr>
+  <th>Type</th>
+  <th align="right">Storage</th>
+  <th align="right">Minimum Value</th>
+  <th align="right">Maximum Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td></td>
+  <td align="right">(Bytes)</td>
+  <td align="right">(Signed/Unsigned)</td>
+  <td align="right">(Signed/Unsigned)</td>
+</tr>
+<tr>
+  <td>TINYINT</td>
+  <td align="right">1</td>
+  <td align="right">-128</td>
+  <td align="right">127</td>
+</tr>
+<tr>
+  <td></td>
+  <td align="right"></td>
+  <td align="right">0</td>
+  <td align="right">255</td>
+</tr>
+<tr>
+  <td>SMALLINT</td>
+  <td align="right">2</td>
+  <td align="right">-32768</td>
+  <td align="right">32767</td>
+</tr>
+<tr>
+  <td></td>
+  <td align="right"></td>
+  <td align="right">0</td>
+  <td align="right">65535</td>
+</tr>
+<tr>
+  <td>MEDIUMINT</td>
+  <td align="right">3</td>
+  <td align="right">-8388608</td>
+  <td align="right">8388607</td>
+</tr>
+<tr>
+  <td></td>
+  <td align="right"></td>
+  <td align="right">0</td>
+  <td align="right">16777215</td>
+</tr>
+<tr>
+  <td>INT</td>
+  <td align="right">4</td>
+  <td align="right">-2147483648</td>
+  <td align="right">2147483647</td>
+</tr>
+<tr>
+  <td></td>
+  <td align="right"></td>
+  <td align="right">0</td>
+  <td align="right">4294967295</td>
+</tr>
+<tr>
+  <td>BIGINT</td>
+  <td align="right">8</td>
+  <td align="right">-9223372036854775808</td>
+  <td align="right">9223372036854775807</td>
+</tr>
+<tr>
+  <td></td>
+  <td align="right"></td>
+  <td align="right">0</td>
+  <td align="right">18446744073709551615</td>
+</tr>
+</tbody>
+</table>
+
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/monokai-sublime.min.css">
+<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/twig.min.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</p>
+
+    </section>
+    <footer class="pt-10">
+                    <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/blob/main/2023/02/03/snippets-mysql-sql">Did you find an error or want to make a change? Open a PR</a><br>
+            <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/issues/9">Follow this link to add a comment on this page</a>
+            </footer>
+</article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+
+        <p class="text-right" style="opacity: 0.75;">
+            <a style="float: left; display: block;" href="http://www.april.org">
+                <img src="http://www.april.org/files/association/documents/bannieres/boutons/bouton-april-80x15.png" alt="Promouvoir et soutenir le logiciel libre"/>
+            </a>
+            contact: jerome@gangneux.net / also on <a rel="me" href="https://social.gangneux.net/@jerome">Mastodon</a>
+        </p>
+    </footer>
+
+            </body>
+</html>

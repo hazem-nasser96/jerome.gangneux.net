@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>ffmpeg - Jérôme Gangneux</title>
+                <meta name="description" content="Scale, crop and encode video like a pro">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="Scale, crop and encode video like a pro">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2023/02/03/snippets-ffmpeg" />
+        <meta property="og:title" content="ffmpeg - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/snippet/ffmpeg.png" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <nav class="p-4">
+    <div class="text-xl font-semibold tracking-tight">
+        <a href="/">&larr; Jérôme Gangneux</a>
+    </div>
+</nav>
+<article class="post mt-12 p-4">
+    <header class="mb-12">
+        <h1>ffmpeg</h1>
+                <p>Last update: February 3, 2023</p>
+            </header>
+    <section class="main">
+                <p>ffmpeg is one of my favorite command line tool, I'm always amazed by what it's possible to do with it!<br>
+I use it quite often for <a href="/2021/02/17/generative-movies">generative art pieces</a>.</p>
+
+<h2 id="scaling">Scaling</h2>
+
+<pre><code class="language-bash">ffmpeg -i input.mp4 -vf scale=1024:768 output.mp4
+ffmpeg -i input.mp4 -vf scale=320:-1 output.mp4 # Keep aspect ratio</code></pre>
+
+<h2 id="cropping">Cropping</h2>
+
+<pre><code class="language-bash">ffmpeg -i 50.mp4 -filter:v "crop=480:360:0:60" 50.2.mp4
+ffmpeg -i in.mp4 -filter:v "crop=out_w:out_h:x:y" out.mp4</code></pre>
+
+<h2 id="image-incrustation">Image incrustation</h2>
+
+<pre><code class="language-bash">ffmpeg -i input.mp4 -i image.png \
+    -filter_complex "[0:v][1:v] overlay=25:25:enable='between(t,0,20)'" \
+    -pix_fmt yuv420p -c:a copy \
+output.mp4</code></pre>
+
+<h2 id="encode-from-image-list">Encode from image list</h2>
+
+<p><code>-framerate = input framerate</code><br>
+<code>-r = output framerate</code></p>
+
+<pre><code class="language-bash">ffmpeg -framerate 50 -i video_%06d.png -r 50 -pix_fmt yuv420p output.mp4</code></pre>
+
+<h2 id="scale-video">Scale video</h2>
+
+<pre><code class="language-bash">ffmpeg -i in.mp4 -acodec copy -crf 12 -vf scale=1080:1920,setsar=1:1 out.mp4</code></pre>
+
+<h2 id="convert-gif-in-videos">Convert GIF in videos</h2>
+
+<pre><code class="language-bash">for f in *.gif \
+do ffmpeg -f gif -i $f -vcodec mpeg4 -y mp4/$f.mp4 \
+done</code></pre>
+
+<h2 id="accelerate-video">Accelerate video</h2>
+
+<p>Here it's by a factor ten (0.1*)</p>
+
+<pre><code class="language-bash">ffmpeg -i in.mp4 -filter:v "setpts=0.1*PTS" -an out.mp4</code></pre>
+
+<h2 id="get-video-length-in-seconds">Get video length in seconds</h2>
+
+<pre><code class="language-bash">ffprobe -i file.mp4 -show_entries format=duration -v quiet -of csv="p=0"</code></pre>
+
+<p>or summing multiples:</p>
+
+<pre><code class="language-bash">sum=0
+for f in *.mp4 \
+do sum=$(echo $sum + $(ffprobe -i $f -show_entries format=duration -v quiet -of csv="p=0") | bc) \
+done \
+echo $sum;</code></pre>
+
+<h2 id="apng">APNG</h2>
+
+<p>My goal was to get a bunch of PNG frames and make an animation in photoshop, the easiest path has been:</p>
+
+<ul>
+<li><code>ffmpeg -pattern_type glob -i '*.png' video.apng</code></li>
+<li>then opening this file and converting it to PSD through the website: https://www.photopea.com</li>
+<li>then in Photoshop on the animation panel menu (top right of the panel) "Create images from layers"</li>
+</ul>
+
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/monokai-sublime.min.css">
+<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/twig.min.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</p>
+
+    </section>
+    <footer class="pt-10">
+                    <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/blob/main/2023/02/03/snippets-ffmpeg">Did you find an error or want to make a change? Open a PR</a><br>
+            <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/issues/6">Follow this link to add a comment on this page</a>
+            </footer>
+</article>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+
+        <p class="text-right" style="opacity: 0.75;">
+            <a style="float: left; display: block;" href="http://www.april.org">
+                <img src="http://www.april.org/files/association/documents/bannieres/boutons/bouton-april-80x15.png" alt="Promouvoir et soutenir le logiciel libre"/>
+            </a>
+            contact: jerome@gangneux.net / also on <a rel="me" href="https://social.gangneux.net/@jerome">Mastodon</a>
+        </p>
+    </footer>
+
+            </body>
+</html>

@@ -5,9 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Command line tools - Jérôme Gangneux</title>
-                <meta name="description" content="I am a big fan of command line utilities and scripts, so I wanted to share with you some tricks I learned and scripts I use.">
+                <meta name="description" content="I am a big fan of command line utilities and scripts, so I wanted to share with you some tricks and scripts I use.">
         <meta name="twitter:site" content="@jeromegx_" />
-        <meta property="og:description" content="I am a big fan of command line utilities and scripts, so I wanted to share with you some tricks I learned and scripts I use.">
+        <meta property="og:description" content="I am a big fan of command line utilities and scripts, so I wanted to share with you some tricks and scripts I use.">
         <meta property="og:type" content="article">
         <meta property="og:url" content="https://jerome.gangneux.net/2021/08/10/command-line-tools" />
         <meta property="og:title" content="Command line tools - Jérôme Gangneux" />
@@ -39,39 +39,36 @@
 <article class="post mt-12 p-4">
     <header class="mb-12">
         <h1>Command line tools</h1>
-        <p>August 10, 2021</p>
-    </header>
+                <p>Last update: February 11, 2023</p>
+            </header>
     <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/writing/command-line-tools.jpg">
-        </div>
-                <h1 id="introduction">Introduction</h1>
+                <h2 id="introduction">Introduction</h2>
 
 <p>I am a big fan of command line utilities and scripts, so I wanted to share with you some tricks I learned and scripts I use.
-Some are only a command with notable options, more like a memo of how to use them, other are homemade scripts.</p>
-
-<h1 id="basics">Basics</h1>
+Some are only a command with notable options like a memo of how to use them, others are homemade scripts.</p>
 
 <h2 id="find-and-related">Find and related</h2>
 
-<p>Find allows you to apply some quite powerful command to your files, you can query it so it gets only specifics files and then pipe them to some command.</p>
+<p><code>Find</code> allows you to apply some quite powerful command to your files, you can query it to get only specifics files and then pipe them to other commands.</p>
 
-<pre><code class="bash">find . -type f \ # Find all file (only of type: file, not directories)
+<pre><code class="language-bash"># Exec a given command (rm -f here)
+find . -type f \  # Find all file (only of type: file, not directories)
     ! -mtime 60 \ # Where modification time is greater (!) than 60 days
-    --exec rm "{}" -f \; # Exec that command (rm -f here)
+    --exec rm "{}" -f \;
+
 # Note: using xargs is faster, so we can do something similar:
 find . -name .svn \ # Find all file with name '.svn'
-    -print0 \ # Send the list to (null padded)
-    | xargs -0 \ # Get the list from (null padded)
+    -print0 \       # Send the list to (null padded)
+    | xargs -0 \    # Get the list from (null padded)
     rm -rf # Current command (rm -f here)
+
 # Find file by extended regex
 find -E . -regex ".*\.(php|sh)"
 </code></pre>
 
-<p><br>
-<code>xargs</code> allows you to build/execute a command from an input that you get on the pipe.</p>
+<p><code>xargs</code> allows you to build/execute a command from an input that you get on the pipe.</p>
 
-<pre><code class="bash"># -I % defines "%" as the placeholder
+<pre><code class="language-bash"># -I % defines "%" as the placeholder
 cat foo.txt | xargs -I % sh -c "echo %; mkdir %;"
 </code></pre>
 
@@ -79,137 +76,117 @@ cat foo.txt | xargs -I % sh -c "echo %; mkdir %;"
 
 <h3 id="find-in-combination-with-other-utilities">Find in combination with other utilities</h3>
 
-<pre><code class="bash"># Copy all mp4 file to /tmp
+<pre><code class="language-bash"># Copy all mp4 file to /tmp
 find . -type f -iname "*.mp4" -exec cp "{}" /tmp \;
-# Update all C# file "end of line" from windows to unix (dos2unix)
+
+# Update all C Sharp files "end of line" from windows to unix (dos2unix)
 find . -type f -iname "*.cs" -exec dos2unix "{}" \;
+
 # Rename all file, replacing 'Screenshot-' by 'Screen_'
 find . -exec rename -s "Screenshot-" "Screen_" "{}" \;
+
 # For each jpg, get the exif meta or add a macos tag if not found (-I % defines the placeholder)
 find . -iname "*.jpg" -print0 | xargs -I % -0 bash -c 'exiftool "%" | grep -i "create date" || tag -a missingExif "%"'
+
 # You can have complex queries for find with \( \) and -o
 find . \( -iname "*.html" -o -iname "*.php" \) -print0 | xargs -I % -0 bash -c 'echo "%";'
 </code></pre>
 
 <h2 id="curl">CURL</h2>
 
-<p>Curl makes web requests, it's very powerful for basic and not-so basic requests, allowing you to download files, forge request and even interact with API.</p>
+<p>Curl makes web requests, it's very powerful for basic and not-so basic requests, allowing you to download files, forge request and even interact with APIs.</p>
 
-<pre><code class="bash">curl \
-    -d "param1=value1&amp;param2=value2" \ # Post data
+<pre><code class="language-bash">curl \
+    -d "param1=value1&param2=value2" \ # Post data
     -H "Content-Type: application/x-www-form-urlencoded" \ # This is the default with POST
     -X POST \ # Method
     URL
+
 curl \
     -d "@data.txt" \ # Send this file "data.txt"
     -X POST \
     URL
+
 curl \
     -d '{"key1":"value1", "key2":"value2"}' \ # Post data, here JSON
-    -H "Content-Type: application/json" \ # Specific JSON header
-    -X POST URL
-</code></pre>
-
-<h2 id="ffmpeg">FFMPEG</h2>
-
-<p>ffmpeg is one of my favorite command line tool, I'm always amazed by what it's possible to do with it!<br />
-I use it extensibly for some <a href="/2021/02/17/generative-movies">generative art pieces</a>.</p>
-
-<pre><code class="bash"># Scaling
-ffmpeg -i input.mp4 -vf scale=1024:768 output.mp4 
-# Scaling and keep aspect ratio
-ffmpeg -i input.mp4 -vf scale=320:-1 output.mp4 
-# Cropping: "crop=out_width:out_height:x:y"
-ffmpeg -i input.mp4 -filter:v "crop=480:360:0:60" output.mp4 
-# Change speed: in this example accelerate by a factor ten (0.1*)
-ffmpeg -i input.mp4 -filter:v "setpts=0.1*PTS" -an output.mp4 
-# Convert GIF in video
-ffmpeg -f gif -i image.gif -vcodec mpeg4 -y output.mp4 
-# Get video duration
-ffprobe -i input.mp4 -show_entries format=duration -v quiet -of csv="p=0"
-</code></pre>
-
-<p><br></p>
-
-<h3 id="encode-from-image-list">Encode from image list</h3>
-
-<pre><code class="bash">ffmpeg \
-    -framerate 50 \ # Input framerate
-    -i video_%06d.png \ # Image names (sprint pattern)
-    -r 50 \ # Output framerate
-    -pix_fmt yuv420p output.mp4
+    -H "Content-Type: application/json" \     # Specify JSON header
+    -X POST \
+    URL
 </code></pre>
 
 <h2 id="rsync">Rsync</h2>
 
 <p>Rsync is powerful and versatile, I'm using it for backups and remote server sync, but it can do way more!</p>
 
-<pre><code class="bash"># Here I use it for basic one-way no-history archiving
+<pre><code class="language-bash"># Here I use it for basic one-way no-history archiving
 rsync \
     --archive \ # implies: recursive ; preserve time, owner, group, perms ; copy symlinks as it
     --human-readable --progress \
     --delete \ # Delete the file on destination if not present on the source any more
     --exclude='node_modules' \ # Node ;-)
     /Users/jerome/projects /Volumes/Backup-disk # Source / Destination
+
 # Synchronize the local directory with the distant one
 sync --archive --verbose --delete \
     -e "ssh -p 22" \ # Remote shell to use (here ssh with option -P 22)
     static/ root@example.com:/var/www/
 </code></pre>
 
-<h1 id="macos-specific">MacOs specific</h1>
+<h2 id="shell-commands-101">Shell commands 101</h2>
 
-<p>I'm a macOS user, and I like this operating system because it is based on UNIX and thus has great command line support.</p>
+<pre><code class="language-bash"># Redirect the error output to the standard output (stderr to stdout)
+echo 'test' 2>&1
 
-<pre><code class="bash"># Will make your mac speak
-say "a sentence" 
-# Copy/past from the term
-echo "copy that" | pbcopy 
-pbpaste
-# Similar to unix locate, find a file on your machine
-mdfind 
-# Mount a disk image
-hdiutil attach diskimage.dmg 
-# Change the time between two time machine saves
-sudo defaults write /System/Library/LaunchDaemons/com.apple.backupd-auto StartInterval -int 1800 # seconds
-</code></pre>
-
-<h1 id="general-shell">General shell</h1>
-
-<pre><code class="bash"># Redirect the error output to the standard output (stderr to stdout)
-echo 'test' 2&gt;&amp;1
 # Mount a distant directory to the local filesystem
 sshfs username@example.com:/directory directory
+
 # Delete the line LINE_NUMBER in the file
 sed 'LINE_NUMBERd' file
+sed '2,4d' file # delete lines from 2 to 4 in file
+
 # Stop/continue a process by pid
 kill -s STOP/CONT PID
+
 # Create an archive for this directory
 tar -cvzf archive.tar.gz directory
+
 # Extract the given tarball
 tar -xvf archive.tar.gz
+
 # Generate a new key pair
 ssh-keygen -t dsa
+
 # Change extended permissions on a file
 setfacl -Rm u:username:rw directory
+
 # Convert windows line ending file to unix
-dos2unix 
+dos2unix
+
 # Add user (username) to group
-usermod -a -G group username 
-</code></pre>
+usermod -a -G group username</code></pre>
 
-<h1 id="specific-tools">Specific tools</h1>
+<h2 id="ngrok">ngrok</h2>
 
-<h2 id="firewall">Firewall</h2>
+<p>I use <a href="https://ngrok.com">ngrok</a></p>
+
+<p>This is a proprietary tool, but still, it has a free tier that is enough for me.<br>
+It may exist some similar tools, do not hesitate to contact me!</p>
+
+<blockquote>
+  <p>Ngrok exposes local servers behind NATs and firewalls to the public internet over secure tunnels.</p>
+</blockquote>
+
+<h1 id="linux-server">Linux server</h1>
+
+<h2 id="ufw-firewall">UFW Firewall</h2>
 
 <p>On my Linux server I use ufw (Uncomplicated Firewall), and it holds its promise!
 See it in action below:</p>
 
-<pre><code class="bash">ufw allow 22 # ssh
+<pre><code class="language-bash">ufw allow 22 # ssh
 ufw allow 443 # https
 ufw allow 80 # http
-ufw enable
-</code></pre>
+ufw enable</code></pre>
 
 <h2 id="mosh">Mosh</h2>
 
@@ -225,22 +202,38 @@ ufw enable
   <p>Mosh is free software, available for GNU/Linux, BSD, macOS, Solaris, Android, Chrome, and iOS.</p>
 </blockquote>
 
-<h2 id="ngrok">ngrok</h2>
+<h2 id="screen">Screen</h2>
 
-<p>I use <a href="https://ngrok.com">ngrok</a></p>
+<p>Create a new named session: <code>screen -S NAME</code>
+Restore a named session: <code>screen -x NAME</code></p>
 
-<p>This is a proprietary tool, but still, it has a free tier that is enough for me.<br />
-It may exist some similar tools, do not hesitate to contact me!</p>
+<h3 id="keybinding">Keybinding</h3>
 
-<blockquote>
-  <p>Ngrok exposes local servers behind NATs and firewalls to the public internet over secure tunnels.</p>
-</blockquote>
+<ul>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>c</kbd> = create</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>Shift</kbd> + <kbd>A</kbd> = title</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>Ctrl</kbd> + <kbd>a</kbd> = toggle</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>num</kbd> = switch to num</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>Shift</kbd> + <kbd>F</kbd> = fit</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>space</kbd>/<kbd>backspace</kbd> = next/prev windows</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>Shift</kbd> + <kbd>C</kbd> = clear</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>"</kbd> = List tabs</li>
+</ul>
+
+<h3 id=".screenrc">.screenrc</h3>
+
+<pre><code>termcapinfo xterm* ti@:te@ # Pour le scroll
+caption always # activates window caption
+caption string '%{= wk}[ %{k}%H %{k}][%= %{= wk}%?%-Lw%?%{r}(%{r}%n*%f%t%?(%u)%?%{r})%{k}%?%+Lw%?%?%= %{k}][%{b} %d/%m %{k}%c %{k}]' # good looking window bar
+bindkey -k k5 prev # F5 for previous window
+bindkey -k k6 next # F6 for next window
+</code></pre>
 
 <h1 id="my-own-scripts">My Own scripts</h1>
 
 <h2 id="filename-%2F-extname">filename / extname</h2>
 
-<p>Similar to <code>basename</code>, I've often needed to get the filename (without extension) or the extension of a given file in my scripts.<br />
+<p>Similar to <code>basename</code>, I've often needed to get the filename (without extension) or the extension of a given file in my scripts.<br>
 I added them in my path, so they are accessible when needed.</p>
 
 <p><code class="filepath">filename</code></p>
@@ -284,8 +277,8 @@ exit 0</code></pre>
 
 <h2 id="retime">Retime</h2>
 
-<p>This script is more specific to my needs, but still I think it can be useful to someone.<br />
-It will try to rename a media file with the date/time of creation.<br />
+<p>This script is more specific to my needs, but still I think it can be useful to someone.<br>
+It will try to rename a media file with the date/time of creation.<br>
 Note: it uses PHP and exiftool to work.</p>
 
 <p><code class="filepath">retime</code></p>
@@ -358,7 +351,7 @@ exit(0);
 
 <h2 id="doubloons">Doubloons</h2>
 
-<p>This script looks for file doubloons in the current and sub-directories.<br />
+<p>This script looks for file doubloons in the current and sub-directories.<br>
 Note: it's a PHP script that use a SQLite database.</p>
 
 <p><code class="filepath">doubloons</code></p>
@@ -504,22 +497,28 @@ if (!file_exists(DB_FILE_NAME)) {
 }
 </code></pre>
 
-<h2 id="other-custom-made-scripts">Other custom made scripts</h2>
+<h2 id="other-custom-made-scripts">Other custom-made scripts</h2>
 
-<p>I made other scripts that are probably to specific and too messy to be published here,
-one I like an used a lot was a PHP script (+ command line tools) that split a mbox file and extract message/attachment to a database. 
-Worked well to save my emails when I left gmail. Let me know if you are interested :)</p>
+<p>I made other scripts that are probably too specific and too messy to be published here,
+one I like a used a lot was a PHP script (+ command line tools) that split a mbox file and extract message/attachment to a database.
+Worked well to save my emails when I left Gmail.
+Let me know if you are interested :)</p>
 
-<p><link rel="stylesheet" href="/assets/css/monokai.min.css">
-<script type="text/javascript" src="/assets/js/highlight.min.js"></script>
-<script>hljs.highlightAll();</script></p>
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/monokai-sublime.min.css">
+<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/twig.min.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</p>
 
     </section>
     <footer class="pt-10">
                     <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/blob/main/2021/08/10/command-line-tools">Did you find an error or want to make a change? Open a PR</a><br>
             <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/issues/2">Follow this link to add a comment on this page</a>
             </footer>
-    </article>
+</article>
         </div>
     </div>
 

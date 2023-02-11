@@ -39,8 +39,8 @@
 <article class="post mt-12 p-4">
     <header class="mb-12">
         <h1>Je me mets à la VR (part 1)</h1>
-        <p>October 26, 2016</p>
-    </header>
+                <p>October 26, 2016</p>
+            </header>
     <section class="main">
                 <div class="image_main_wrap mb-12">
             <img alt="" src="/images/vr/part1-cover.png">
@@ -56,7 +56,7 @@ j’ai pour ça un projet complet en tête dans le but d’apprendre un maximum 
 
 <p>L’installation de Daydream en suivant la documentation Google s’est passée sans trop de difficultés, malheureusement le guide n’est déjà plus à jour et il faudra adapter certaines choses ici et là.</p>
 
-<p>En terme de matériel j’ai acheté un Nexus 6P pour le casque (headset) et j’ai un Nexus 5 que j’utilise pour la télécommande (tracker)
+<p>En termes de matériel j’ai acheté un Nexus 6P pour le casque (headset) et j’ai un Nexus 5 que j’utilise pour la télécommande (tracker)
 J’avais un Cardboard en plastique déjà et j’utilise mon clavier Bluetooth pour l’expérience.</p>
 
 <table style="text-align:center;width:100%" valign="center">
@@ -76,23 +76,23 @@ J’ai nommé les touches selon la convention de Unity pour pouvoir facilement y
 
 <h2 id="avanc%C3%A9s">Avancés</h2>
 
-<p>Je suis parti de la démo de Google afin de ne pas avoir a créer une scène de zéro,
+<p>Je suis parti de la démo de Google afin de ne pas avoir à créer une scène de zéro,
 la télécommande a marché facilement et j’ai pu bouger les cubes avec comme le prévoit la démo.</p>
 
 <p>Ensuite j’ai intégré mes modèles Blender, “Snowman” et “Lapin” que j’avais créé dans les tutoriels vidéos, j’ai ajouté le nécessaire dans le code pour qu’on puisse les déplacer aussi. Fun.</p>
 
-<p>J’ai ajouté un bloc pour symboliser le tracker - Nexus 5 -  physiquement dans la scène (en effet dans la démo de Google il n’y a qu’un pointeur) et j’ai ajouté le code pour que le bloc bouge selon la position du tracker sur les 3 axes.</p>
+<p>J’ai ajouté un bloc pour symboliser le tracker - Nexus 5 - physiquement dans la scène (en effet dans la démo de Google il n’y a qu’un pointeur) et j’ai ajouté le code pour que le bloc se déplace selon la position du tracker sur les 3 axes.</p>
 
-<p>Finalement j’ai importé le clavier dans Unity et ajouté un champ texte dans la scène. Après quelques temps sur la documentation Unity (pas très simple à trouver sur ce point particulier) j’ai réussi à récupérer les événements des touches, et du coup j’ai pu coder un feedback sur le modèle 3D du clavier : quand on appuie sur une touche physique alors la touche du modèle 3D s’illumine.</p>
+<p>Finalement j’ai importé le clavier dans Unity et ajouté un champ texte dans la scène. Après quelque temps sur la documentation Unity (pas très simple à trouver sur ce point particulier) j’ai réussi à récupérer les événements des touches, et du coup j’ai pu coder un feedback sur le modèle 3D du clavier : quand on appuie sur une touche physique alors la touche du modèle 3D s’illumine.</p>
 
 <p><img src="https://jerome.gangneux.net/images/vr/keyboard-blender-p1.png" style="max-width:100%"></p>
 
-<p>Au final le rendu est sympa mais pas aussi satisfaisant que ce que j'avais en tête à cause d’une limitation importante sur la plateforme Daydream.</p>
+<p>Finalement le rendu est sympa, mais pas aussi satisfaisant que ce que j'avais en tête à cause d’une limitation importante sur la plateforme Daydream.</p>
 
 <h2 id="ce-que-j%E2%80%99ai-appris">Ce que j’ai appris</h2>
 
-<p>Malheureusement je suis vite arrivé sur une des limitations de la plateforme Daydream (dans la configuration que j’utilise en tout cas) : le positionnement dans l'espace n’est pas possible.
-En effet si l’utilisateur se déplace, ou si il déplace le tracker physiquement dans l’espace, il n’est pas possible de répercuter ces déplacements dans la VR.
+<p>Malheureusement, je suis vite arrivé sur une des limitations de la plateforme Daydream (dans la configuration que j’utilise en tout cas) : le positionnement dans l'espace n’est pas possible.
+En effet, si l’utilisateur se déplace, ou s'il déplace le tracker physiquement dans l’espace, il n’est pas possible de répercuter ces déplacements dans la VR.
 Pour que ce soit possible il faudrait des capteurs externes comme le propose le Vive par exemple. C’est une limitation connue de Daydream dans sa version actuelle, limitation qui m’avait complètement échappée.</p>
 
 <p><img src="https://jerome.gangneux.net/images/vr/scene-unity-p1.png" style="max-width:100%"></p>
@@ -109,13 +109,13 @@ et aussi de récupérer un flux vidéo d'un autre device en temps réel pour fai
 
 <p><img src="https://jerome.gangneux.net/images/vr/final-p1.png" style="max-width:100%"></p>
 
-<p>Malheureusement je n’ai pas trouvé un moyen de faire une capture vidéo du rendu, les app qui le permettent en général ne fonctionnent pas avec le mode VR.
-On peut voir sur cette scène, le clavier au repos. Les touches n’ont pas de textures (flemme), elles deviennent oranges quand on appuie dessus. A droite le tracker (Nexus 5 dans le monde physique) et le pointeur en orange au loin. Il y a aussi l’écran qui flotte avec le texte entré au clavier qui apparaît dessus.</p>
+<p>Malheureusement, je n’ai pas trouvé un moyen de faire une capture vidéo du rendu, les app qui le permettent en général ne fonctionnent pas avec le mode VR.
+On peut voir sur cette scène, le clavier au repos. Les touches n’ont pas de textures (flemme), elles deviennent oranges quand on appuie dessus. À droite le tracker (Nexus 5 dans le monde physique) et le pointeur en orange au loin. Il y a aussi l’écran qui flotte avec le texte entré au clavier qui apparaît dessus.</p>
 
     </section>
     <footer class="pt-10">
             </footer>
-    </article>
+</article>
         </div>
     </div>
 

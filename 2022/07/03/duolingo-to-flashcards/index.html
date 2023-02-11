@@ -39,8 +39,8 @@
 <article class="post mt-12 p-4">
     <header class="mb-12">
         <h1>Duolingo Flashcards</h1>
-        <p>July 3, 2022</p>
-    </header>
+                <p>July 3, 2022</p>
+            </header>
     <section class="main">
                 <div class="image_main_wrap mb-12">
             <img alt="" src="/images/writing/duolingo-to-flashcard.png">
@@ -71,18 +71,18 @@
 
 <h2 id="connect-everything">Connect Everything</h2>
 
-<p>First, I need an API point on the Duolingo part, but unfortunately, it does not exist… The internet being a magic place full of ressources, I found someone working on an unofficial API. Thank you, <a href="#">@KartikTalwar</a>, for <a href="#">github.com/KartikTalwar/Duolingo</a>.</p>
+<p>First, I need an API point on the Duolingo part, but unfortunately, it does not exist… The internet being a magic place full of resources, I found someone working on an unofficial API. Thank you, <a href="#">@KartikTalwar</a>, for <a href="#">github.com/KartikTalwar/Duolingo</a>.</p>
 
 <p>I took me sometime to explore the API (without doc) and found some endpoints that would do the job.</p>
 
-<p>The next step is the easy one, take my favorite scripting language PHP and build a CSV file from this info. After a bit of test, it works as expected, I cleaned up the whole projet and decided to put it online, so you could use it too.</p>
+<p>The next step is the easy one, take my favorite scripting language PHP and build a CSV file from this info. After a bit of test, it works as expected, I cleaned up the whole project and decided to put it online, so you could use it too.</p>
 
 <p>Find it here <a href="https://github.com/jrmgx/duo-vocabulary">github.com/jrmgx/duo-vocabulary</a> you have all the information to use it on the repository. It's easy with docker, you don't have to install anything <code>docker run jrmgx/duo-vocabulary [parameters] &gt; output.csv</code></p>
 
 <h2 id="limitations">Limitations</h2>
 
 <ul>
-<li>It has some specific hardcoded rules to remove feminine and plural words, but those rules only work for Spanish (the language I'm learning right now).</li>
+<li>It has some specific hard-coded rules to remove feminine and plural words, but those rules only work for Spanish (the language I'm learning right now).</li>
 <li>Duolingo does not provide an official API, for that reason, it may stop working at anytime (without any way to fix it).</li>
 <li>From what I understood, calls to <code>dictionary/hints</code> endpoint are limited in payload size, it may have to be split at some point, but for now, with my current usage it works like that.</li>
 </ul>
@@ -96,7 +96,7 @@
     </section>
     <footer class="pt-10">
             </footer>
-    </article>
+</article>
         </div>
     </div>
 
