@@ -29,22 +29,31 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Snippets
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>Command line tools</h1>
-                <p>Last update: February 11, 2023</p>
-            </header>
-    <section class="main">
-                <h2 id="introduction">Introduction</h2>
 
-<p>I am a big fan of command line utilities and scripts, so I wanted to share with you some tricks I learned and scripts I use.
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>Command line tools</h1>
+                        <p>Last update: February 11, 2023</p>
+                    </header>
+        <section class="main">
+            <p>I am a big fan of command line utilities and scripts, so I wanted to share with you some tricks I learned and scripts I use.
 Some are only a command with notable options like a memo of how to use them, others are homemade scripts.</p>
 
 <h2 id="find-and-related">Find and related</h2>
@@ -176,9 +185,9 @@ It may exist some similar tools, do not hesitate to contact me!</p>
   <p>Ngrok exposes local servers behind NATs and firewalls to the public internet over secure tunnels.</p>
 </blockquote>
 
-<h1 id="linux-server">Linux server</h1>
+<h2 id="linux-server">Linux server</h2>
 
-<h2 id="ufw-firewall">UFW Firewall</h2>
+<h3 id="ufw-firewall">UFW Firewall</h3>
 
 <p>On my Linux server I use ufw (Uncomplicated Firewall), and it holds its promise!
 See it in action below:</p>
@@ -188,7 +197,7 @@ ufw allow 443 # https
 ufw allow 80 # http
 ufw enable</code></pre>
 
-<h2 id="mosh">Mosh</h2>
+<h3 id="mosh">Mosh</h3>
 
 <p>I use <a href="https://mosh.org">Mosh</a></p>
 
@@ -202,12 +211,12 @@ ufw enable</code></pre>
   <p>Mosh is free software, available for GNU/Linux, BSD, macOS, Solaris, Android, Chrome, and iOS.</p>
 </blockquote>
 
-<h2 id="screen">Screen</h2>
+<h3 id="screen">Screen</h3>
 
 <p>Create a new named session: <code>screen -S NAME</code>
 Restore a named session: <code>screen -x NAME</code></p>
 
-<h3 id="keybinding">Keybinding</h3>
+<h4 id="keybinding">Keybinding</h4>
 
 <ul>
 <li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>c</kbd> = create</li>
@@ -220,7 +229,7 @@ Restore a named session: <code>screen -x NAME</code></p>
 <li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>"</kbd> = List tabs</li>
 </ul>
 
-<h3 id=".screenrc">.screenrc</h3>
+<h4 id=".screenrc">.screenrc</h4>
 
 <pre><code>termcapinfo xterm* ti@:te@ # Pour le scroll
 caption always # activates window caption
@@ -229,9 +238,9 @@ bindkey -k k5 prev # F5 for previous window
 bindkey -k k6 next # F6 for next window
 </code></pre>
 
-<h1 id="my-own-scripts">My Own scripts</h1>
+<h2 id="my-own-scripts">My Own scripts</h2>
 
-<h2 id="filename-%2F-extname">filename / extname</h2>
+<h3 id="filename-%2F-extname">filename / extname</h3>
 
 <p>Similar to <code>basename</code>, I've often needed to get the filename (without extension) or the extension of a given file in my scripts.<br>
 I added them in my path, so they are accessible when needed.</p>
@@ -275,7 +284,7 @@ FILENAME=&quot;${BASENAME%.*}&quot;
 echo &quot;${EXTENSION}&quot;
 exit 0</code></pre>
 
-<h2 id="retime">Retime</h2>
+<h3 id="retime">Retime</h3>
 
 <p>This script is more specific to my needs, but still I think it can be useful to someone.<br>
 It will try to rename a media file with the date/time of creation.<br>
@@ -349,7 +358,7 @@ stdout(&quot;Success: {$file} renamed in {$destination}&quot;);
 exit(0);
 </code></pre>
 
-<h2 id="doubloons">Doubloons</h2>
+<h3 id="doubloons">Doubloons</h3>
 
 <p>This script looks for file doubloons in the current and sub-directories.<br>
 Note: it's a PHP script that use a SQLite database.</p>
@@ -497,7 +506,7 @@ if (!file_exists(DB_FILE_NAME)) {
 }
 </code></pre>
 
-<h2 id="other-custom-made-scripts">Other custom-made scripts</h2>
+<h3 id="other-custom-made-scripts">Other custom-made scripts</h3>
 
 <p>I made other scripts that are probably too specific and too messy to be published here,
 one I like a used a lot was a PHP script (+ command line tools) that split a mbox file and extract message/attachment to a database.
@@ -513,12 +522,13 @@ Let me know if you are interested :)</p>
 <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
 </p>
 
-    </section>
-    <footer class="pt-10">
-                    <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/blob/main/2021/08/10/command-line-tools">Did you find an error or want to make a change? Open a PR</a><br>
-            <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/issues/2">Follow this link to add a comment on this page</a>
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                            <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/blob/main/2021/08/10/command-line-tools">Did you find an error or want to make a change? Open a PR</a><br>
+                <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/issues/2">Follow this link to add a comment on this page</a>
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 

@@ -29,23 +29,31 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Blog
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>Post mortem de 6 startups</h1>
-                <p>June 17, 2016</p>
-            </header>
-    <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/writing/startup-cover.jpg">
-        </div>
-                <h1 id="pr%C3%A9sentation">Présentation</h1>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>Post mortem de 6 startups</h1>
+                        <p>June 17, 2016</p>
+                    </header>
+        <section class="main">
+            <h2 id="pr%C3%A9sentation">Présentation</h2>
 
 <p>Je m’appelle Jérôme je suis développeur dans le sens large du terme.<br>
 En ce moment spécialisé dans le développement mobile natif iOS et Android, je suis passé par le développement web et full-stack.</p>
@@ -53,9 +61,9 @@ En ce moment spécialisé dans le développement mobile natif iOS et Android, je
 <p>J’écris avant tout pour faire la synthèse de près de cinq ans dans le monde des startups en tant que co-fondateur technique, j’espère que ça pourra être utile à d’autres.<br>
 Je parle principalement du point de vue d’un profil technique en y incluant ma subjectivité personnelle. Pour être honnête ces cinq années ont été folles, de Paris à San Francisco, j’ai pu rencontrer énormément de monde, il est temps pour moi de vous faire part de mon ressenti et de mes erreurs en espérant que cela vous serve aussi.</p>
 
-<h1 id="les-d%C3%A9buts-innocents">Les débuts innocents</h1>
+<h2 id="les-d%C3%A9buts-innocents">Les débuts innocents</h2>
 
-<h2 id="cosmoz-2010">Cosmoz 2010</h2>
+<h3 id="cosmoz-2010">Cosmoz 2010</h3>
 
 <p>En 2010 je quitte Netvibes pour me lancer à la conquête du monde, moi aussi je veux ma success story et je vais monter ma startup.
 J’ai 25 ans, je n’y connais rien, je me suis assez peu renseigné (à part sur le fait de bien pouvoir toucher mon chômage), ce sont presque des vacances finalement.<br>
@@ -85,7 +93,7 @@ L’idée est de permettre aux artistes et à la mouvance DIY (c’était la mod
 <li>Il n’est pas nécessaire de monter une structure légale tant qu’il n’y a pas d’employés. Globalement il vaut mieux monter une structure légale le plus tard possible.</li>
 </ul>
 
-<h2 id="citroon-2011">Citroon 2011</h2>
+<h3 id="citroon-2011">Citroon 2011</h3>
 
 <p>Deuxième startup, <strong>Citroon :</strong> <em>Contrôlez votre téléphone depuis le web</em>.<br>
 Ça n’est pas à proprement parler un pivot, mais c’est dans la continuation, essentiellement administrative (oui parce que monter une société en France, c’est très chronophage).</p>
@@ -109,19 +117,19 @@ L’idée est de permettre aux artistes et à la mouvance DIY (c’était la mod
 <li>Il faut apprendre de ses erreurs (et ce n'est pas si simple quand on va vite)</li>
 </ul>
 
-<h1 id="pause">Pause</h1>
+<h2 id="pause">Pause</h2>
 
 <p>Alors que mes finances personnelles commencent à tendre vers zéro, on vient me proposer un poste plutôt sympa, c’est l’heure de la pause startup : je rejoins Newsring.<br>
 Je suis employé en CDI pendant quelque temps, ça me permet de me refaire une trésorerie personnelle (y compris cumuler à nouveau des indemnités chômage).<br>
 Cependant, je n’ai qu’une envie, trouver l’idée, celle avec en grand “i” et bientôt lancer une nouvelle startup (et ça ne sera que plus tard qu’on m’apprendra qu’il n’y a pas de bonne idée, juste des bonnes équipes et un bon timing).</p>
 
-<h1 id="mont%C3%A9e-en-puissance-de-la-sc%C3%A8ne-parisienne">Montée en puissance de la scène parisienne</h1>
+<h2 id="mont%C3%A9e-en-puissance-de-la-sc%C3%A8ne-parisienne">Montée en puissance de la scène parisienne</h2>
 
 <p>On parle de plus en plus startup sur la scène parisienne, le Camping (accélérateur de startup parisien) en est à sa saison 5, les success story américaines ont une grande résonance en France. Certains lèvent même de l’argent sur Paris.</p>
 
 <p>De mon côté, je continue de me tenir au courant, je participe à des startups weekend (en tant que développeur), j’organise des événements perso. Je ne manque aucun Start in Paris, je rencontre des fondateurs de startup qui cherchent des associés techniques (ou des développeurs), mais sincèrement, j’ai toujours pas d’idée de génie.</p>
 
-<h1 id="budeal-et-i-love-promo">Budeal et I LOVE PROMO</h1>
+<h2 id="budeal-et-i-love-promo">Budeal et I LOVE PROMO</h2>
 
 <p>De Newsring, je suis passé à l’académie du goût (Webedia) mais être un simple employé devient lassant, il est temps pour moi de prospecter activement à nouveau, et pourquoi pas cette fois-ci rejoindre quelqu’un qui a déjà sa propre idée de startup ?<br>
 Après tout l’essentiel, c’est de ne pas être seul, et peut-être que je pourrai apporter ma pierre à l’édifice, voire amener à un pivot ?</p>
@@ -133,7 +141,7 @@ Je l’avais déjà rencontré auparavant lors d’un événement entrepreneur. 
 
 <p>Je m'investis à mi-temps dans chacun de ces projets faisant des applications iOS pour chacun, en échange de part dans leurs sociétés.</p>
 
-<h2 id="numa-%3A-entre-r%C3%AAve-et-d%C3%A9sillusion">NUMA : entre rêve et désillusion</h2>
+<h3 id="numa-%3A-entre-r%C3%AAve-et-d%C3%A9sillusion">NUMA : entre rêve et désillusion</h3>
 
 <p>Depuis toujours j’avais essayé d’entrer au Camping (maintenant appelé NUMA), j’y ai vu plusieurs amis participer aux différentes saisons, et ça me semblait être un passage obligé pour formaliser tout ce que j’avais pu expérimenter et ainsi arriver au niveau supérieur.</p>
 
@@ -162,7 +170,7 @@ Je l’avais déjà rencontré auparavant lors d’un événement entrepreneur. 
 <li>Il faut apprendre à gérer son énergie</li>
 </ul>
 
-<h1 id="le-sursaut-whask">Le sursaut Whask</h1>
+<h2 id="le-sursaut-whask">Le sursaut Whask</h2>
 
 <p>Après un mois de repos, je suis retourné au NUMA de temps en temps, dire bonjour, écouter un événement, etc. Et ça m’avait manqué. Du coup je me suis laissé aller à participer à l’événement Adopt a CTO pour jeter un œil.</p>
 
@@ -182,7 +190,7 @@ Car il se trouve que la célébrité qui nous supportait (y compris financièrem
 <li>Il faut bien définir les rôles de chacun, surtout sur les profils non techniques</li>
 </ul>
 
-<h1 id="conclusion">Conclusion</h1>
+<h2 id="conclusion">Conclusion</h2>
 
 <p>Après près de 5 ans à chercher le projet ultime, j’ai réalisé que je n’avais jamais fait le point sur mes motivations personnelles, ou du moins pris le recul pour savoir si j’étais toujours en phase avec le monde des startups.</p>
 
@@ -196,10 +204,11 @@ Car il se trouve que la célébrité qui nous supportait (y compris financièrem
 je prends juste quelques vacances avant,<br>
 et je ferai une bonne vieille société à l'ancienne une slowly-forward.</p>
 
-    </section>
-    <footer class="pt-10">
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 

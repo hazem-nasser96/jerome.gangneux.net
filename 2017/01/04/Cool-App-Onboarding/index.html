@@ -29,25 +29,31 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Blog
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>Cool App Onboarding</h1>
-                <p>January 4, 2017</p>
-            </header>
-    <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/writing/testOnboardingCool.gif">
-        </div>
-                <h1 id="introduction">Introduction</h1>
 
-<p>A few months ago I was working on <a href="https://jerome.gangneux.net/projects/2016-02-whask/">Whask</a>,
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>Cool App Onboarding</h1>
+                        <p>January 4, 2017</p>
+                    </header>
+        <section class="main">
+            <p>A few months ago I was working on <a href="https://jerome.gangneux.net/projects/2016-02-whask/">Whask</a>,
 and because we were looking for a market fit we were always prototyping things,
 working to reduce the friction, accelerate the adoption, increase the conversion and keep up the retention.<br>
 Startup life.</p>
@@ -57,7 +63,7 @@ I'm passionate about thinking of new ways to onboard user: it is challenging, an
 
 <p>Even today at Augment we are still working on user tests to found the best way to introduce augmented reality to our users. And trust me, it is not easy.</p>
 
-<h1 id="prototype">Prototype</h1>
+<h2 id="prototype">Prototype</h2>
 
 <p>At Whask we were targeting youth people, and the chat bot trend had just started.
 That's how I came with this idea: a chat bot to introduce the App features and onboard the user.<br>
@@ -86,7 +92,7 @@ It seems very logic for me.</p>
 
 <p>But we haven't had a chance to test it, neither implement it, Whask didn't find its way.</p>
 
-<h1 id="live-code">Live code</h1>
+<h2 id="live-code">Live code</h2>
 
 <p>Two or three months later I still wanted to test that idea on a real App.
 So we decided with my friend Damien (designer) to give it another try.<br>
@@ -98,7 +104,7 @@ We use the old — still fashionable — good idea of <a href="https://jerome.ga
     <iframe style="width:320px;left:50%;height:565px;position:relative;margin-left:-160px;" width="320" height="565" src="https://www.youtube.com/embed/WKdm4R6KZaQ" frameborder="0" allowfullscreen></iframe>
 </div>
 
-<h1 id="conclusion">Conclusion</h1>
+<h2 id="conclusion">Conclusion</h2>
 
 <p>Of course the App is not finished at all<sup>*</sup></p>
 
@@ -120,10 +126,11 @@ I hate 3 steps tutorials with sliders or other annoying overlays.</p>
 
 <p><small>* Squarechat2 will never go live, I have <a href="https://jerome.gangneux.net/blog/vr/">other priorities</a></small></p>
 
-    </section>
-    <footer class="pt-10">
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 

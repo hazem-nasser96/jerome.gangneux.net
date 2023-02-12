@@ -29,25 +29,31 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Blog
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>Learning VR (part 4)</h1>
-                <p>November 28, 2016</p>
-            </header>
-    <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/vr/part4-cover.png">
-        </div>
-                <h1 id="introduction">Introduction</h1>
 
-<p>It is going well, I continue to experiment in VR, and I got good results.<br>
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>Learning VR (part 4)</h1>
+                        <p>November 28, 2016</p>
+                    </header>
+        <section class="main">
+            <p>It is going well, I continue to experiment in VR, and I got good results.<br>
 I am now able to do pretty much what I want, I'm only missing time!</p>
 
 <p>The main idea ; to get a virtual desktop ; takes all its meaning when you are at the point where you can personalize your environment.<br>
@@ -70,7 +76,7 @@ I am working in the middle of a night sky, with Mars in background, how cool is 
     </td></tr>
 </table>
 
-<h1 id="progress">Progress</h1>
+<h2 id="progress">Progress</h2>
 
 <div style="text-align:center;margin:20px 0">
     <img src="/images/vr/part4/tweet.png" style="padding:10px;max-width:100%;"><br>
@@ -114,7 +120,7 @@ It is not teleportation, it moves quite slowly to the place you're pointing.</p>
     </td></tr>
 </table>
 
-<h1 id="what-is-needed">What is needed</h1>
+<h2 id="what-is-needed">What is needed</h2>
 
 <p>While I was experimenting, I felt the need to have a kind of "window" manager to move objects around,
 it is not windows that are present but more something like 3D boxes around these objects I guess.
@@ -125,7 +131,7 @@ Each app could have a resize and a move action, and we could be able to see the 
 I must work on that problem too, if you have any idea let me know.
 To be honest, I think Unity software is a little buggy too and not that much ergonomic, sometime I'm losing time because of that too.</p>
 
-<h1 id="beyond-code">Beyond code</h1>
+<h2 id="beyond-code">Beyond code</h2>
 
 <p>I also started to meet people that do VR too, some are already specialists, others are enthusiasts.
 We mostly got to the same point each time ; I will resume it for you too: I do not believe in VR,
@@ -135,7 +141,7 @@ VR has too many ergonomic problems, AR theoretically allows to do VR anyway.</p>
 <p>There are new trending topics, this time I learn about "<a href="http://www.spatial-computing.org/">spacial computing</a>",
 and for me, it is just a way to talk about AR with a new buzzword.</p>
 
-<h1 id="next-steps">Next steps</h1>
+<h2 id="next-steps">Next steps</h2>
 
 <p>I need to clean the code, it is spaghetti code with lots of bizarre things.
 While cleaning, I will try to get the App concept in, or at least something like an interface to allows every App to inherit basic "window" management functionalities + state conservation.</p>
@@ -165,10 +171,11 @@ While cleaning, I will try to get the App concept in, or at least something like
 My job here is only to assemble existing technologies pieces in a meaning full way and deliver something quick.
 It is like Lego &copy;</p>
 
-    </section>
-    <footer class="pt-10">
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 

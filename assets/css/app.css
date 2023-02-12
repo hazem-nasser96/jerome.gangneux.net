@@ -143,6 +143,8 @@ code {
     color: #ddd;
     display: inline-block;
     padding: 0 0.5rem;
+    max-width: 100%;
+    overflow: auto;
 }
 
 code.filepath {

@@ -29,23 +29,31 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Blog
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>TED talks must watch</h1>
-                <p>August 8, 2014</p>
-            </header>
-    <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/writing/ted-cover.jpg">
-        </div>
-                <h1 id="general">General</h1>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>TED talks must watch</h1>
+                        <p>August 8, 2014</p>
+                    </header>
+        <section class="main">
+            <h2 id="general">General</h2>
 
 <h3 id="the-interspecies-internet%3F-an-idea-in-progress">The interspecies internet? An idea in progress</h3>
 
@@ -67,7 +75,7 @@
 <p>Sir Ken Robinson makes an entertaining and profoundly moving case for creating an education system that nurtures (rather than undermines) creativity.
 <a href="http://www.ted.com/talks/ken_robinson_says_schools_kill_creativity">http://www.ted.com/talks/ken_robinson_says_schools_kill_creativity</a></p>
 
-<h1 id="evolution">Evolution</h1>
+<h2 id="evolution">Evolution</h2>
 
 <h3 id="a-30-year-history-of-the-future">A 30-year history of the future</h3>
 
@@ -79,7 +87,7 @@
 <p>Two hundred million years ago, our mammal ancestors developed a new brain feature: the neocortex. This stamp-sized piece of tissue (wrapped around a brain the size of a walnut) is the key to what humanity has become. Now, futurist Ray Kurzweil suggests, we should get ready for the next big leap in brain power, as we tap into the computing power in the cloud.
 <a href="http://www.ted.com/talks/ray_kurzweil_get_ready_for_hybrid_thinking">http://www.ted.com/talks/ray_kurzweil_get_ready_for_hybrid_thinking</a></p>
 
-<h1 id="personality">Personality</h1>
+<h2 id="personality">Personality</h2>
 
 <h3 id="the-mind-behind-tesla%2C-spacex%2C-solarcity-...">The mind behind Tesla, SpaceX, SolarCity ...</h3>
 
@@ -101,7 +109,7 @@
 <p>Onstage at TED2014, Charlie Rose interviews Google CEO Larry Page about his far-off vision for the company. It includes aerial bikeways and internet balloons … and then it gets even more interesting, as Page talks through the company’s recent acquisition of Deep Mind, an AI that is learning some surprising things.
 <a href="http://www.ted.com/talks/larry_page_where_s_google_going_next">http://www.ted.com/talks/larry_page_where_s_google_going_next</a></p>
 
-<h1 id="space">Space</h1>
+<h2 id="space">Space</h2>
 
 <h3 id="the-discovery-that-could-rewrite-physics">The discovery that could rewrite physics</h3>
 
@@ -113,7 +121,7 @@
 <p>In this passionate talk, legendary spacecraft designer Burt Rutan lambasts the US government-funded space program for stagnating and asks entrepreneurs to pick up where NASA has left off.
 <a href="http://www.ted.com/talks/burt_rutan_sees_the_future_of_space">http://www.ted.com/talks/burt_rutan_sees_the_future_of_space</a></p>
 
-<h1 id="life">Life</h1>
+<h2 id="life">Life</h2>
 
 <h3 id="a-roadmap-to-end-aging">A roadmap to end aging</h3>
 
@@ -125,14 +133,14 @@
 <p>Speaking as both an astronomer and "a concerned member of the human race," Sir Martin Rees examines our planet and its future from a cosmic perspective. He urges action to prevent dark consequences from our scientific and technological development.
 <a href="http://www.ted.com/talks/martin_rees_asks_is_this_our_final_century">http://www.ted.com/talks/martin_rees_asks_is_this_our_final_century</a></p>
 
-<h1 id="technical">Technical</h1>
+<h2 id="technical">Technical</h2>
 
 <h3 id="the-1s-and-0s-behind-cyber-warfare">The 1s and 0s behind cyber warfare</h3>
 
 <p>Chris Domas is a cybersecurity researcher, operating on what’s become a new front of war, "cyber." In this engaging talk, he shows how researchers use pattern recognition and reverse engineering (and pull a few all-nighters) to understand a chunk of binary code whose purpose and contents they don't know.
 <a href="http://www.ted.com/talks/chris_domas_the_1s_and_0s_behind_cyber_warfare">http://www.ted.com/talks/chris_domas_the_1s_and_0s_behind_cyber_warfare</a></p>
 
-<h1 id="lifestyle">Lifestyle</h1>
+<h2 id="lifestyle">Lifestyle</h2>
 
 <h3 id="3-ways-to-speak-english">3 ways to speak English</h3>
 
@@ -149,7 +157,7 @@
 <p>Have you ever wondered: Am I a human being? Ze Frank suggests a series of simple questions that will determine this. Please relax and follow the prompts. Let's begin …
 <a href="http://www.ted.com/talks/ze_frank_are_you_human">http://www.ted.com/talks/ze_frank_are_you_human</a></p>
 
-<h1 id="politics">Politics</h1>
+<h2 id="politics">Politics</h2>
 
 <h3 id="the-unstoppable-walk-to-political-reform">The unstoppable walk to political reform</h3>
 
@@ -161,10 +169,11 @@
 <p>Oklahoma City is a midsized town that had a big problem: It was among the most obese towns in America. Mayor Mick Cornett realized that, to make his city a great place to work and live, it had to become healthier too. In this charming talk, he walks us through the interlocking changes that helped OKC drop a collective million pounds (450,000 kilos).
 <a href="http://www.ted.com/talks/mick_cornett_how_an_obese_town_lost_a_million_pounds">http://www.ted.com/talks/mick_cornett_how_an_obese_town_lost_a_million_pounds</a></p>
 
-    </section>
-    <footer class="pt-10">
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 

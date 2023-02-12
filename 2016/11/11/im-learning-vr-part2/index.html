@@ -29,25 +29,31 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Blog
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>Learning VR (part 2)</h1>
-                <p>November 11, 2016</p>
-            </header>
-    <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/vr/part2-cover.png">
-        </div>
-                <h1 id="introduction">Introduction</h1>
 
-<p>The previous session was full of hopes,
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>Learning VR (part 2)</h1>
+                        <p>November 11, 2016</p>
+                    </header>
+        <section class="main">
+            <p>The previous session was full of hopes,
 mainly because I got something working very quickly, but now I'm stuck.</p>
 
 <p>I spent two weeks on a problem that I still did not manage to fully solve.
@@ -55,7 +61,7 @@ Let's talk about that.</p>
 
 <div style="text-align:center"><img src="/images/vr/part3/part3-unity-cube.png" style="padding:10px;max-width:100%"><br><strong>My workspace</strong></div>
 
-<h1 id="the-project">The project</h1>
+<h2 id="the-project">The project</h2>
 
 <p>The idea is to get a web browser working in VR,
 I do that to learn Unity / DayDream and VR in general.
@@ -65,7 +71,7 @@ So I want a working web browser to start with.</p>
 
 <p>But I'm far from here.</p>
 
-<h1 id="pieces-of-the-puzzle">Pieces of the puzzle</h1>
+<h2 id="pieces-of-the-puzzle">Pieces of the puzzle</h2>
 
 <p>Nothing that I tried has worked so far,
 I even restarted to test the feasibility of this project outside of Unity (native android)
@@ -115,7 +121,7 @@ I can understand, it is fair.</p>
 <div style="text-align:center"><img src="/images/vr/part2/talk.png" style="padding:10px;max-width:100%"><br>
 <strong>Learning the hard way</strong></div>
 
-<h1 id="progress">Progress</h1>
+<h2 id="progress">Progress</h2>
 
 <p>This is the technical workflow,</p>
 
@@ -145,7 +151,7 @@ is only rendered as a 1px by 1px texture when it arrives in Unity (stretched int
 it is strange, but because I'm a beginner, I'm sure I missed something basic somewhere.
 I will find a solution!</p>
 
-<h1 id="next-steps">Next steps</h1>
+<h2 id="next-steps">Next steps</h2>
 
 <p>I did not have time to play with the Nintendo Wii controller as I wanted,
 so when I will get the WebView working I may look at that.
@@ -153,9 +159,9 @@ Also, I want people to get visual feedback about the real world around them,
 so I'll try to get a live video stream from the camera into the VR world.
 I have much more idea, but I need to go step by step because it is quite hard.</p>
 
-<h1 id="useful-links">Useful links</h1>
+<h2 id="useful-links">Useful links</h2>
 
-<h2 id="documentation-and-articles">Documentation and articles</h2>
+<h3 id="documentation-and-articles">Documentation and articles</h3>
 
 <ul>
 <li><a href="http://www.felixjones.co.uk/neo%20website/Android_View/">http://www.felixjones.co.uk/neo%20website/Android_View/</a></li>
@@ -167,24 +173,25 @@ I have much more idea, but I need to go step by step because it is quite hard.</
 <li><a href="https://www.reddit.com/r/GearVR/comments/2u0ro2/gearvr_w_unity_loading_movie_onto_texture/">https://www.reddit.com/r/GearVR/comments/2u0ro2/gearvr_w_unity_loading_movie_onto_texture/</a></li>
 </ul>
 
-<h2 id="checkout-some-code">Checkout some code</h2>
+<h3 id="checkout-some-code">Checkout some code</h3>
 
 <ul>
 <li><a href="https://gist.github.com/jrmgx/019cba403769dda27a6d42e48c461b1b">https://gist.github.com/jrmgx/019cba403769dda27a6d42e48c461b1b</a></li>
 <li><a href="https://gist.github.com/jrmgx/e0319c2b898115d1a55e50e423f96dfb">https://gist.github.com/jrmgx/e0319c2b898115d1a55e50e423f96dfb</a></li>
 </ul>
 
-<h2 id="help-me-if-you-can">Help me if you can</h2>
+<h3 id="help-me-if-you-can">Help me if you can</h3>
 
 <ul>
 <li><a href="http://stackoverflow.com/questions/40370290/how-to-get-an-android-webview-as-a-unity-texture">http://stackoverflow.com/questions/40370290/how-to-get-an-android-webview-as-a-unity-texture</a></li>
 <li><a href="http://stackoverflow.com/questions/40554697/only-getting-one-pixel-from-an-external-texture">http://stackoverflow.com/questions/40554697/only-getting-one-pixel-from-an-external-texture</a></li>
 </ul>
 
-    </section>
-    <footer class="pt-10">
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 

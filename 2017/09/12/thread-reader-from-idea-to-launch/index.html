@@ -29,25 +29,33 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Threadreader
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>Thread Reader use case: From Idea to Launch</h1>
-                <p>September 12, 2017</p>
-            </header>
-    <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/writing/tttthreads/fake-mokup-4x3.png">
-        </div>
-                <p><strong>Note: This project has been acquired in 2018, I'm no longer the owner of ThreadReaderApp</strong></p>
 
-<h1 id="bootstrap-your-idea">Bootstrap your idea</h1>
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>Thread Reader use case: From Idea to Launch</h1>
+                        <p>September 12, 2017</p>
+                    </header>
+        <section class="main">
+            <p><strong>Note: This project has been acquired in 2018, I'm no longer the owner of ThreadReaderApp</strong></p>
+
+<h2 id="bootstrap-your-idea">Bootstrap your idea</h2>
 
 <p><small>This project started on August 11, 2017</small></p>
 
@@ -55,7 +63,7 @@
 
 <p>This post is not to brag about me or anything like that, but instead show you that you can do it too.</p>
 
-<h2 id="the-problem">The problem</h2>
+<h3 id="the-problem">The problem</h3>
 
 <p>First I came up with a problem, it’s better if it’s a problem you personally have.<br>
 It does not have to be some game changing idea, start small. The objective is to find people that have the same problem as you.</p>
@@ -132,7 +140,7 @@ For Thread Reader I decided to target people using the <i>#thread</i> hashtag on
 
 <p>Let’s start building!</p>
 
-<h2 id="building">Building</h2>
+<h3 id="building">Building</h3>
 
 <p>During all the process you should stay close to your first users (prospects) and include them in the progress loop.</p>
 
@@ -142,7 +150,7 @@ At that point it’s allowed to be buggy, but it must be online.</p>
 
 <p>For that project we will need a Twitter account and Twitter App</p>
 
-<h3 id="tech-stack">Tech stack</h3>
+<h4 id="tech-stack">Tech stack</h4>
 
 <p>My choice will be the <a href="https://en.wikipedia.org/wiki/LAMP_(software_bundle)"><abbr title="Linux Apache MySQL PHP">LAMP</abbr></a> stack with the <a href="https://silex.symfony.com/">Silex framework</a>, Silex is a very minimal PHP framework.
 I chose it because I like to work with it,
@@ -198,7 +206,7 @@ And to be honest in 90% of the time projects won’t succeed, and you’re going
 <p>Trust me on this one.<br>
 You should fail fast.</p>
 
-<h3 id="design">Design</h3>
+<h4 id="design">Design</h4>
 
 <p>Getting the data works!</p>
 
@@ -247,9 +255,9 @@ and to ask the user to make a report if he thinks it’s one indeed.</p>
 
 <p>I put that in the TODO list 😀</p>
 
-<h1 id="launching">Launching</h1>
+<h2 id="launching">Launching</h2>
 
-<h2 id="going-online">Going online</h2>
+<h3 id="going-online">Going online</h3>
 
 <p>For a small PHP+MySQL MVP project you don’t need expensive server at start.
 I checked for you <a href="https://www.000webhost.com/">000webhost.com</a> hosting and it looks like it can do the trick.<br></p>
@@ -265,7 +273,7 @@ but you will have to pay a little to get a domain and a great service.</p>
     I already have my server it’s not relevant, so I decided to not publish it.</p>
 </div>
 
-<h2 id="iterate">Iterate</h2>
+<h3 id="iterate">Iterate</h3>
 
 <p>Unfortunately the twitter search API has major limitation that goes on our way:</p>
 
@@ -298,7 +306,7 @@ but we need to resist and take some time to communicate and ask for feedback.</p
 
 <p>Everything is online now, it’s communication time!</p>
 
-<h2 id="communication">Communication</h2>
+<h3 id="communication">Communication</h3>
 
 <p>I’m not a marketing guy, not at all.<br>
 But for this service, because it’s on Twitter, it seems easy to find a few growth hacks or
@@ -328,7 +336,7 @@ and it’s not so easy to find great content (something that our bot will have t
 
 <p>Now that we are on tracks and can iterate fast, let’s ask user for feedbacks and start implements new features.</p>
 
-<h3 id="user-feedbacks">User feedbacks</h3>
+<h4 id="user-feedbacks">User feedbacks</h4>
 
 <p>You should contact every user you have and ask them for feedback,<br>
 I did contact many of them on Twitter and I got some interesting thoughts:</p>
@@ -349,9 +357,9 @@ I did contact many of them on Twitter and I got some interesting thoughts:</p>
 
 <hr>
 
-<h1 id="annex">Annex</h1>
+<h2 id="annex">Annex</h2>
 
-<h2 id="todo-list">TODO List</h2>
+<h3 id="todo-list">TODO List</h3>
 
 <p>This is an example of my TODO list at some point,<br>
 it’s here to show you that you don’t have to worry about having many things to do, it goes by:</p>
@@ -382,7 +390,7 @@ it’s here to show you that you don’t have to worry about having many things 
 <li>And so on…</li>
 </ul>
 
-<h2 id="youtube-videos">YouTube videos</h2>
+<h3 id="youtube-videos">YouTube videos</h3>
 
 <p><small>Edit 2020, unfortunately those video are outdated, so I've deleted them</small></p>
 
@@ -400,10 +408,11 @@ it’s here to show you that you don’t have to worry about having many things 
 
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-    </section>
-    <footer class="pt-10">
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 

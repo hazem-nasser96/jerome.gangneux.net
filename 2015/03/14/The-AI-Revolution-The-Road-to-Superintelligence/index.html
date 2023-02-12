@@ -29,23 +29,31 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Blog
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>La révolution IA : Le chemin vers la Super-intelligence</h1>
-                <p>March 14, 2015</p>
-            </header>
-    <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/writing/ia-cover.jpg">
-        </div>
-                <p>Par Tim Urban, traduction Française Jerome Gangneux
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>La révolution IA : Le chemin vers la Super-intelligence</h1>
+                        <p>March 14, 2015</p>
+                    </header>
+        <section class="main">
+            <p>Par Tim Urban, traduction Française Jerome Gangneux
 vous trouverez l'article original ici : <a href="http://waitbutwhy.com/2015/01/artificial-intelligence-revolution-1.html">The AI Revolution: The Road to Superintelligence</a></p>
 
 <p><strong>Note :</strong> La raison pour laquelle ce billet m'a pris trois semaines, c'est qu'au fur et à mesure de mes recherches sur l'Intelligence Artificielle, je suis tombé sur des lectures <strong>incroyables</strong>. J'ai rapidement réalisé que ce qu'il arrive dans le monde de l'IA n'est pas juste un sujet important, mais de loin le PLUS important des sujets pour notre future. C'est pourquoi j'ai voulu en apprendre le plus possible, et une fois fini, je voulais être sûr d'écrire un billet qui expliquait réellement cette nouvelle situation et pourquoi c'est si important. Sans surprise, le billet est devenu vraiment très long, je l'ai donc divisé en deux parties. Ceci est la première partie.</p>
@@ -66,7 +74,7 @@ vous trouverez l'article original ici : <a href="http://waitbutwhy.com/2015/01/a
 
 <p>Ce qui semble plutôt normal…</p>
 
-<h1 id="le-futur-lointain-arrive-prochainement">Le futur lointain arrive prochainement</h1>
+<h2 id="le-futur-lointain-arrive-prochainement">Le futur lointain arrive prochainement</h2>
 
 <p>Imaginez-vous avec une machine à remonter le temps de retour en 1750, une époque où le monde était dans un manque d'énergie permanent, que la communication longue distance voulait simplement dire crier fort ou tirer des coups de canon en l'air, et que tous les transports étaient menés par des chevaux. Quand vous arrivez là-bas, vous capturez quelqu'un, et l'amenez en 2015, puis vous lui faites la visite et observez ces réactions à propos de ce qui l'entoure. C'est impossible pour nous de comprendre ce qu'il serait pour lui de voir des capsules brillantes déferler sur l'autoroute, parler aux gens qui sont de l'autre côté de l'océan, regarder une rencontre sportive jouée en direct à 1000 km, écouter un concert qui a eu lieu il y a plus de 50 ans, et jouer avec un rectangle magique qui peut servir à prendre des photos ou "enregistrer" la vie, afficher une carte avec un point bleu magique qui montre où il se situe, voir la tête d'un autre et lui parler alors qu'il est dans une autre ville, et bien d'autres aspects qui relèvent de la sorcellerie. Tout ça avant même que vous lui montriez l'Internet ou lui expliquiez des choses comme la Station Spatiale Internationale, le grand collisionneur de hadrons, les armes nucléaires ou la relativité générale.</p>
 
@@ -125,9 +133,9 @@ Donc une UMPP a pris plus de 100&nbsp;000 ans pour le temps des chasseurs, mais 
 
 <p>Même si <em>"naaaaaan"</em> semble être la bonne réaction lorsque vous lisez ce billet, c'est probablement la mauvaise. Le fait est que, si nous restons parfaitement logiques et que nous nous attendons à ce que les schémas historiques se reproduisent, nous devrions conclure que beaucoup, beaucoup, beaucoup plus devrait changer dans les prochaines décennies que ce qu'à quoi nous nous attendons intuitivement. La logique veut aussi que si la plus avancée des espèces sur une planète fait des sauts de plus en plus grands, à une vitesse qui avance de plus en plus, à un moment, ils feront un saut si grand que ça changera définitivement la vie comme ils la connaissent y compris la perception même de ce qu'ils pensent que c'est d'être humain ; un peu comme l'évolution qui n'a pas arrêté de faire de grands bonds vers l'intelligence jusqu'à ce qu'on arrive à un si grand pas en avant vers l'humain que ça a complètement altéré ce que signifiait vivre sur Terre pour les autres créatures. Et si vous passez un peu de temps à lire ce qu'il se passe aujourd'hui dans les domaines de la science et des technologies, vous commencez à voir beaucoup de signes laissant entendre que la vie telle que nous la connaissons ne peut échapper à un bond similaire.</p>
 
-<h1 id="la-route-vers-la-superintelligence">La route vers la Superintelligence</h1>
+<h2 id="la-route-vers-la-superintelligence">La route vers la Superintelligence</h2>
 
-<h2 id="qu%27est-ce-que-l%27ia-%3F">Qu'est-ce que l'IA ?</h2>
+<h3 id="qu%27est-ce-que-l%27ia-%3F">Qu'est-ce que l'IA ?</h3>
 
 <p>Si vous êtes comme moi, vous pensez que l'Intelligence Artificielle est un concept de science-fiction, mais dernièrement vous avez entendu des personnes sérieuses en parler, et vous ne comprenez pas toute cette agitation.</p>
 
@@ -164,7 +172,7 @@ Intelligence Artificielle Supérieure (IAS) :</strong> le philosophe et chercheu
 
 <p>Regardons de plus près où les experts du domaine pensent que ce chemin nous mènera et pourquoi cette révolution pourrait arriver bien plus tôt que ce que vous pensez :</p>
 
-<h2 id="o%C3%B9-en-sommes-nous-aujourd%27hui-%3A-un-monde-qui-fonctionne-gr%C3%A2ce-%C3%A0-l%27iar">Où en sommes nous aujourd'hui : Un monde qui fonctionne grâce à l'IAR</h2>
+<h3 id="o%C3%B9-en-sommes-nous-aujourd%27hui-%3A-un-monde-qui-fonctionne-gr%C3%A2ce-%C3%A0-l%27iar">Où en sommes nous aujourd'hui : Un monde qui fonctionne grâce à l'IAR</h3>
 
 <p>L'Intelligence Artificielle Restreinte est une machine intelligente qui égale ou dépasse les capacités intellectuelles ou l'efficacité humaine dans un <em>domaine précis</em>. Quelques exemples :</p>
 
@@ -184,9 +192,9 @@ Intelligence Artificielle Supérieure (IAS) :</strong> le philosophe et chercheu
 
 <p>Mais tandis que l'IAR n'a pas la capacité de causer des menaces existentielles, nous devrions voir cet écosystème complexe et grandissant d'IAR relativement inoffensives comme les prémices d'une tempête qui arrive bientôt pour modifier le monde. Chaque innovation dans l'IAR ajoute une nouvelle brique et nous rapproche de l'IAG et de l'IAS. Ou comme Aaron Saenz <a href="http://singularityhub.com/2010/08/10/we-live-in-a-jungle-of-artificial-intelligence-that-will-spawn-sentience/">le voit</a>, notre monde d'IAR "est comme les acides aminés de l'ère primitive de la Terre" les composants inanimés de la vie, qui un jour sans prévenir, se réveillent.</p>
 
-<h2 id="la-route-de-l%27iar-vers-l%27iag">La route de l'IAR vers l'IAG</h2>
+<h3 id="la-route-de-l%27iar-vers-l%27iag">La route de l'IAR vers l'IAG</h3>
 
-<h3 id="pourquoi-est-ce-si-difficile-%3F">Pourquoi est-ce si difficile ?</h3>
+<h4 id="pourquoi-est-ce-si-difficile-%3F">Pourquoi est-ce si difficile ?</h4>
 
 <p>Rien ne vous ferait plus apprécier l'intelligence humaine que de tenter de construire un ordinateur aussi intelligent que nous le sommes. Construire des buildings, envoyer des hommes dans l'espace, comprendre les détails du Big Bang, sont toutes des choses bien plus faciles à faire que de comprendre comment notre propre cerveau fonctionne ou comment fabriquer quelque chose d'aussi cool que ça. À l'heure actuelle, le cerveau humain est l'objet le plus complexe de l'univers.</p>
 
@@ -215,7 +223,7 @@ Intelligence Artificielle Supérieure (IAS) :</strong> le philosophe et chercheu
 
 <p>Alors comment pouvons-nous y arriver ?</p>
 
-<h3 id="premi%C3%A8re-clef-pour-cr%C3%A9er-une-iag-%3A-augmenter-la-puissance-de-calcul">Première clef pour créer une IAG : Augmenter la puissance de calcul</h3>
+<h4 id="premi%C3%A8re-clef-pour-cr%C3%A9er-une-iag-%3A-augmenter-la-puissance-de-calcul">Première clef pour créer une IAG : Augmenter la puissance de calcul</h4>
 
 <p>Une chose qui doit obligatoirement arriver pour rendre l'IAG possible est une augmentation de la puissance de calcul du matériel informatique. Si une IA doit devenir aussi intelligente que le cerveau, elle doit avoir la même capacité de calcul pur.</p>
 
@@ -235,7 +243,7 @@ Intelligence Artificielle Supérieure (IAS) :</strong> le philosophe et chercheu
 
 <p>Donc, du côté du matériel, la puissance nécessaire pour une IAG est techniquement disponible dès maintenant, en Chine, et nous elle sera bientôt abordable et largement diffusée d'ici à 10 ans. Mais la puissance de calcul brute n'est pas ce qui rend un ordinateur intelligent, la question est, comment apporte-t-on le niveau d'intelligence humain dans tout ça ?</p>
 
-<h3 id="deuxi%C3%A8me-clef-pour-cr%C3%A9er-une-iag-%3A-la-rendre-intelligente">Deuxième clef pour créer une IAG : La rendre intelligente</h3>
+<h4 id="deuxi%C3%A8me-clef-pour-cr%C3%A9er-une-iag-%3A-la-rendre-intelligente">Deuxième clef pour créer une IAG : La rendre intelligente</h4>
 
 <p>C'est la partie délicate. La vérité est, que personne ne sait vraiment comment rendre l'IA intelligente, nous sommes encore en train de débattre sur la façon de rendre un ordinateur aussi intelligent qu'un humain et capable de savoir ce qu'est un chien, une lettre B mal écrite ou un mauvais film. Mais il y a plusieurs stratégies avancées qui existent et à un moment donné, une d'elle va marcher. Voici les trois plus communes que j'ai découvert :</p>
 
@@ -267,7 +275,7 @@ Intelligence Artificielle Supérieure (IAS) :</strong> le philosophe et chercheu
 
 <p>L'idée est de construire un ordinateur dont les deux principales compétences seraient de faire <em>de la recherche en IA</em> et de faire des <em>modifications sur lui-même</em>, ça lui permettrait d'apprendre, mais aussi de s'améliorer. Nous apprendrions aux ordinateurs à être des scientifiques pour qu'ils puissent se développer eux même. Et leur travail principal serait de trouver <em>comment devenir plus intelligent</em>. Plus sur ce point plus tard.</p>
 
-<h3 id="et-%C3%A7a-pourrait-arriver-bient%C3%B4t">Et ça pourrait arriver bientôt</h3>
+<h4 id="et-%C3%A7a-pourrait-arriver-bient%C3%B4t">Et ça pourrait arriver bientôt</h4>
 
 <p>Les avancées matérielles rapides et les expérimentations logicielles innovantes sont en train d'arriver simultanément, du coup l'IAG pourrait arriver rapidement et de façon imprévue, pour deux raisons principales :</p>
 
@@ -285,7 +293,7 @@ Intelligence Artificielle Supérieure (IAS) :</strong> le philosophe et chercheu
 
 <p>En fait, l'IAG avec un niveau égal à l'humain aurait plusieurs avantages sur les hommes. Comme :</p>
 
-<h4 id="le-mat%C3%A9riel-%3A">Le matériel :</h4>
+<h5 id="le-mat%C3%A9riel-%3A">Le matériel :</h5>
 
 <ul>
 <li><strong>La vitesse.</strong> La vitesse maximale des neurones du cerveau est d'environ 200 Hz, alors que les processeurs d'aujourd'hui (qui sont bien plus lents qu'il le seront d'ici là) fonctionnent à 2 GHz, soit 10 millions de fois plus vite que nos neurones. Et les communications internes du cerveau, qui peuvent bouger à 200 m/s, sont complètement dépassées par un ordinateur qui peut exploiter la vitesse de la lumière.</li>
@@ -293,7 +301,7 @@ Intelligence Artificielle Supérieure (IAS) :</strong> le philosophe et chercheu
 <li><strong>Fiabilité et durabilité.</strong> La mémoire d'un ordinateur ne serait pas seulement plus précise. Les composants électroniques sont bien plus précis que les neurones biologiques, et ils sont moins sujets à la dégradation (au pire ils peuvent être réparés). Les cerveaux humains peuvent être fatigués rapidement, alors qu'un ordinateur peut fonctionner en performance optimale 24/7.</li>
 </ul>
 
-<h4 id="logiciel-%3A">Logiciel :</h4>
+<h5 id="logiciel-%3A">Logiciel :</h5>
 
 <ul>
 <li><strong>Modifiable, évolutif, avec un large éventail de possibilités.</strong> Contrairement au cerveau humain, le logiciel peut recevoir des mises à jour et correctifs, on peut facilement faire des expérimentations. Des mises à jour pourraient couvrir des domaines où l'humain est mauvais. Notre "logiciel" de vision est très avancé alors que notre "matériel" l'est beaucoup moins. Les ordinateurs pourraient égaler les humains en vision, mais aussi dans d'autres domaines.</li>
@@ -312,7 +320,7 @@ Intelligence Artificielle Supérieure (IAS) :</strong> le philosophe et chercheu
 
 <p>Et il se passe quoi après…?</p>
 
-<h4 id="une-explosion-de-l%27intelligence">Une explosion de l'intelligence</h4>
+<h5 id="une-explosion-de-l%27intelligence">Une explosion de l'intelligence</h5>
 
 <p>J'espère que vous avez apprécié le temps d'avant, parce qu'à partir de maintenant ça va devenir effrayant, et ça va le rester jusqu'à la fin. Je veux en profiter pour vous rappeler que tout ce que je vais dire est réel, de la science vérifiée et des prévisions plausibles des plus grands et plus respectés scientifiques. Gardez-le à l'esprit.</p>
 
@@ -356,10 +364,11 @@ Intelligence Artificielle Supérieure (IAS) :</strong> le philosophe et chercheu
 <li>7 <a id="note7"></a>: Ce terme a été utilisé pour la première fois par un des plus grands chercheur en IA, Irving John Good, en 1965.</li>
 </ul>
 
-    </section>
-    <footer class="pt-10">
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 

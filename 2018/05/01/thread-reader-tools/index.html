@@ -29,28 +29,36 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Threadreader
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>Thread Reader: Let&#039;s explore my tooling (technical post)</h1>
-                <p>May 1, 2018</p>
-            </header>
-    <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/writing/threadreader-series.jpg">
-        </div>
-                <p><strong>Note: This project has been acquired in 2018, I'm no longer the owner of ThreadReaderApp</strong></p>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>Thread Reader: Let&#039;s explore my tooling (technical post)</h1>
+                        <p>May 1, 2018</p>
+                    </header>
+        <section class="main">
+            <p><strong>Note: This project has been acquired in 2018, I'm no longer the owner of ThreadReaderApp</strong></p>
 
 <p><em>This is a technical article about Thread Reader,
 for more context <a href="/posts/category/threadreader">see the whole series here</a></em></p>
 
-<h1 id="hardware-and-server-stack">Hardware and Server Stack</h1>
+<h2 id="hardware-and-server-stack">Hardware and Server Stack</h2>
 
 <p>I have my own server from <a href="https://kimsufi.com">kimsufi.com</a> (Canada based).
 It is an Intel i5 at 2.8GHz with 16GB RAM and 2TB of hard drive, Network is 100Mbps.</p>
@@ -62,7 +70,7 @@ It has memcached for some caching layer, even if most of the content is cached o
 
 <p>So, yes it is PHP + basic CSS (<a href="http://getbootstrap.com/">bootstrap</a>) + basic javascript (<a href="http://jquery.com/">jquery</a>).</p>
 
-<h3 id="notable">Notable</h3>
+<h4 id="notable">Notable</h4>
 
 <ul>
 <li>I'm using the <a href="https://silex.symfony.com/">Silex</a> PHP micro framework and some Symfony components</li>
@@ -71,7 +79,7 @@ It has memcached for some caching layer, even if most of the content is cached o
 <li>All this is backed by <a href="https://www.cloudflare.com/">Cloudflare</a> caching</li>
 </ul>
 
-<h3 id="server-metrics-as-may-2018">Server Metrics as May 2018</h3>
+<h4 id="server-metrics-as-may-2018">Server Metrics as May 2018</h4>
 
 <ul>
 <li>Average load is close to 0.3 and can go close to 1 when 800+ visits/minutes</li>
@@ -79,7 +87,7 @@ It has memcached for some caching layer, even if most of the content is cached o
 <li>RAM is half used on a normal day, no swapping</li>
 </ul>
 
-<h1 id="monitoring">Monitoring</h1>
+<h2 id="monitoring">Monitoring</h2>
 
 <p>To monitor the server I mostly use cron jobs that check for specific signals:</p>
 
@@ -95,7 +103,7 @@ It has memcached for some caching layer, even if most of the content is cached o
 <p>Logs include many things: payments hooks, Apache errors, bot mentions and replies, job outputs and more.<br>
 These logs are also accessible on the web via an admin page I have access to.</p>
 
-<h2 id="in-case-of-emergency">In case of emergency</h2>
+<h3 id="in-case-of-emergency">In case of emergency</h3>
 
 <p>If something goes wrong about performance I use:</p>
 
@@ -112,7 +120,7 @@ got something like 300 RT and then the author deleted the thread.
 So any visitor would arrive at the thread page but nothing was found on the database
 and so the bot tried to unroll it, but it was not on Twitter anymore (times 1000 visits). Made a mess. Fixed now.</p>
 
-<h2 id="web-admin-interface">Web Admin interface</h2>
+<h3 id="web-admin-interface">Web Admin interface</h3>
 
 <p>I made an admin interface with the minimum to do some monitoring about the service (not the server).</p>
 
@@ -122,7 +130,7 @@ and so the bot tried to unroll it, but it was not on Twitter anymore (times 1000
 <li>I can do some action on threads like force refresh for example.</li>
 </ul>
 
-<h1 id="scripts-and-crons">Scripts and Crons</h1>
+<h2 id="scripts-and-crons">Scripts and Crons</h2>
 
 <p>I have plenty of scripts and Crons that runs on the server:</p>
 
@@ -148,7 +156,7 @@ These are started in a <code>screen</code> that is configured to auto start if t
 <li>Run jobs</li>
 </ul>
 
-<h2 id="queue-and-job-mechanism">Queue and job mechanism</h2>
+<h3 id="queue-and-job-mechanism">Queue and job mechanism</h3>
 
 <p>Thread Reader needs a queuing mechanism for two reasons:<br>
 long processing jobs (like thread archiving) and relative scheduled actions (DM/emails alerts)</p>
@@ -159,7 +167,7 @@ long processing jobs (like thread archiving) and relative scheduled actions (DM/
 I add the time when I want it to be executed and a return code to check later.<br>
 Then a script pulls entries one by one and execute them.</p>
 
-<h1 id="backup-and-security">Backup and security</h1>
+<h2 id="backup-and-security">Backup and security</h2>
 
 <ul>
 <li>SSH via public key and no root</li>
@@ -172,7 +180,7 @@ Still. A full dump of the database is saved every day (cron script),
 encrypted and sync to <a href="https://dropbox.com">dropbox.com</a> (true)<br>
 No other data are saved as it is only caching.</p>
 
-<h1 id="external-services-and-tools">External Services and Tools</h1>
+<h2 id="external-services-and-tools">External Services and Tools</h2>
 
 <p>For thread reader I only use a few external services:</p>
 
@@ -183,7 +191,7 @@ No other data are saved as it is only caching.</p>
 <li>Google Analytics and Google AdSense for analytics and ads.</li>
 </ul>
 
-<h2 id="support-and-twitter-ecosystem">Support and Twitter ecosystem</h2>
+<h3 id="support-and-twitter-ecosystem">Support and Twitter ecosystem</h3>
 
 <p>I use services to keep in touch with my users on Twitter:<br>
 I did use <a href="https://tweetdeck.twitter.com/">Tweetdeck</a>,
@@ -193,7 +201,7 @@ This is very important because I use the same account for the support and the bo
 
 <p>Most of the support is done by Twitter and email (inbox by Gmail setup with custom domain).</p>
 
-<h2 id="development-software-and-services">Development Software and Services</h2>
+<h3 id="development-software-and-services">Development Software and Services</h3>
 
 <p>I have a private <a href="https://github.com">Github</a> repository for the code,
 I use the issue tracking and the project view to keep my TODOs.
@@ -205,7 +213,7 @@ This is very rare as the service is quite well-structured now.</p>
 <p>To connect to my database I use <a href="https://www.sequelpro.com/">Sequel Pro</a> via SSH,
 it has some custom options to plays nicely with the database (like not requesting full blobs etc.).</p>
 
-<h1 id="conclusion">Conclusion</h1>
+<h2 id="conclusion">Conclusion</h2>
 
 <p>As you can see nothing fancy, it is good old technology.<br>
 Boring working stuff.</p>
@@ -221,10 +229,11 @@ I'm quite sure it can go up to 5000 before showing any sign of slowness.</p>
     Learn more about Thread Reader story in <a href="/posts/category/threadreader">the whole blog post series</a>.
 </strong></p>
 
-    </section>
-    <footer class="pt-10">
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 

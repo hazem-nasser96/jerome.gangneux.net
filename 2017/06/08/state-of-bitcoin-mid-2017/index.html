@@ -29,25 +29,31 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Blog
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>Bitcoin (mid-2017)</h1>
-                <p>June 8, 2017</p>
-            </header>
-    <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/writing/bitcoin.jpg">
-        </div>
-                <h1 id="introduction">Introduction</h1>
 
-<p>This is it, bitcoin is on fire, every body around me talks about it!
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>Bitcoin (mid-2017)</h1>
+                        <p>June 8, 2017</p>
+                    </header>
+        <section class="main">
+            <p>This is it, bitcoin is on fire, every body around me talks about it!
 Some are just curious and want to know what it is all about, others are more serious and want to invest.</p>
 
 <p>I mean invest… it is more about your faith in technology than anything else,
@@ -58,7 +64,7 @@ Therefore, it is a biased personal opinion, and it will only cover some aspects 
 
 <p>Remember that Bitcoin is first and foremost an experimentation and is highly speculative.</p>
 
-<h1 id="what-is-bitcoin">What is Bitcoin</h1>
+<h2 id="what-is-bitcoin">What is Bitcoin</h2>
 
 <p>Bitcoin is a virtual currency that is not regulated by any governmental or financial organizations.</p>
 
@@ -82,11 +88,11 @@ My idea was, in August 2016, to invest — or bet depending on how you see it �
 
 <p>This crisis was about one of the main limitation of Bitcoin. Let's see…</p>
 
-<h1 id="limitations-%2F-weakness">Limitations / weakness</h1>
+<h2 id="limitations-%2F-weakness">Limitations / weakness</h2>
 
 <p>Bitcoin has — in my opinion — multiple weaknesses, including a major one.</p>
 
-<h2 id="first%3A-security">First: Security</h2>
+<h3 id="first%3A-security">First: Security</h3>
 
 <p>Bitcoin is not regulated, this is not a real weakness, but you must remember it,
 it has no organization to back it up, so if at any point you get scammed, you're on your own.</p>
@@ -99,7 +105,7 @@ multiple <a href="https://www.wired.com/2014/03/bitcoin-exchange/">websites have
 and some of them have been run by <a href="http://www.businessinsider.com/report-ceo-of-major-bitcoin-exchange-arrested-2014-1?IR=T">criminals and scammers</a>,
 and beware, as mentioned above, in case of trouble you will have no one to turn to for help.</p>
 
-<h2 id="second%3A-mining">Second: Mining</h2>
+<h3 id="second%3A-mining">Second: Mining</h3>
 
 <p>For the Bitcoin network / transactions to work and be validated it requires a process called "mining" done by "miners".
 This process, as you may understand from the videos above, needs by nature a lot of computational (electric) power.</p>
@@ -115,7 +121,7 @@ buildings are turned into “bitcoin mines”, with specialized computers focuse
 
 <p>This leads to the third problem.</p>
 
-<h2 id="third%3A-the-51%25-attack">Third: The 51% attack</h2>
+<h3 id="third%3A-the-51%25-attack">Third: The 51% attack</h3>
 
 <p>Transactions are validated by consensus.</p>
 
@@ -136,7 +142,7 @@ Such a majority would allow them to create fake transactions and authorize them.
 
 <p>Check out the major mining pools: <a href="https://bitcoinworldwide.com/mining/pools/">https://bitcoinworldwide.com/mining/pools/</a></p>
 
-<h2 id="the-major-flaw">The major flaw</h2>
+<h3 id="the-major-flaw">The major flaw</h3>
 
 <p>Bitcoin is an experiment and was not designed to reach such a global scale.
 As more people use it and as a result increase the amount of transactions,
@@ -175,7 +181,7 @@ they settled on one of the technical solutions to preserve confidence in the cur
 <a href="https://calvinayre.com/2017/05/12/business/bitcoin-unlimited-proposal-paves-way-first-block-size-limit-increase/">here</a>
 and <a href="http://www.coindesk.com/coindesk-explainer-bitcoin-unlimited-debate/">here</a>.</p>
 
-<h2 id="other-small-problems">Other small problems</h2>
+<h3 id="other-small-problems">Other small problems</h3>
 
 <p>These are not as big of a deal, but don't forget: Bitcoin is not anonymous or at least has its limitation.
 Even by applying strict rules and security,
@@ -183,7 +189,7 @@ some NSA grade tools are able to do statistical analysis and uncover a lot of in
 
 <p>In addition, owing to the fact that every transaction is public, some bitcoins have had a bad history such as being traded on the infamous <a href="https://en.wikipedia.org/wiki/Silk_Road_(marketplace)">Silk road website</a> or similar.</p>
 
-<h1 id="bitcoin-today">Bitcoin today</h1>
+<h2 id="bitcoin-today">Bitcoin today</h2>
 
 <p>Nation states have so far been reluctant in embracing Bitcoin and other cryptocurrencies,
 mostly because they lack control over it. Some have tried to ban it but with difficulty due to its digital nature,
@@ -206,7 +212,7 @@ In the USA the currency is a candidate as a legal <em>exchange traded funds</em>
 The status of bitcoin in China is not settled yet and has already changed a few times. Even if ironically most of the computational power of the bitcoin network comes from China, it has been banned, then embraced, then banned again and <a href="https://www.cryptocoinsnews.com/chinese-bitcoin-exchanges-might-resume-withdrawals-next-month-punitive-measures/">now its future is unknown</a>.</li>
 </ul>
 
-<h1 id="should-you-invest%3F">Should you invest?</h1>
+<h2 id="should-you-invest%3F">Should you invest?</h2>
 
 <p>Disclaimer: This is my opinion and I should not be held responsible for your actions.</p>
 
@@ -235,10 +241,11 @@ More challenges are around the corner and if bitcoin gets too political others c
 
 <p>Thank you to my friend William for helping with writing this article.</p>
 
-    </section>
-    <footer class="pt-10">
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 

@@ -29,29 +29,37 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Threadreader
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>Thread Reader use case: From Launch to Traction</h1>
-                <p>October 20, 2017</p>
-            </header>
-    <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/writing/tttthreads/tttthreads-cover-part2.jpg">
-        </div>
-                <p><strong>Note: This project has been acquired in 2018, I'm no longer the owner of ThreadReaderApp</strong></p>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>Thread Reader use case: From Launch to Traction</h1>
+                        <p>October 20, 2017</p>
+                    </header>
+        <section class="main">
+            <p><strong>Note: This project has been acquired in 2018, I'm no longer the owner of ThreadReaderApp</strong></p>
 
 <p><em>For more context <a href="/2017/09/12/thread-reader-from-idea-to-launch">read the first part here</a></em></p>
 
 <p><strong>Time to Launch!</strong></p>
 
-<h1 id="launching">Launching</h1>
+<h2 id="launching">Launching</h2>
 
 <p>I was quite naive on this one, I read through some blog post
 and I thought that you can/should show your product on a few major websites and hopefully get some interest.</p>
@@ -88,7 +96,7 @@ but the real peaks come from another type of traffic: influencers.</p>
 
 <p>Let’s check that.</p>
 
-<h1 id="get-traction">Get traction</h1>
+<h2 id="get-traction">Get traction</h2>
 
 <p>So I guess you saw that spike between Hacker News and Reddit?
 More than 10K Users that day! 🔥🔥🔥</p>
@@ -120,9 +128,9 @@ Last was from Spain!</p>
     <img src="/images/writing/tttthreads/stats-global.png">
 </div>
 
-<h1 id="money">Money</h1>
+<h2 id="money">Money</h2>
 
-<h2 id="costs">Costs</h2>
+<h3 id="costs">Costs</h3>
 
 <p>Let be transparent.</p>
 
@@ -134,7 +142,7 @@ I will say I take one hour every day to answer support questions and fix bugs or
 <p>As a freelancer in France I would ask for US$ 500 per day,
 so this project would have been about 12K including a month of support (this estimate is quite opinionated for sure).</p>
 
-<h2 id="gains">Gains</h2>
+<h3 id="gains">Gains</h3>
 
 <p><strong>Donation</strong><br>
 I did not plan to make big money with that project, at the beginning I did not include any way to give me money.
@@ -170,7 +178,7 @@ so I gained 0.25 XMR so far worth about 22US$ (not paid yet)</p>
 <p>I will stop that experiment soon, also it is important to note that multiple antivirus
 consider that as Malware (it is not, but it has been abused as it) so I did get few criticisms about it.</p>
 
-<h1 id="conclusion">Conclusion</h1>
+<h2 id="conclusion">Conclusion</h2>
 
 <p><strong>What now?</strong></p>
 
@@ -204,10 +212,11 @@ I’m going to keep working on that service something like an hour a day for use
     Learn more about Thread Reader story in <a href="/posts/category/threadreader">the whole blog post series</a>.
 </strong></p>
 
-    </section>
-    <footer class="pt-10">
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 

@@ -3,7 +3,7 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2023-02-11T15:58:30+00:00</updated>
+    <updated>2023-02-12T16:54:53+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
@@ -21,8 +21,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/twig.min.js"></script>
 <script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
 </p>
-
-<h1 id="installing-your-own-mastodon-instance-with-docker-compose">Installing Your Own Mastodon Instance With Docker Compose</h1>
 
 <p>Mastodon is a free, open-source social networking platform that is designed to be decentralized and run on users' own servers.
 In this post, we will go over how to install Mastodon on a server running Ubuntu 20.10 using Docker.</p>
@@ -396,9 +394,7 @@ You may have noted some weird looking <code>labels</code> in the <code>docker-co
         <link href="/2022/12/02/wikireveal"/>
         <updated>2022-12-02T00:00:00+00:00</updated>
         <id>/2022/12/02/wikireveal</id>
-        <content type="html"><![CDATA[<h1 id="wikireveal">WikiReveal</h1>
-
-<p>WikiReveal is a multilingual version of redactle.com published at <a href="https://wikireveal.com">wikireveal.com</a></p>
+        <content type="html"><![CDATA[<p>WikiReveal is a multilingual version of redactle.com published at <a href="https://wikireveal.com">wikireveal.com</a></p>
 
 <blockquote>
   <p>It is a daily browser game where the user tries to determine the subject of a random obfuscated Wikipedia article chosen from Wikipedia's 10,000 Vital Articles (Level 4).</p>
@@ -481,9 +477,7 @@ I added a PHP interface for implementing languages, so anyone can create a new o
         <link href="/2022/11/20/geek-stuff"/>
         <updated>2022-11-20T00:00:00+00:00</updated>
         <id>/2022/11/20/geek-stuff</id>
-        <content type="html"><![CDATA[<h1 id="geek-stuff">Geek Stuff</h1>
-
-<p>Two stupid yet useful things I've done recently on my local setup.</p>
+        <content type="html"><![CDATA[<p>Two stupid yet useful things I've done recently on my local setup.</p>
 
 <h2 id="languagetool-desktop-app-spoofing">LanguageTool Desktop App spoofing</h2>
 
@@ -554,9 +548,7 @@ Well, I can't help, I'm a geek.</p>
         <link href="/2022/10/22/web3"/>
         <updated>2022-10-22T00:00:00+00:00</updated>
         <id>/2022/10/22/web3</id>
-        <content type="html"><![CDATA[<h1 id="web3-avril%2Fmai-2022">web3 (avril/mai 2022)</h1>
-
-<p>J'ai passé un mois dans le monde du web3 pour vous : voici mon avis d'un point de vue de développeur.</p>
+        <content type="html"><![CDATA[<p>J'ai passé un mois dans le monde du web3 pour vous : voici mon avis d'un point de vue de développeur.</p>
 
 <p><small class="text-sm">Notez qu'entre-temps, il y a eu un krach des crypto monnaies et NFT et que ce sujet n'est plus trop d'actualité. Ça m'apprendra à tarder à publier mes articles.</small></p>
 
@@ -636,11 +628,7 @@ En espérant qu'il restera de bonnes choses de cette expérience web3 !</p>
         <link href="/2022/07/03/duolingo-to-flashcards"/>
         <updated>2022-07-03T00:00:00+00:00</updated>
         <id>/2022/07/03/duolingo-to-flashcards</id>
-        <content type="html"><![CDATA[<h1 id="duolingo-flashcards">Duolingo Flashcards</h1>
-
-<h2 id="long-intro">Long Intro</h2>
-
-<p>You may — or may not — know me, but let me tell you one of my passion in life: connect everything together.</p>
+        <content type="html"><![CDATA[<p>You may — or may not — know me, but let me tell you one of my passion in life: connect everything together.</p>
 
 <p>When I was young — let's say 15 — I tried to connect a landline phone to my computer sound card, learning a lesson here: landline in France carry a bit of electricity and my computer did not like it. I had to play without sound for a while.</p>
 
@@ -690,9 +678,7 @@ En espérant qu'il restera de bonnes choses de cette expérience web3 !</p>
         <link href="/2022/05/03/performant-tooling-docker-macos"/>
         <updated>2022-05-03T00:00:00+00:00</updated>
         <id>/2022/05/03/performant-tooling-docker-macos</id>
-        <content type="html"><![CDATA[<h1 id="performant-tooling-with-docker-and-macos">Performant tooling with Docker and macOS</h1>
-
-<p>Developers love performant tools, I mean, developers NEED performant tools!</p>
+        <content type="html"><![CDATA[<p>Developers love performant tools, I mean, developers NEED performant tools!</p>
 
 <p>I'm not going to talk about whether you should use macOS to develop.<br>
 Personally, I do, not gonna argument here.</p>

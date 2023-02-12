@@ -29,31 +29,37 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Blog
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>Learning VR (part 8)</h1>
-                <p>March 6, 2017</p>
-            </header>
-    <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/vr/part8-cover.jpg">
-        </div>
-                <h1 id="introduction">Introduction</h1>
 
-<p>Last time I got a live video feedback from the headset,
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>Learning VR (part 8)</h1>
+                        <p>March 6, 2017</p>
+                    </header>
+        <section class="main">
+            <p>Last time I got a live video feedback from the headset,
 and I wanted to use this to position the headset in space.
 That was a very ambitious goal!</p>
 
 <p>I was also waiting for the review of my first Unity Asset, and it is now live.</p>
 
-<h1 id="unity-asset">Unity Asset</h1>
+<h2 id="unity-asset">Unity Asset</h2>
 
 <p><strong>My Android VR Webview Texture is live on the <a href="https://www.assetstore.unity3d.com/#!/content/82379">Unity Asset store</a><br>
 It is a success, people love it!</strong></p>
@@ -75,9 +81,9 @@ A new version is waiting for review on the Asset Store (v1.1)</p>
 
 <p>Checkout the extension on the <strong><a href="https://www.assetstore.unity3d.com/#!/content/82379">Unity Asset store</a></strong></p>
 
-<h1 id="results-from-my-last-vr-experiments">Results from my last VR experiments</h1>
+<h2 id="results-from-my-last-vr-experiments">Results from my last VR experiments</h2>
 
-<h2 id="tracking-the-headset-with-markers">Tracking the headset with markers</h2>
+<h3 id="tracking-the-headset-with-markers">Tracking the headset with markers</h3>
 
 <p><em>Setup: I put 5 A4 sized trackers in my living room so two of them are visible at anytime.</em><br></p>
 
@@ -87,7 +93,7 @@ A new version is waiting for review on the Asset Store (v1.1)</p>
 But in practice the bad quality of the lighting in the room coupled to the relatively fast moving
 of the head in real conditions prevent a working experience (tracker are lost all the time).</p>
 
-<h2 id="tracking-the-headset-with-slam">Tracking the headset with SLAM</h2>
+<h3 id="tracking-the-headset-with-slam">Tracking the headset with SLAM</h3>
 
 <p>Then I tested SLAM with the Kudan library, here I got another problem
 and to be honest I did not investigate more than that.</p>
@@ -99,7 +105,7 @@ for the camera I realized that applying this matrix to the main camera conflicte
 which I guess try to apply its own matrix from the gyroscope. I'm not quite sure about that, but I lost the
 patience, and a game project just had come to light so...</p>
 
-<h1 id="next-steps">Next steps</h1>
+<h2 id="next-steps">Next steps</h2>
 
 <p>It is the time my friends!</p>
 
@@ -113,10 +119,11 @@ and hopefully most VR phones.</p>
 
 <p>See you soon :)</p>
 
-    </section>
-    <footer class="pt-10">
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 

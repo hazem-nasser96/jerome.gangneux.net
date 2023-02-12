@@ -29,29 +29,37 @@
                     </head>
     <body class="font-sans text-gray-800 dark:text-gray-100">
 
-        
-        <div class="container mx-auto mt-4" style="max-width:1024px">
-            <nav class="p-4">
-    <div class="text-xl font-semibold tracking-tight">
-        <a href="/">&larr; Jérôme Gangneux</a>
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Threadreader
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
     </div>
 </nav>
-<article class="post mt-12 p-4">
-    <header class="mb-12">
-        <h1>Thread Reader follow up: Daily Life of a Solo Maker</h1>
-                <p>April 9, 2018</p>
-            </header>
-    <section class="main">
-                <div class="image_main_wrap mb-12">
-            <img alt="" src="/images/writing/threadreader/part3-cover.jpg">
-        </div>
-                <p><strong>Note: This project has been acquired in 2018, I'm no longer the owner of ThreadReaderApp</strong></p>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>Thread Reader follow up: Daily Life of a Solo Maker</h1>
+                        <p>April 9, 2018</p>
+                    </header>
+        <section class="main">
+            <p><strong>Note: This project has been acquired in 2018, I'm no longer the owner of ThreadReaderApp</strong></p>
 
 <p><em>This is a follow-up of my experiment with Thread Reader,
 for more context <a href="/2017/09/12/thread-reader-from-idea-to-launch">read the first part here</a>
 <a href="/2017/09/12/thread-reader-from-idea-to-launch">and the second part here</a></em></p>
 
-<h1 id="solo-maker">Solo Maker</h1>
+<h2 id="solo-maker">Solo Maker</h2>
 
 <p><strong>Definition:</strong> <em>A solo maker for me is a person that is working full time on his own project and get most of its revenues from it.</em></p>
 
@@ -63,7 +71,7 @@ And today I feel confident that I can figure it out and get enough money out of 
 <p>At that time Thread Reader was still very small, and it was not the reason why I wanted to stop the usual office work.
 But still it helps as I had some hopes about it.</p>
 
-<h2 id="so-what-is-a-typical-day-for-me%3F">So what is a typical day for me?</h2>
+<h3 id="so-what-is-a-typical-day-for-me%3F">So what is a typical day for me?</h3>
 
 <p>First I wake up at 7.50am, I'm a morning person and get work done easily in the morning.
 Plus as you may know I live in Vancouver, Canada
@@ -89,11 +97,11 @@ but also to keep practicing with other technologies.</p>
 <p>My biggest fear is that Twitter block/prevent Thread Reader to work.
 It could be because of an update of their API for example, plenty of Apps already had to stop because of this.</p>
 
-<h1 id="features">Features</h1>
+<h2 id="features">Features</h2>
 
 <p>This is a list of the existing feature on Thread Reader as well as tests that failed and my feelings about it.</p>
 
-<h2 id="the-one-that-are-still-here">The one that are still here</h2>
+<h3 id="the-one-that-are-still-here">The one that are still here</h3>
 
 <p><strong>Unroll/bot:</strong></p>
 
@@ -131,7 +139,7 @@ It is quite powerful, but you must be premium to access all the options.</p>
 <p>You can add any unroll to your private dashboard to find/read it later.
 I did not monitor anything about this one because I'm using it personally, and I will not remove it anyway!</p>
 
-<h2 id="the-failed-experiments">The failed experiments</h2>
+<h3 id="the-failed-experiments">The failed experiments</h3>
 
 <p><strong>Home page selection:</strong></p>
 
@@ -159,7 +167,7 @@ I did a <a href="https://twitter.com/threadreaderapp/status/976234284288626689">
 and got more than 60% of people saying that they could use it.
 To day only 5 peoples use it (including me). It will be removed in the near future.</p>
 
-<h2 id="most-asked-feature">Most asked feature</h2>
+<h3 id="most-asked-feature">Most asked feature</h3>
 
 <p>The most asked feature is to be able to unroll a thread with multiple authors (replies or comment, call it the way you want).</p>
 
@@ -169,7 +177,7 @@ To be honest, even the actual basic unroll of one author is already a quite dirt
 Also, that would mean that sometime the thread will split in two or more parts.
 Very hard to design a good interface for it.</p>
 
-<h1 id="branding">Branding</h1>
+<h2 id="branding">Branding</h2>
 
 <p>Quite early in the life of Thread Reader I could see some traction.
 And the project scope changed from an experimentation to some more serious website.</p>
@@ -193,9 +201,9 @@ the previous one was a little more catchy for sure but totally ugly too.</p>
     <img src="/images/writing/threadreader/evolution-thumb.jpg" />
 </div>
 
-<h1 id="money">Money</h1>
+<h2 id="money">Money</h2>
 
-<h2 id="premium">Premium</h2>
+<h3 id="premium">Premium</h3>
 
 <p>Let's talk about the important stuff: Money.</p>
 
@@ -216,26 +224,26 @@ Followed by... Patreon and only after that Credit Card.</p>
 <p>As today: Monday, April the 9th I have 284 premium users.
 Most of them choose the yearly payment (thus saving 2 months)</p>
 
-<h2 id="other-source-of-income">Other source of income</h2>
+<h3 id="other-source-of-income">Other source of income</h3>
 
 <p>I have some Google Ads running on the website, these are very dependent of the traffic.<br>
 It goes from $5 to $50 per day.</p>
 
-<h2 id="expenses">Expenses</h2>
+<h3 id="expenses">Expenses</h3>
 
 <p>I subscribed to some services to help me manage all my TODO and support, it is about $30/month.<br>
 The server is around $50/month and the most expensive thing is sending email alerts: it varies from $50 to $100/month.</p>
 
-<h2 id="total">Total</h2>
+<h3 id="total">Total</h3>
 
 <p>As today, I can live out of Thread Reader, but it is not stable enough for me to be serene.
 I am thinking about other ways to get money and stabilize the whole thing.</p>
 
 <p>That is why I'm looking for some monthly sponsorship: if you are interested <a href="https://www.patreon.com/posts/april-18-search-17951520">read more here</a>.</p>
 
-<h1 id="metrics">Metrics</h1>
+<h2 id="metrics">Metrics</h2>
 
-<h2 id="traffic">Traffic</h2>
+<h3 id="traffic">Traffic</h3>
 
 <p>From the start, the website have seen 2.6 millions users and displayed 6.6 millions pages.</p>
 
@@ -249,7 +257,7 @@ Someday nothing much happen, but all of a sudden out of nowhere:
 
 <p>These days I'm very happy but in return I have a lot of support to do from newcomers.</p>
 
-<h2 id="social">Social</h2>
+<h3 id="social">Social</h3>
 
 <p>On the social side <code>@ThreadReaderApp</code> which is the bot
 but also an account that I manage by hand from time to time has 20k followers and posted 50k+ status
@@ -261,7 +269,7 @@ but also an account that I manage by hand from time to time has 20k followers an
     <img src="/images/writing/threadreader/twitter-20k.png" />
 </div>
 
-<h2 id="internals">Internals</h2>
+<h3 id="internals">Internals</h3>
 
 <p>These are some raw numbers (April 9th 2018) that does not always mean anything:</p>
 
@@ -273,7 +281,7 @@ but also an account that I manage by hand from time to time has 20k followers an
 <li>User with one subscription or more: 4500</li>
 </ul>
 
-<h1 id="conclusion">Conclusion</h1>
+<h2 id="conclusion">Conclusion</h2>
 
 <p><strong>What now?</strong></p>
 
@@ -290,10 +298,11 @@ If you liked this post you can support me there too!</p>
     Learn more about Thread Reader story in <a href="/posts/category/threadreader">the whole blog post series</a>.
 </strong></p>
 
-    </section>
-    <footer class="pt-10">
-            </footer>
-</article>
+        </section>
+        <footer class="pt-10">
+                    </footer>
+    </article>
+</div>
         </div>
     </div>
 
