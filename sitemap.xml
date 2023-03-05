@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
         <loc></loc>
-        <lastmod>2023-02-12</lastmod>
+        <lastmod>2023-03-05</lastmod>
         <changefreq>daily</changefreq>
         <priority>0.8</priority>
     </url>
@@ -14,6 +14,12 @@
         <priority>1.0</priority>
     </url>
 
+        <url>
+        <loc>/2023/03/05/etl-runner</loc>
+        <lastmod>2023-03-05T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
         <url>
         <loc>/2023/02/03/snippets-macos</loc>
         <lastmod>2023-02-03T00:00:00+00:00</lastmod>
@@ -46,6 +52,12 @@
     </url>
         <url>
         <loc>/2023/02/03/snippets-git</loc>
+        <lastmod>2023-02-03T00:00:00+00:00</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+        <url>
+        <loc>/2023/02/03/command-line-tools</loc>
         <lastmod>2023-02-03T00:00:00+00:00</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
@@ -119,12 +131,6 @@
         <url>
         <loc>/2021/11/01/artillery-royale-going-free-and-open-source</loc>
         <lastmod>2021-11-01T00:00:00+00:00</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>1.0</priority>
-    </url>
-        <url>
-        <loc>/2021/08/10/command-line-tools</loc>
-        <lastmod>2021-08-10T00:00:00+00:00</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>

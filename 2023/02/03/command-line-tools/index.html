@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Command line tools - Jérôme Gangneux</title>
+                <meta name="description" content="I am a big fan of command line utilities and scripts, so I wanted to share with you some tricks and scripts I use.">
+        <meta name="twitter:site" content="@jeromegx_" />
+        <meta property="og:description" content="I am a big fan of command line utilities and scripts, so I wanted to share with you some tricks and scripts I use.">
+        <meta property="og:type" content="article">
+        <meta property="og:url" content="https://jerome.gangneux.net/2023/02/03/command-line-tools" />
+        <meta property="og:title" content="Command line tools - Jérôme Gangneux" />
+        <meta name="twitter:card" content="summary_large_image">
+                <meta property="og:image" content="https://jerome.gangneux.net/images/writing/command-line-tools.jpg" />
+                        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#606060">
+        <meta name="msapplication-TileColor" content="#2acac5">
+        <meta name="theme-color" content="#32c3bd">
+                <meta name="robots" content="index, follow">
+                <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="/assets/css/tailwind.css"/>
+        <link rel="stylesheet" href="/assets/css/app.css"/>
+        <link rel="alternate" type="application/atom+xml" href="/atom.xml" title="Jérôme Gangneux activity feed" />
+                    </head>
+    <body class="font-sans text-gray-800 dark:text-gray-100">
+
+        <nav id="site-header" class="container mx-auto mt-0 p-4" style="max-width:1024px">
+    <h1 class="text-5xl --font-semibold tracking-tight leading-none mb-12 text-center">
+        <a href="/">Jérôme Gangneux</a>
+        —&nbsp;Snippets
+    </h1>
+    <div id="main-menu" class="mt-4">
+        <div class="flex sm:text-xl text-base flex-wrap justify-center">
+                                    <a href="/" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Projects</a>
+            <a href="/posts/category/art" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Art</a>
+            <a href="/posts/category/blog" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Blog</a>
+            <a href="/posts/category/snippets" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md dark:pink-600 bg-pink-500 dark:bg-pink-500 sm:bg-pink-500 sm:dark:pink-600 text-white ">Snippets</a>
+            <a href="/social" class="mr-3 mb-3 px-2 sm:mr-5 sm:mb-5 sm:px-3 py-1 bg-white dark:bg-gray-700 sm:bg-transparent rounded-md ">Micro Blog</a>
+        </div>
+    </div>
+</nav>
+
+        <div class="container mx-auto mt-4" style="max-width:1024px">
+            <div class="post grid grid-cols-1">
+    <article class="shadow-xl p-8 m-4 bg-white dark:bg-gray-700 _rounded-md">
+        <header class="mb-12">
+            <h1>Command line tools</h1>
+                        <p>Last update: February 13, 2023</p>
+                    </header>
+        <section class="main">
+            <p>I am a big fan of command line utilities and scripts, so I wanted to share with you some tricks I learned and scripts I use.
+Some are only a command with notable options like a memo of how to use them, others are homemade scripts.</p>
+
+<h2 id="find-and-related">Find and related</h2>
+
+<p><code>Find</code> allows you to apply some quite powerful command to your files, you can query it to get only specifics files and then pipe them to other commands.</p>
+
+<pre><code class="language-bash"># Exec a given command (rm -f here)
+find . -type f \  # Find all file (only of type: file, not directories)
+    ! -mtime 60 \ # Where modification time is greater (!) than 60 days
+    --exec rm "{}" -f \;
+
+# Note: using xargs is faster, so we can do something similar:
+find . -name .svn \ # Find all file with name '.svn'
+    -print0 \       # Send the list to (null padded)
+    | xargs -0 \    # Get the list from (null padded)
+    rm -rf # Current command (rm -f here)
+
+# Find file by extended regex
+find -E . -regex ".*\.(php|sh)"
+</code></pre>
+
+<p><code>xargs</code> allows you to build/execute a command from an input that you get on the pipe.</p>
+
+<pre><code class="language-bash"># -I % defines "%" as the placeholder
+cat foo.txt | xargs -I % sh -c "echo %; mkdir %;"
+</code></pre>
+
+<p><br></p>
+
+<h3 id="find-in-combination-with-other-utilities">Find in combination with other utilities</h3>
+
+<pre><code class="language-bash"># Copy all mp4 file to /tmp
+find . -type f -iname "*.mp4" -exec cp "{}" /tmp \;
+
+# Update all C Sharp files "end of line" from windows to unix (dos2unix)
+find . -type f -iname "*.cs" -exec dos2unix "{}" \;
+
+# Rename all file, replacing 'Screenshot-' by 'Screen_'
+find . -exec rename -s "Screenshot-" "Screen_" "{}" \;
+
+# For each jpg, get the exif meta or add a macos tag if not found (-I % defines the placeholder)
+find . -iname "*.jpg" -print0 | xargs -I % -0 bash -c 'exiftool "%" | grep -i "create date" || tag -a missingExif "%"'
+
+# You can have complex queries for find with \( \) and -o
+find . \( -iname "*.html" -o -iname "*.php" \) -print0 | xargs -I % -0 bash -c 'echo "%";'
+</code></pre>
+
+<h2 id="curl">CURL</h2>
+
+<p>Curl makes web requests, it's very powerful for basic and not-so basic requests, allowing you to download files, forge request and even interact with APIs.</p>
+
+<pre><code class="language-bash">curl \
+    -d "param1=value1&param2=value2" \ # Post data
+    -H "Content-Type: application/x-www-form-urlencoded" \ # This is the default with POST
+    -X POST \ # Method
+    URL
+
+curl \
+    -d "@data.txt" \ # Send this file content as post data
+    -X POST \
+    URL
+
+curl \
+    -F file=@data.txt \ # Upload with multipart/form-data content
+    -X POST \
+    URL
+
+curl \
+    -d '{"key1":"value1", "key2":"value2"}' \ # Post data, here JSON
+    -H "Content-Type: application/json" \     # Specify JSON header
+    -X POST \
+    URL
+</code></pre>
+
+<h2 id="rsync">Rsync</h2>
+
+<p>Rsync is powerful and versatile, I'm using it for backups and remote server sync, but it can do way more!</p>
+
+<pre><code class="language-bash"># Here I use it for basic one-way no-history archiving
+rsync \
+    --archive \ # implies: recursive ; preserve time, owner, group, perms ; copy symlinks as it
+    --human-readable --progress \
+    --delete \ # Delete the file on destination if not present on the source any more
+    --exclude='node_modules' \ # Node ;-)
+    /Users/jerome/projects /Volumes/Backup-disk # Source / Destination
+
+# Synchronize the local directory with the distant one
+sync --archive --verbose --delete \
+    -e "ssh -p 22" \ # Remote shell to use (here ssh with option -P 22)
+    static/ root@example.com:/var/www/
+</code></pre>
+
+<h2 id="shell-commands-101">Shell commands 101</h2>
+
+<pre><code class="language-bash"># Redirect the error output to the standard output (stderr to stdout)
+echo 'test' 2>&1
+
+# Mount a distant directory to the local filesystem
+sshfs username@example.com:/directory directory
+
+# Delete the line LINE_NUMBER in the file
+sed 'LINE_NUMBERd' file
+sed '2,4d' file # delete lines from 2 to 4 in file
+
+# Stop/continue a process by pid
+kill -s STOP/CONT PID
+
+# Create an archive for this directory
+tar -cvzf archive.tar.gz directory
+
+# Extract the given tarball
+tar -xvf archive.tar.gz
+
+# Generate a new key pair
+ssh-keygen -t dsa
+
+# Change extended permissions on a file
+setfacl -Rm u:username:rw directory
+
+# Convert windows line ending file to unix
+dos2unix
+
+# Add user (username) to group
+usermod -a -G group username</code></pre>
+
+<h2 id="ngrok">ngrok</h2>
+
+<p>I use <a href="https://ngrok.com">ngrok</a></p>
+
+<p>This is a proprietary tool, but still, it has a free tier that is enough for me.<br>
+It may exist some similar tools, do not hesitate to contact me!</p>
+
+<blockquote>
+  <p>Ngrok exposes local servers behind NATs and firewalls to the public internet over secure tunnels.</p>
+</blockquote>
+
+<h2 id="linux-server">Linux server</h2>
+
+<h3 id="ufw-firewall">UFW Firewall</h3>
+
+<p>On my Linux server I use ufw (Uncomplicated Firewall), and it holds its promise!
+See it in action below:</p>
+
+<pre><code class="language-bash">ufw allow 22 # ssh
+ufw allow 443 # https
+ufw allow 80 # http
+ufw enable</code></pre>
+
+<h3 id="mosh">Mosh</h3>
+
+<p>I use <a href="https://mosh.org">Mosh</a></p>
+
+<blockquote>
+  <p>Mosh (mobile shell)</p>
+  
+  <p>It's a remote terminal application that allows roaming, supports intermittent connectivity, and provides intelligent local echo and line editing of user keystrokes.</p>
+  
+  <p>Mosh is a replacement for interactive SSH terminals. It's more robust and responsive, especially over Wi-Fi, cellular, and long-distance links.</p>
+  
+  <p>Mosh is free software, available for GNU/Linux, BSD, macOS, Solaris, Android, Chrome, and iOS.</p>
+</blockquote>
+
+<h3 id="screen">Screen</h3>
+
+<p>Create a new named session: <code>screen -S NAME</code>
+Restore a named session: <code>screen -x NAME</code></p>
+
+<h4 id="keybinding">Keybinding</h4>
+
+<ul>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>c</kbd> = create</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>Shift</kbd> + <kbd>A</kbd> = title</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>Ctrl</kbd> + <kbd>a</kbd> = toggle</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>num</kbd> = switch to num</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>Shift</kbd> + <kbd>F</kbd> = fit</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>space</kbd>/<kbd>backspace</kbd> = next/prev windows</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>Shift</kbd> + <kbd>C</kbd> = clear</li>
+<li><kbd>Ctrl</kbd> + <kbd>a</kbd> <kbd>"</kbd> = List tabs</li>
+</ul>
+
+<h4 id=".screenrc">.screenrc</h4>
+
+<pre><code>termcapinfo xterm* ti@:te@ # Pour le scroll
+caption always # activates window caption
+caption string '%{= wk}[ %{k}%H %{k}][%= %{= wk}%?%-Lw%?%{r}(%{r}%n*%f%t%?(%u)%?%{r})%{k}%?%+Lw%?%?%= %{k}][%{b} %d/%m %{k}%c %{k}]' # good looking window bar
+bindkey -k k5 prev # F5 for previous window
+bindkey -k k6 next # F6 for next window
+</code></pre>
+
+<h2 id="my-own-scripts">My Own scripts</h2>
+
+<h3 id="filename-%2F-extname">filename / extname</h3>
+
+<p>Similar to <code>basename</code>, I've often needed to get the filename (without extension) or the extension of a given file in my scripts.<br>
+I added them in my path, so they are accessible when needed.</p>
+
+<p><code class="filepath">filename</code></p>
+
+<pre><code class="language-bash">#!/bin/bash
+
+if [[ $# -ne 1 ]]
+then
+    echo &quot;usage: $0 \&quot;filename.ext\&quot;&quot;
+    echo &quot;Returns filename without extension&quot;
+    echo &quot;Note: it applies basename before&quot;
+    exit 2
+fi
+
+BASENAME=&quot;$(basename &quot;$1&quot;)&quot;
+EXTENSION=&quot;${BASENAME##*.}&quot;
+FILENAME=&quot;${BASENAME%.*}&quot;
+
+echo &quot;${FILENAME}&quot;
+exit 0</code></pre>
+
+<p><br>
+<code class="filepath">extname</code></p>
+
+<pre><code class="language-bash">#!/bin/bash
+
+if [[ $# -ne 1 ]]
+then
+    echo &quot;usage: $0 \&quot;filename.ext\&quot;&quot;
+    echo &quot;Returns filename&#039;s extension&quot;
+    echo &quot;Note: it applies basename before&quot;
+    exit 2
+fi
+
+BASENAME=&quot;$(basename &quot;$1&quot;)&quot;
+EXTENSION=&quot;${BASENAME##*.}&quot;
+FILENAME=&quot;${BASENAME%.*}&quot;
+
+echo &quot;${EXTENSION}&quot;
+exit 0</code></pre>
+
+<h3 id="retime">Retime</h3>
+
+<p>This script is more specific to my needs, but still I think it can be useful to someone.<br>
+It will try to rename a media file with the date/time of creation.<br>
+Note: it uses PHP and exiftool to work.</p>
+
+<p><code class="filepath">retime</code></p>
+
+<pre><code class="language-php">#!/usr/bin/env php
+&lt;?php
+
+function stdout($message)
+{
+    echo $message.&quot;\n&quot;;
+}
+
+if (2 != count($argv)) {
+    stdout(&#039;Rename media files to their original creation time (if possible)&#039;);
+    stdout(&quot;Usage {$argv[0]} source_media&quot;);
+
+    exit(1);
+}
+
+function exiftool(string $file): array
+{
+    $output = shell_exec(&#039;exiftool &#039;.escapeshellarg($file));
+    $data = [];
+    foreach (explode(&quot;\n&quot;, $output) as $line) {
+        $l = explode(&#039;:&#039;, $line, 2);
+        $data[trim($l[0])] = trim($l[1]);
+    }
+
+    return $data;
+}
+
+$file = $argv[1];
+$directory = dirname($file);
+$extension = pathinfo($file, PATHINFO_EXTENSION);
+$data = exiftool($file);
+
+if (isset($data[&#039;Creation Date&#039;])) {
+    $exifDate = $data[&#039;Creation Date&#039;];
+} elseif (isset($data[&#039;Date Time Original&#039;])) {
+    $exifDate = $data[&#039;Date Time Original&#039;];
+} else {
+    stdout(&quot;Can not find relevant exif information for {$file}&quot;);
+
+    exit(1);
+}
+
+$date = date_create($exifDate);
+if (!$date) {
+    stdout(&quot;Can not parse date for {$file}&quot;);
+
+    exit(2);
+}
+
+$name = $date-&gt;format(&#039;Y-m-d H-i-s&#039;).&#039;.&#039;.$extension;
+$destination = $directory.DIRECTORY_SEPARATOR.$name;
+
+if (file_exists($destination)) {
+    stdout(&quot;A file with that name already exist {$name} for file {$file}&quot;);
+
+    exit(3);
+}
+
+rename($file, $destination);
+$touchDate = $date-&gt;format(&#039;YmdHi.s&#039;);
+shell_exec(&#039;touch -t &#039;.$touchDate.&#039; &#039;.escapeshellarg($destination));
+stdout(&quot;Success: {$file} renamed in {$destination}&quot;);
+
+exit(0);
+</code></pre>
+
+<h3 id="doubloons">Doubloons</h3>
+
+<p>This script looks for file doubloons in the current and sub-directories.<br>
+Note: it's a PHP script that use a SQLite database.</p>
+
+<p><code class="filepath">doubloons</code></p>
+
+<pre><code class="language-php">#!/usr/bin/env php
+&lt;?php
+
+const DB_FILE_NAME = &#039;./doubloon.sqlite&#039;;
+$shortOptions = [];
+// Index options
+$shortOptions[&#039;e:&#039;] = &#039;File extension to check ; coma separated ; case insensitive ; default: &quot;jpg,jpeg,gif,png&quot;&#039;;
+$shortOptions[&#039;s:&#039;] = &#039;Hash algorithm used ; available: md5, sha1 ; default &quot;md5&quot;&#039;;
+$shortOptions[&#039;r&#039;] = &#039;Reset/rebuild index&#039;;
+// Program options
+$shortOptions[&#039;f&#039;] = &#039;For a given doubloon ; keep the first and delete the others ; default: interactive mode: ask&#039;;
+$shortOptions[&#039;h&#039;] = &#039;This help&#039;;
+
+$options = array_merge([
+    &#039;e&#039; =&gt; &#039;jpg,jpeg,gif,png&#039;,
+    &#039;s&#039; =&gt; &#039;md5&#039;,
+], getopt(implode(array_keys($shortOptions)), []));
+
+function stdout($message)
+{
+    echo $message.&quot;\n&quot;;
+}
+
+function sqlite(bool $create)
+{
+    $sql = new SQLite3(DB_FILE_NAME);
+    if ($create) {
+        $sql-&gt;exec(&#039;CREATE TABLE &quot;file&quot; (&quot;path&quot; text NOT NULL, &quot;hash&quot; varchar NOT NULL, PRIMARY KEY (path));&#039;);
+    }
+
+    return $sql;
+}
+
+function findDoubloons()
+{
+    $hashes = [];
+    $db = sqlite(false);
+    $result = $db-&gt;query(&#039;SELECT * FROM `file` WHERE `hash` IN (
+        SELECT `hash` FROM `file` GROUP BY `hash` HAVING COUNT(*) &gt;= 2
+    )&#039;);
+    while (($row = $result-&gt;fetchArray(SQLITE3_ASSOC))) {
+        $hashes[$row[&#039;hash&#039;]][] = $row[&#039;path&#039;];
+    }
+
+    return $hashes;
+}
+
+function index(string $directory, string $extensions, string $hashAlgo)
+{
+    stdout(&#039;Building index...&#039;);
+    $extensionsRegex = &#039;`\.(&#039;.str_replace(&#039;,&#039;, &#039;|&#039;, preg_quote($extensions)).&#039;)$`i&#039;;
+    $find = shell_exec(&#039;find -L &quot;&#039;.$directory.&#039;&quot;&#039;); // -L to follow symlinks
+    $data = explode(&quot;\n&quot;, $find);
+    $db = sqlite(true);
+    foreach ($data as $line) {
+        $line = trim($line);
+        if (!preg_match($extensionsRegex, $line)) {
+            continue;
+        }
+        if (&#039;sha1&#039; === $hashAlgo) {
+            $hash = sha1_file($line);
+        } else {
+            $hash = md5_file($line);
+        }
+        $statement = $db-&gt;prepare(&#039;INSERT OR IGNORE INTO `file` VALUES (:path, :hash);&#039;);
+        $statement-&gt;bindParam(&#039;:path&#039;, $line, SQLITE3_TEXT);
+        $statement-&gt;bindParam(&#039;:hash&#039;, $hash, SQLITE3_TEXT);
+        $statement-&gt;execute();
+
+        stdout($line.&#039;: &#039;.$hash);
+    }
+
+    stdout(&#039;done.&#039;);
+
+    exit(0);
+}
+
+function remove($interactive)
+{
+    $hashes = findDoubloons();
+    $delete = [];
+    $progress = 0;
+    $total = count($hashes);
+    stdout(&#039;Started, type 99 to finish...&#039;);
+    foreach ($hashes as $hash =&gt; $paths) {
+        ++$progress;
+        stdout(&quot;Found doubloons ({$progress}/{$total}):&quot;);
+        stdout(&#039;    0. No action&#039;);
+        $candidates = [];
+        $c = 0;
+        foreach ($paths as $path) {
+            ++$c;
+            $candidates[$c] = $path;
+            stdout(&quot;    {$c}. {$path}&quot;);
+        }
+        if (!$interactive) {
+            $action = 1;
+        } else {
+            $action = (int) trim(readline(&quot;&gt; keep [0-{$c}]: &quot;));
+        }
+        if (0 == $action) {
+            continue;
+        }
+        if (99 == $action) {
+            break;
+        }
+        unset($candidates[$action]);
+        $delete = array_merge($delete, array_values($candidates));
+    }
+    stdout(&quot;Double check everything and execute:\n&quot;);
+    foreach ($delete as $d) {
+        stdout(&#039;rm &quot;&#039;.$d.&#039;&quot;&#039;);
+    }
+    stdout(&#039;rm &#039;.DB_FILE_NAME);
+
+    return $delete;
+}
+
+if (array_key_exists(&#039;h&#039;, $options)) {
+    stdout(&quot;Usage: {$argv[0]} [options]&quot;);
+    foreach ($shortOptions as $name =&gt; $message) {
+        $name = trim($name, &#039;:&#039;);
+        stdout(&quot;    -{$name}    {$message}&quot;);
+    }
+
+    exit(0);
+}
+
+if (array_key_exists(&#039;r&#039;, $options)) {
+    @unlink(DB_FILE_NAME);
+}
+
+if (!file_exists(DB_FILE_NAME)) {
+    // No index exist in this directory, build one
+    index(&#039;.&#039;, $options[&#039;e&#039;], $options[&#039;s&#039;]);
+} else {
+    // the index already exist, start the program
+    remove(!array_key_exists(&#039;f&#039;, $options));
+}
+</code></pre>
+
+<h3 id="other-custom-made-scripts">Other custom-made scripts</h3>
+
+<p>I made other scripts that are probably too specific and too messy to be published here,
+one I like a used a lot was a PHP script (+ command line tools) that split a mbox file and extract message/attachment to a database.
+Worked well to save my emails when I left Gmail.
+Let me know if you are interested :)</p>
+
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/monokai-sublime.min.css">
+<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<!-- and it's easy to individually load additional languages -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/go.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/dockerfile.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/languages/twig.min.js"></script>
+<script>document.addEventListener('DOMContentLoaded', () => hljs.highlightAll());</script>
+</p>
+
+        </section>
+        <footer class="pt-10">
+                            <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/blob/main/2023/02/03/command-line-tools">Did you find an error or want to make a change? Open a PR</a><br>
+                <a target="_blank" href="https://github.com/jrmgx/jerome.gangneux.net/issues/2">Follow this link to add a comment on this page</a>
+                    </footer>
+    </article>
+</div>
+        </div>
+    </div>
+
+    <footer class="container mx-auto mt-12 p-4" style="max-width:1024px">
+
+        <p class="text-right" style="opacity: 0.75;">
+            <a style="float: left; display: block;" href="http://www.april.org">
+                <img src="http://www.april.org/files/association/documents/bannieres/boutons/bouton-april-80x15.png" alt="Promouvoir et soutenir le logiciel libre"/>
+            </a>
+            contact: jerome@gangneux.net / also on <a rel="me" href="https://social.gangneux.net/@jerome">Mastodon</a>
+        </p>
+    </footer>
+
+            </body>
+</html>

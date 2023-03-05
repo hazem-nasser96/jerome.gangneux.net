@@ -153,6 +153,12 @@ code.filepath {
     padding: 0;
 }
 
+@media (max-width: 425px) {
+    * {
+        font-size: 90%;
+    }
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         color: #F3F4F6; /* gray-100 */
