@@ -3,7 +3,7 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2023-03-05T09:43:28+00:00</updated>
+    <updated>2023-03-10T11:52:42+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
@@ -72,7 +72,7 @@ It's easy to configure, with everything described in one single file.</p>
 For these points, the project comes with specific documentation for major code hosting providers (GitLab and GitHub for now)</p>
 
 <p>You can find ETL-Runner on <a href="https://github.com/jrmgx/etl-runner">GitHub</a>
-and <a href="gitlab.com/jrmgx/etl-runner">GitLab</a> (just fork the repository and make it your own).</p>
+and <a href="https://gitlab.com/jrmgx/etl-runner">GitLab</a> (just fork the repository and make it your own).</p>
 
 <p><small><em>Note: Keep in mind that this app isn't designed for big volume or intense data processing. If you plan to trigger the ETL more than twice a day, you may need to look for something more powerful. And depending on your usage, it could even go against some provider's terms of service.</em></small></p>
 
@@ -559,7 +559,7 @@ I added a PHP interface for implementing languages, so anyone can create a new o
 
 <h2 id="languagetool-desktop-app-spoofing">LanguageTool Desktop App spoofing</h2>
 
-<p>I like <a href="languagetool.org">LanguageTool</a>: a multilingual grammar, style, and spell checker. <br>
+<p>I like <a href="https://languagetool.org">LanguageTool</a>: a multilingual grammar, style, and spell checker. <br>
 It is a great help for me, in both English and French.</p>
 
 <p>I have the browser extension setup on each of my browser. But I was not so happy about the text I wrote been sent to servers.
