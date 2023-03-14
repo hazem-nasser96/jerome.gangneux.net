@@ -3,11 +3,19 @@
     <title><![CDATA[Jérôme Gangneux]]></title>
     <link href="/atom.xml" rel="self"/>
     <link href="/"/>
-    <updated>2023-03-10T11:52:42+00:00</updated>
+    <updated>2023-03-14T12:07:14+00:00</updated>
     <id>/</id>
         <author>
         <name><![CDATA[jrmgx]]></name>            </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+                    <entry>
+        <title type="html"><![CDATA[Comprendre et éviter les attaques CSRF grâce à Symfony]]></title>
+        <link href="/2023/03/14/comprendre-eviter-attaques-csrf"/>
+        <updated>2023-03-14T00:00:00+00:00</updated>
+        <id>/2023/03/14/comprendre-eviter-attaques-csrf</id>
+        <content type="html"><![CDATA[<p>See more at (jolicode.com/blog/comprendre-et-eviter-les-attaques-csrf-grace-a-symfony)[https://jolicode.com/blog/comprendre-et-eviter-les-attaques-csrf-grace-a-symfony]</p>
+]]></content>
+    </entry>
                     <entry>
         <title type="html"><![CDATA[No code self-runnable micro ETL]]></title>
         <link href="/2023/03/05/etl-runner"/>
@@ -1004,12 +1012,4 @@ Note, when I say "made 0€" it really means, cost me a bunch of money + my own 
         <content type="html"><![CDATA[<p>See more at (jolicode.com/blog/re-discover-xpath-selectors)[https://jolicode.com/blog/re-discover-xpath-selectors]</p>
 ]]></content>
     </entry>
-                    <entry>
-        <title type="html"><![CDATA[PHP Clone All The Things]]></title>
-        <link href="/2022/01/05/php-clone-all-the-things"/>
-        <updated>2022-01-05T00:00:00+00:00</updated>
-        <id>/2022/01/05/php-clone-all-the-things</id>
-        <content type="html"><![CDATA[<p>See more at (jolicode.com/blog/php-clone-all-the-things)[https://jolicode.com/blog/php-clone-all-the-things]</p>
-]]></content>
-    </entry>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        </feed>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </feed>
